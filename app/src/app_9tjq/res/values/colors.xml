@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/color_theme_green</color>
+    <color name="colorPrimaryDark">@color/color_theme_green</color>
+    <color name="colorAccent">@color/color_theme_green</color>
+    <color name="bt_winthdraw_money">@color/color_theme_green</color>
+    <color name="colorSub">@color/color_theme_green</color>
+    <color name="custom_tab_up_down_tab_text_selected">@color/color_theme_green</color>
+    <color name="theme_custom_tab_up_down_tab_text_unselected">@color/white</color>
+    <color name="fragment_bg">@color/color_theme_black</color>
+    <color name="promo_text_will">@color/color_theme_green</color>
+    <color name="promo_bg">@color/color_theme_black</color>
+    <color name="promo_text">@color/white</color>
+    <color name="bak_blue">@color/color_theme_green</color>
+    <color name="tab_text_selected">@color/color_theme_green</color>
+    <color name="theme_white">@color/color_theme_black</color>
+    <color name="item_theme_white">@color/promo_item_bg_green</color>
+    <color name="promo_item_stroke">@color/promo_item_stroke_green</color>
+    <color name="tabIndicatorColor">@color/color_theme_green</color>
+    <color name="theme_bgColor">@color/promo_item_bg_green</color>
+    <color name="theme_text_color_gray_333333">@color/white</color>
+    <color name="theme_text_color_gray_999999">@color/white</color>
+    <color name="text_bind_bank_card">@color/color_theme_green</color>
+    <color name="background_blue">@color/color_theme_green</color>
+    <color name="but_search_blue">@color/color_theme_green</color>
+    <color name="color_message_center">@color/color_theme_green</color>
+    <color name="color_login_btn">@color/color_theme_green</color>
+    <color name="line_view_bg">@color/line_view_bg_green</color>
+    <color name="tab_bg">#252525</color>
+</resources>

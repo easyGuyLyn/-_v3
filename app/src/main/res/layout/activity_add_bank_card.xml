@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgColor">
+
+    <com.dawoo.gamebox.view.view.HeaderView
+        android:id="@+id/head_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:layout_marginBottom="@dimen/dp_10"/>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/withdraw_money_item_height"
+        android:background="@color/white">
+        <TextView
+            android:id="@+id/hint_real_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/record_margin"
+            android:layout_centerVertical="true"
+            android:textColor="@color/text_winthdraw_money_item_hint"
+            android:textSize="@dimen/text_14_sp"
+            android:text="@string/real_name"/>
+        <TextView
+            android:id="@+id/tv_real_name_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/real_name_hint"
+            android:textSize="@dimen/text_12_sp"
+            android:layout_below="@+id/hint_real_name"
+            android:layout_alignLeft="@+id/hint_real_name"/>
+
+        <EditText
+            android:id="@+id/et_real_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_14_sp"
+            android:hint="请输入姓名"
+            android:gravity="center_vertical|right"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/record_margin"
+            android:background="@null"
+            />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="@dimen/record_margin"
+        android:layout_height="1dp"
+        android:background="@color/white"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/withdraw_money_item_height"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/record_margin"
+            android:textColor="@color/text_winthdraw_money_item_hint"
+            android:textSize="@dimen/text_14_sp"
+            android:text="@string/bank_name"/>
+
+        <LinearLayout
+            android:id="@+id/ll_select_bank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/record_margin"
+            android:orientation="horizontal"
+            android:onClick="onSelectBank">
+            <TextView
+                android:id="@+id/tv_bank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_14_sp"
+                android:text="@string/please_select"
+                />
+            <ImageView
+                android:id="@+id/iv_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_more_select"/>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="@dimen/record_margin"
+        android:layout_height="1dp"
+        android:background="@color/white"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/withdraw_money_item_height"
+        android:background="@color/white">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/record_margin"
+            android:layout_centerVertical="true"
+            android:textColor="@color/text_winthdraw_money_item_hint"
+            android:textSize="@dimen/text_14_sp"
+            android:text="@string/card_number"/>
+
+        <EditText
+            android:id="@+id/et_card_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_14_sp"
+            android:hint="@string/input_card_hint"
+            android:digits="1234567890"
+            android:maxLength="25"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/record_margin"
+            />
+
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="@dimen/record_margin"
+        android:layout_height="1dp"
+        android:background="@color/white"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/withdraw_money_item_height"
+        android:background="@color/white">
+        <TextView
+            android:id="@+id/tv_open_bank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/record_margin"
+            android:layout_centerVertical="true"
+            android:textColor="@color/text_winthdraw_money_item_hint"
+            android:textSize="@dimen/text_14_sp"
+            android:text="@string/open_account_bank"/>
+
+        <TextView
+            android:id="@+id/tv_open_account_bank_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_open_bank"
+            android:layout_marginLeft="@dimen/record_margin"
+            android:textSize="@dimen/text_10_sp"
+            android:text="@string/select_other_bank_hint"/>
+
+        <EditText
+            android:id="@+id/et_open_account_bank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_14_sp"
+            android:hint="@string/open_account_bank_hint"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/record_margin"
+            />
+
+    </RelativeLayout>
+
+
+    <Button
+        android:id="@+id/bt_submit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/withdraw_money_item_height"
+        android:layout_marginRight="@dimen/record_margin"
+        android:layout_marginLeft="@dimen/record_margin"
+        android:layout_marginTop="@dimen/record_margin"
+        android:background="@drawable/shape_withdraw_money_bt"
+        android:textColor="@color/white"
+        android:text="确认提交"
+        android:onClick="onSubmit"
+        />
+
+</LinearLayout>

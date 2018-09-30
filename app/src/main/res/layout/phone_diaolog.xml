@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="295dp"
+    android:layout_height="449dp"
+    android:layout_gravity="center_horizontal"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="387dp"
+        android:background="@drawable/frament_home_phone_dialog_bg_white">
+
+        <TextView
+            android:id="@+id/notice_title"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:background="@drawable/fragment_home_phone_dialog_title_bg"
+            android:gravity="center"
+            android:text="@string/notice"
+            android:textColor="@color/text_color_gray_333333"
+            android:textSize="@dimen/text_title_sp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/notice_dialog_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/confirm_btn"
+            android:layout_below="@id/notice_title"
+            android:layout_marginBottom="18dp"
+            android:layout_marginEnd="26dp"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/frament_home_notice_dialog_bg_white"
+            android:paddingLeft="14dp"
+            android:paddingRight="14dp" />
+
+
+        <Button
+            android:id="@+id/confirm_btn"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="26dp"
+            android:layout_marginStart="26dp"
+            android:background="@drawable/frame_fillet_blue"
+            android:text="@string/hongbao_confirm"
+            android:textColor="@color/colorTitle"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/close_iv"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:src="@mipmap/dialog_close_icon" />
+</LinearLayout>

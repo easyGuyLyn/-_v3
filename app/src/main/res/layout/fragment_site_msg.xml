@@ -1,0 +1,108 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgColor"
+    android:orientation="vertical"
+    tools:context="com.dawoo.gamebox.view.activity.message.SiteMsgFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal">
+
+
+            <RelativeLayout
+                android:id="@+id/rl_sys_notice"
+                android:layout_width="96dp"
+                android:layout_height="36dp"
+                android:layout_marginLeft="@dimen/dp_10">
+
+                <TextView
+                    android:id="@+id/btn_sys_notice"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/site_button_bg_selector"
+                    android:gravity="center"
+                    android:text="@string/sys_msg"
+                    android:textColor="@color/text_color_666666_to_white_text_selector"
+                    android:textSize="@dimen/text_12_sp" />
+
+                <TextView
+                    android:id="@+id/v_tip_sys_notice"
+                    android:layout_width="6dp"
+                    android:layout_height="6dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/shape_red_tip"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_8_sp"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rl_my_notice"
+                android:layout_width="96dp"
+                android:layout_height="36dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_toRightOf="@+id/rl_sys_notice">
+
+                <TextView
+                    android:id="@+id/btn_my_notice"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/site_button_bg_selector"
+                    android:gravity="center"
+                    android:text="@string/my_msg"
+                    android:textColor="@color/text_color_666666_to_white_text_selector"
+                    android:textSize="@dimen/text_12_sp" />
+
+                <TextView
+                    android:id="@+id/v_tip_my_notice"
+                    android:layout_width="6dp"
+                    android:layout_height="6dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/shape_red_tip"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_8_sp"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btn_send_msg"
+                android:layout_width="96dp"
+                android:layout_height="36dp"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@id/rl_my_notice"
+                android:background="@drawable/site_button_bg_selector"
+                android:text="@string/send_msg"
+                android:textColor="@color/text_color_666666_to_white_text_selector"
+                android:textSize="@dimen/text_12_sp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/color_message_center" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/fragment_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+</LinearLayout>

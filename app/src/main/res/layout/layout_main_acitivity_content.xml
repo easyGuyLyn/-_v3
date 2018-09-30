@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/tabIndicatorColor">
+
+    <com.dawoo.gamebox.view.view.CustomViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/llTab" />
+
+
+    <!--底部菜单-->
+    <LinearLayout
+        android:id="@+id/llTab"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/tab_bar_height_v3"
+        android:layout_alignParentBottom="true"
+        android:background="@color/tab_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <!--主页-->
+        <LinearLayout
+            android:id="@+id/home_ll"
+            style="@style/tab_bottom_ll_style">
+
+            <ImageView
+                android:id="@+id/img_home"
+                style="@style/tab_bottom_icon_style"
+                android:src="@drawable/main_activity_tab_tiem_home_icon_selector" />
+
+            <TextView
+                style="@style/tab_bottom_text_style"
+                android:layout_marginTop="3dp"
+                android:text="@string/title_home" />
+        </LinearLayout>
+
+        <!--存款-->
+        <LinearLayout
+            android:id="@+id/deposit_ll"
+            style="@style/tab_bottom_ll_style">
+
+            <ImageView
+                android:id="@+id/img_deposit"
+                style="@style/tab_bottom_icon_style"
+                android:src="@drawable/main_activity_tab_tiem_deposit_icon_selector" />
+
+            <TextView
+                style="@style/tab_bottom_text_style"
+                android:text="@string/title_deposit" />
+        </LinearLayout>
+
+        <!--优惠-->
+        <LinearLayout
+            android:id="@+id/promo_ll"
+            style="@style/tab_bottom_ll_style">
+
+            <ImageView
+                android:id="@+id/img_favourable"
+                style="@style/tab_bottom_icon_style"
+                android:src="@drawable/main_activity_tab_tiem_promo_icon_selector" />
+
+            <TextView
+                style="@style/tab_bottom_text_style"
+                android:text="@string/title_promo" />
+        </LinearLayout>
+
+        <!--客服-->
+        <LinearLayout
+            android:id="@+id/service_ll"
+            style="@style/tab_bottom_ll_style">
+
+            <ImageView
+                android:id="@+id/img_service"
+                style="@style/tab_bottom_icon_style"
+                android:src="@drawable/main_activity_tab_tiem_service_icon_selector" />
+
+            <TextView
+                style="@style/tab_bottom_text_style"
+                android:text="@string/title_service" />
+        </LinearLayout>
+
+        <!--我的-->
+        <LinearLayout
+            android:id="@+id/mine_ll"
+            style="@style/tab_bottom_ll_style">
+
+            <ImageView
+                android:id="@+id/img_mine"
+                style="@style/tab_bottom_icon_style"
+                android:src="@drawable/main_activity_tab_tiem_mine_icon_selector" />
+
+            <TextView
+                style="@style/tab_bottom_text_style"
+                android:text="@string/title_mine" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

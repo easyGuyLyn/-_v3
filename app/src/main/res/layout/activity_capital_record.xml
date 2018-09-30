@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgColor">
+
+    <com.dawoo.gamebox.view.view.HeaderView
+        android:id="@+id/head_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height" />
+
+    <RelativeLayout
+        android:layout_width="60dp"
+        android:layout_height="@dimen/toolbar_height"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <View
+            android:id="@+id/point"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:layout_centerVertical="true" />
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_below="@id/point"
+            android:layout_toLeftOf="@+id/user_capital_total"
+            android:src="@mipmap/account_icon" />
+
+
+        <TextView
+            android:id="@+id/user_capital_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/point"
+            android:layout_marginStart="4dp"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxLength="10"
+            android:text="****dddddd"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_9_sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/paras_rl"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_below="@id/head_view"
+        android:background="@color/white"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="资金日期:"
+            android:textColor="@color/text_color_gray_333333"
+            android:textSize="@dimen/text_12_sp" />
+
+        <FrameLayout
+            android:id="@+id/start_time_fl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:layout_toStartOf="@+id/fv"
+            android:background="@drawable/rectangle_line_gray">
+
+            <TextView
+                android:id="@+id/start_time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="4dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="4dp"
+                android:drawableStart="@mipmap/date_icon"
+                android:gravity="center"
+                android:text="2018-01-01"
+                android:textColor="@color/text_color_gray_333333"
+                android:textSize="@dimen/text_12_sp" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/fv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="2dp"
+            android:layout_marginStart="2dp"
+            android:text="~" />
+
+        <FrameLayout
+            android:id="@+id/end_time_fl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/fv"
+            android:background="@drawable/rectangle_line_gray">
+
+            <TextView
+                android:id="@+id/end_time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="4dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="4dp"
+                android:drawableStart="@mipmap/date_icon"
+                android:gravity="center"
+                android:text="2018-01-02"
+                android:textColor="@color/text_color_gray_333333"
+                android:textSize="@dimen/text_12_sp" />
+
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/fast_choose_btn"
+            android:layout_width="44dp"
+            android:layout_height="29dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="end"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/activity_note_record_btn_corn_selector"
+            android:text="@string/fast_choose"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_14_sp" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/custom_tab_up_down_bg" />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/title_list_ll"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:layout_below="@id/paras_rl"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/type_choose"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="7dp"
+                android:background="@drawable/shape_add_bitcoin_button_again"
+                android:drawableRight="@mipmap/spiner_icon"
+                android:gravity="center_vertical|left"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
+                android:text="@string/all_type">
+
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="8dp">
+
+            <Button
+                android:id="@+id/search_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="7dp"
+                android:background="@drawable/activity_capital_record_btn_corn_selector"
+                android:text="@string/search"
+                android:textColor="@color/colorWhite" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider_1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/title_list_ll"
+        android:background="@color/custom_tab_up_down_bg" />
+
+
+    <RelativeLayout
+        android:id="@+id/doing_rl"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:layout_below="@id/divider_1"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/drawcash_lable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:text="@string/drawcash_dealwith"
+            android:textColor="@color/text_color_gray_333333"
+            android:textSize="@dimen/text_12_sp" />
+
+        <TextView
+            android:id="@+id/drawcash_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@id/drawcash_lable"
+            android:textColor="@color/btn_yellow_normal"
+            android:textSize="@dimen/text_12_sp" />
+
+        <TextView
+            android:id="@+id/transfer_lable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_toStartOf="@+id/transfer_value"
+            android:text="@string/transfer_dealwith"
+            android:textColor="@color/text_color_gray_333333"
+            android:textSize="@dimen/text_12_sp" />
+
+        <TextView
+            android:id="@+id/transfer_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:textColor="@color/btn_yellow_normal"
+            android:textSize="@dimen/text_12_sp" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/capital_activity_top_view" />
+
+    <LinearLayout
+        android:id="@+id/bottom_1"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_above="@+id/bottom_2"
+        android:background="@color/note_record_bottom_bg"
+        android:orientation="horizontal"
+        android:paddingTop="6dp"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/total_account"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/total_account"
+            android:textColor="@color/text_color_gray_333333"
+            android:textSize="@dimen/text_14_sp" />
+
+        <TextView
+            android:id="@+id/account_banlance"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center_vertical|left"
+            android:paddingLeft="30dp"
+            android:text="@string/recharge_total"
+            android:textColor="@color/text_color_gray_333333"
+            android:textSize="@dimen/text_12_sp" />
+
+        <TextView
+            android:id="@+id/payout_reward"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center_vertical|left"
+            android:paddingLeft="30dp"
+            android:text="@string/withdraw_total"
+            android:textColor="@color/text_color_gray_333333"
+            android:textSize="@dimen/text_12_sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom_2"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/note_record_bottom_bg"
+        android:orientation="horizontal"
+        android:paddingBottom="6dp"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="@dimen/text_14_sp" />
+
+        <TextView
+            android:id="@+id/effective_betting"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center_vertical|left"
+            android:paddingLeft="30dp"
+            android:text="@string/favorable_total"
+            android:textColor="@color/text_color_gray_333333"
+            android:textSize="@dimen/text_12_sp" />
+
+        <TextView
+            android:id="@+id/lottery_bonus"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center_vertical|left"
+            android:paddingLeft="30dp"
+            android:text="@string/rakeback_total"
+            android:textColor="@color/text_color_gray_333333"
+            android:textSize="@dimen/text_12_sp" />
+
+    </LinearLayout>
+
+
+    <include
+        layout="@layout/layout_swipetoloadlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_1"
+        android:layout_below="@id/capital_mid" />
+
+
+</RelativeLayout>

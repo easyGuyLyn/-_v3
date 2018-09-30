@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.dawoo.gamebox.view.activity.message.MessageCenterActivity">
+
+
+    <com.dawoo.gamebox.view.view.HeaderView
+        android:id="@+id/head_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="66dp"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/game_notice"
+                android:layout_width="96dp"
+                android:layout_height="36dp"
+                android:background="@drawable/message_button_left_selector"
+                android:text="@string/game_noitce"
+                android:textColor="@color/text_color_666666_to_white_text_selector"
+                android:textSize="@dimen/text_12_sp" />
+
+            <Button
+                android:id="@+id/sys_notice"
+                android:layout_width="96dp"
+                android:layout_height="36dp"
+                android:background="@drawable/message_button_mid_selector"
+                android:text="@string/sys_notice"
+                android:textColor="@color/text_color_666666_to_white_text_selector"
+                android:textSize="@dimen/text_12_sp" />
+
+            <RelativeLayout
+                android:layout_width="96dp"
+                android:layout_height="36dp">
+
+                <TextView
+                    android:id="@+id/zhan_notice"
+                    android:layout_width="96dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/message_button_right_selector"
+                    android:gravity="center"
+                    android:text="@string/zhan_message"
+                    android:textColor="@color/text_color_666666_to_white_text_selector"
+                    android:textSize="@dimen/text_12_sp" />
+
+                <TextView
+                    android:id="@+id/v_tip_my_notice"
+                    android:layout_width="6dp"
+                    android:layout_height="6dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/shape_red_tip"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_8_sp"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </FrameLayout>
+
+
+    <com.dawoo.gamebox.view.view.CustomViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </com.dawoo.gamebox.view.view.CustomViewPager>
+</LinearLayout>

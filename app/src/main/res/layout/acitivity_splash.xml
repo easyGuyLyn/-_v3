@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/splash">
+
+    <LinearLayout
+        android:id="@+id/ll_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ll_progress"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical">
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/avi"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="-10dp"
+            app:indicatorColor="@color/colorDarkGray"
+            app:indicatorName="BallPulseIndicator" />
+
+        <TextView
+            android:id="@+id/tvLoading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#333333"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="40dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/app_name"
+        android:maxHeight="100dp"
+        android:maxWidth="180dp"
+        android:scaleType="fitCenter"
+        android:visibility="visible" />
+
+    <RelativeLayout
+        android:id="@+id/ll_progress"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_above="@+id/tvCopyright"
+        android:animateLayoutChanges="true">
+
+        <com.dawoo.gamebox.view.view.numberprogressbar.NumberProgressBar
+            android:id="@+id/numberBar"
+            style="@style/NumberProgressBar_Default"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_25"
+            android:layout_marginRight="@dimen/dp_25"
+            app:progress_text_color="@color/colorPrimary"
+            app:progress_text_size="12sp"
+            app:progress_unreached_color="@color/text_color_gray_999999"
+            custom:progress_current="0" />
+
+        <Button
+            android:id="@+id/b_reGet"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/shape_re_get"
+            android:text="重新匹配"
+            android:textSize="12sp"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/tvCopyright"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:text="4.0.0"
+        android:textColor="@color/colorDarkGray"
+        android:textSize="10sp"
+        tools:ignore="RelativeOverlap" />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/log_recyclerview"
+        android:layout_width="wrap_content"
+        android:layout_height="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:visibility="visible" />
+
+
+    <ImageButton
+        android:id="@+id/setting_log_ib"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/log_recyclerview"
+        android:background="@color/transparent"
+        android:src="@mipmap/mine_right_setting"
+        android:visibility="gone" />
+
+</RelativeLayout>

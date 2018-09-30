@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgColor"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/dp_10"
+    android:paddingRight="@dimen/dp_10">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_vertical_item_hight">
+
+        <CheckBox
+            android:id="@+id/cb_all_choose"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/site_msg_all_choose" />
+
+        <TextView
+            android:id="@+id/tv_siteMsg_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_toRightOf="@+id/cb_all_choose"
+            android:background="@drawable/shape_edittext_site_send_msg"
+            android:gravity="center"
+            android:padding="@dimen/dp_4"
+            android:text="@string/site_msg_delete" />
+
+        <TextView
+            android:id="@+id/tv_siteMsg_read"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_toRightOf="@+id/tv_siteMsg_delete"
+            android:background="@drawable/shape_edittext_site_send_msg"
+            android:gravity="center"
+            android:padding="@dimen/dp_4"
+            android:text="@string/site_msg_sign_read" />
+
+    </RelativeLayout>
+
+
+    <include
+        layout="@layout/layout_swipetoloadlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_1"
+        android:layout_below="@id/doing_rl"
+        android:layout_marginTop="@dimen/dp_10" />
+
+
+</LinearLayout>

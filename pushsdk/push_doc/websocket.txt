@@ -1,0 +1,31 @@
+接入地址：ws://{test01.ccenter.test.so}/mdcenter/websocket/msite?localeType=zh_CN，其中，{test01.ccenter.test.so}需要换成实际站点的域名
+
+
+需处理主题：
+1、系统公告，消息主题：SYS_ANN
+2、站点公告，消息主题：SITE_ANN
+3、消息公告弹窗提醒：MSITE-Player-Announcement-Notice
+4、消息提醒：MCENTER_READ_COUNT
+5、线上支付成功提醒：MSITE-ONLINERECHARGE
+6、自动刷新余额提醒：MSITE_DIGICCY_REFRESH_BALANCE
+
+
+以上都弹窗，显示确认即可。
+
+消息提醒结果为json串，具体格式如下：
+
+{“subscribeType”:"消息类型/主题","msgBody":{"title":"消息标题","content":"消息内容","remindMethod":"收到消息后如何显示"},"receiveUserType":null}
+
+
+receiveUserType字段暂时忽略，目前不需使用。
+
+
+其中：remindMethod类型如下
+NUM("NUM", "仅显示消息数量"),                                          //app只在站内信出现，在主页面显示数量，无需弹窗
+NUM_POPUP("NUM_POPUP", "显示消息数量并弹窗"),                             //app收到后需要弹窗
+NUM_SOUND("NUM_SOUND", "显示消息数量并播放声音"),                        //app收到后需要弹窗，暂时不播放声音
+NUM_POPUP_SOUND("NUM_POPUP_SOUND", "显示消息数量且弹窗并播放声音"),       //app收到后需要弹窗，暂时不播放声音
+TASK_NUM("NUM", "仅显示任务数量"),                                     //app只在站内信出现，在主页面显示数量，无需弹窗
+TASK_NUM_POPUP("NUM_POPUP", "显示任务数量并弹窗"),                             //app收到后需要弹窗
+TASK_NUM_SOUND("NUM_SOUND", "显示任务数量并播放声音"),                   //app只在站内信出现，在主页面显示数量，无需弹窗
+TASK_NUM_POPUP_SOUND("NUM_POPUP_SOUND", "显示任务数量且弹窗并播放声音");  //app收到后需要弹窗

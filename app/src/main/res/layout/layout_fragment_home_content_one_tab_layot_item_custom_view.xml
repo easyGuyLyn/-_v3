@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/ctablayout_shape_bg_selector"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/fl_1"
+        android:layout_width="80dp"
+        android:layout_height="34dp"
+        android:background="@drawable/content_one_up_img_selector">
+
+        <ImageView
+            android:id="@+id/img_tab"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_2"
+        android:layout_width="80dp"
+        android:layout_height="27dp"
+        android:layout_below="@+id/fl_1"
+        android:background="@drawable/content_one_down_tv_selector">
+
+        <TextView
+            android:id="@+id/tv_tab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:textColor="@color/content_one_tab_item_text_selector"
+            android:textSize="@dimen/text_14_sp" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_3"
+        android:layout_width="80dp"
+        android:layout_height="9dp"
+        android:layout_below="@+id/fl_2"
+        android:background="@drawable/content_one_down_tv_selector">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_height="1dp"
+                android:background="@color/line_view_bg"/>
+            <ImageView
+                android:id="@+id/iv_tab_bottom"
+                android:layout_width="@dimen/dp_10"
+                android:layout_height="8dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/content_one_down_tv_selecto" />
+        </RelativeLayout>
+
+        <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@drawable/content_one_down_tv_selecto"/>-->
+    </FrameLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,56 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">10dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="ben_margin">4dp</dimen>
+    <dimen name="mine_horizontal_margin">12dp</dimen>
+    <dimen name="common_vertical_item_hight">45dp</dimen>
+    <dimen name="common_vertical_button_hight">45dp</dimen>
+    <dimen name="common_edit_hight">45dp</dimen>
+    <dimen name="common_textview_padding">3dp</dimen>
+
+    <dimen name="top_heignt">45dp</dimen>
+    <dimen name="back_image_size">30dp</dimen>
+    <dimen name="login_textSize">13sp</dimen>
+    <dimen name="editText_height">45dp</dimen>
+    <dimen name="button_height">40dp</dimen>
+    <dimen name="base_textSize">15sp</dimen>
+    <dimen name="dp_30">30dp</dimen>
+    <dimen name="dp_20">20dp</dimen>
+    <dimen name="dp_25">25dp</dimen>
+
+    <dimen name="toolbar_height">46dp</dimen>
+    <dimen name="toolbar_btn_width">46dp</dimen>
+    <dimen name="toolbar_btn_height">24dp</dimen>
+    <dimen name="tab_bar_height">56dp</dimen>
+    <dimen name="tab_bar_height_v3">55dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+
+
+    <dimen name="text_8_sp">8sp</dimen>
+    <dimen name="text_9_sp">9sp</dimen>
+    <dimen name="text_10_sp">10sp</dimen>
+    <dimen name="text_11_sp">11sp</dimen>
+    <dimen name="text_12_sp">12sp</dimen>
+    <dimen name="text_13_sp">13sp</dimen>
+    <dimen name="text_14_sp">14sp</dimen>
+    <dimen name="text_15_sp">15sp</dimen>
+    <dimen name="text_16_sp">16sp</dimen>
+    <dimen name="text_title_sp">17sp</dimen>
+
+    <dimen name="record_entry_height">34dp</dimen>
+    <dimen name="record_margin">20dp</dimen>
+    <dimen name="withdraw_money_item_height">50dp</dimen>
+
+    <dimen name="promo_button_mtop">10</dimen>
+    <dimen name="activity_horizontal_margin_new">13dp</dimen>
+
+    <dimen name="picker_default_text_size">12sp</dimen>
+    <dimen name="picker_toolbar_height">40dp</dimen>
+    <dimen name="textview_default_padding">5dp</dimen>
+    <dimen name="picker_line_width">1dp</dimen>
+    <dimen name="picker_line_mar">5dp</dimen>
+    <dimen name="quota_conversion_item_height">40dp</dimen>
+
+</resources>

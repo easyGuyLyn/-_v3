@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/promo_backgtound_select" android:state_selected="true" />
+    <item android:drawable="@drawable/promo_shape_background" android:state_focused="false" />
+    <item android:drawable="@drawable/frament_home_one_key_back_corn_unclick" />
+</selector>

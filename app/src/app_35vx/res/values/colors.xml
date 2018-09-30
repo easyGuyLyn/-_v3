@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<color name="colorPrimary">@color/color_theme_black</color>-->
+    <color name="colorPrimaryDark">@color/color_theme_black</color>
+    <color name="colorAccent">@color/color_theme_black</color>
+    <color name="colorPrimary_theme">@color/color_theme_black</color>
+
+
+    <color name="notic_line_bg">#252525</color>
+    <color name="custom_tab_up_down_tab_text_selected">@color/tabIndicatorColor</color>
+    <color name="color_activity_background">#151515</color>
+    <color name="color_fragment_background">#151515</color>
+    <color name="promo_text_will">@color/tabIndicatorColor</color>
+
+
+
+    <color name="theme_custom_tab_up_down_tab_text_unselected">@color/white</color>
+    <!--<color name="fragment_bg">@color/color_theme_black</color>-->
+    <!--<color name="promo_bg">@color/color_theme_black</color>-->
+    <!--<color name="promo_text">@color/white</color>-->
+    <color name="theme_white">@color/color_theme_black</color>
+    <!--<color name="item_theme_white">@color/promo_item_bg_green</color>-->
+    <!--<color name="promo_item_stroke">@color/promo_item_stroke_green</color>-->
+    <color name="item_theme_white_">@color/promo_item_bg_green</color>
+    <color name="theme_bgColor">@color/promo_item_bg_green</color>
+    <color name="theme_text_color_gray_333333">@color/white</color>
+    <color name="theme_text_color_gray_999999">@color/white</color>
+    <color name="line_view_bg">@color/line_view_bg_green</color>
+    <color name="tab_bg">#252525</color>
+    <color name="buttonPress">#1bd986</color>
+
+
+    <color name="maintenance_bg">@color/color_theme_black</color>
+    <color name="maintenance_title">#e9d52c</color>
+    <color name="maintenance_content">@color/white</color>
+    <color name="maintenance_cs_text">@color/text_color_gray_333333</color>
+    <color name="maintenance_cs_bg">#e9d52c</color>
+</resources>

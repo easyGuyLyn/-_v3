@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/color_theme_green</color>
+    <color name="colorPrimaryDark">@color/color_theme_green</color>
+    <color name="colorAccent">@color/color_theme_green</color>
+    <color name="bt_winthdraw_money">@color/color_theme_green</color>
+    <color name="colorSub">@color/color_theme_green</color>
+    <color name="custom_tab_up_down_tab_text_selected">@color/color_theme_green</color>
+    <color name="promo_text_will">@color/color_theme_green</color>
+    <color name="bak_blue">@color/color_theme_green</color>
+    <color name="text_bind_bank_card">@color/color_theme_green</color>
+    <color name="background_blue">@color/color_theme_green</color>
+    <color name="but_search_blue">@color/color_theme_green</color>
+    <color name="color_login_btn">@color/color_theme_green</color>
+    <color name="color_message_center">@color/color_theme_green</color>
+    <color name="tab_text_selected">@color/color_theme_green</color>
+</resources>

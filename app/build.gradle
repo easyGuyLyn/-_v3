@@ -1,0 +1,3239 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    defaultConfig {
+        applicationId "com.dawoo.gamebox"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        flavorDimensions("channel")
+        multiDexEnabled true
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86", "mips", 'arm64-v8a', 'x86_64', 'mips_64'
+
+        }
+    }
+
+
+    signingConfigs {
+        config {
+            //加载资源
+            Properties properties = new Properties()
+            InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream()
+            properties.load(inputStream)
+
+            //读取文件
+            def sdkDir = properties.getProperty('keyFile')
+
+            //读取字段
+            def key_keyAlias = properties.getProperty('keyAlias')
+            def key_keyPassword = properties.getProperty('keyPassword')
+            def key_storePassword = properties.getProperty('storePassword')
+
+            storeFile file(sdkDir)
+            storePassword key_storePassword
+            keyAlias key_keyAlias
+            keyPassword key_keyPassword
+        }
+    }
+    def suf = ""
+    buildTypes {
+        debug {
+            buildConfigField("boolean", "IPConnection", "true") // 是否ip直连
+            //   buildConfigField("String", "HOST_URL", "\"\"")
+            //   buildConfigField("String", "HOST_URL", "\"http://test01.ampinplayopt0matrix.com\"")
+            //           buildConfigField("String", "HOST_URL", "\"http://test01.ccenter.test.so\"")
+//            buildConfigField("String", "HOST_URL", "\"https://test2.hongtubet.com\"")
+            buildConfigField("String", "HOST_URL", "\"https://test71.hongtubet.com\"")
+            //        buildConfigField("String", "HOST_URL", "\"https://71.hongtubet.com\"")
+
+            buildConfigField("String", "terminal", "\"app_android\"")
+            // white,black,blue
+//            buildConfigField("String", "theme", "\"white\"")
+            //  xxhdpi,xxxhdpi
+            buildConfigField("String", "resolution", "\"xxhdpi\"")
+//
+//            //为已经存在的applicationId添加后缀
+//            applicationIdSuffix ".debug"
+//            // 为版本名添加后缀
+//            versionNameSuffix "-debug"
+            // 不开启混淆
+            minifyEnabled false
+            // 不开启ZipAlign优化
+            zipAlignEnabled false
+            // 不移除无用的resource文件
+            shrinkResources false
+            // 使用config签名
+            signingConfig signingConfigs.config
+//            debuggable true
+//            testCoverageEnabled true
+            // 混淆文件位置
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            suf = applicationIdSuffix
+        }
+        release {
+            buildConfigField("boolean", "IPConnection", "true")
+            buildConfigField("String", "HOST_URL", "\"\"")
+            buildConfigField("String", "terminal", "\"app_android\"")
+            // white,black,blue
+//            buildConfigField("String", "theme", "\"white\"")
+            //  xxhdpi,xxxhdpi
+            buildConfigField("String", "resolution", "\"xxhdpi\"")
+            // 为版本名添加后缀
+            //  versionNameSuffix "-relase"
+            // 不开启混淆
+            minifyEnabled true
+            // 开启ZipAlign优化
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources true
+            // 使用config签名
+            signingConfig signingConfigs.config
+            // 混淆文件位置
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            suf = applicationIdSuffix
+
+            // 批量打包
+            applicationVariants.all { variant ->
+                variant.outputs.all { output ->
+                    //输出apk名称为：渠道名_版本名_时间.apk
+                    outputFileName = "${variant.productFlavors[0].name}_${defaultConfig.versionName}.apk"
+                }
+            }
+        }
+    }
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['src/main/jniLibs']
+        }
+    }
+
+    // 多渠道 的不同配置
+    productFlavors {
+        def pid_pex = ".fileprovider"
+
+//        app_0_black {
+//            applicationId "com.pacakage.mother"
+//            resValue "string", "app_name", "!(@label@)!"
+//            resValue "string", "app_code", "!(@app_code@)!"
+//            resValue "string", "app_sid", "!(@app_sid@)!"
+//            resValue "string", "app_generalize", "!(@app_generalize@)!"
+//            manifestPlaceholders = [pro_id         : "!(@file_paths@)!"
+//                                    , JPUSH_APPKEY : "!(@jupsh_appkey@)!"
+//                                    , JPUSH_CHANNEL: "developer-default"
+//                                    , r_process    : ":!(@r_process@)!"]
+//        }
+//        app_0_blue {
+//            applicationId "com.pacakage.mother"
+//            resValue "string", "app_name", "!(@label@)!"
+//            resValue "string", "app_code", "!(@app_code@)!"
+//            resValue "string", "app_sid", "!(@app_sid@)!"
+//            resValue "string", "app_generalize", "!(@app_generalize@)!"
+//            manifestPlaceholders = [pro_id: "!(@file_paths@)!"
+//                                    ,JPUSH_APPKEY : "!(@jupsh_appkey@)!"
+//                                    , JPUSH_CHANNEL : "developer-default"
+//                                    , r_process: ":!(@r_process@)!"]
+//        }
+//        app_0_blue_black {
+//            applicationId "com.pacakage.mother"
+//            resValue "string", "app_name", "!(@label@)!"
+//            resValue "string", "app_code", "!(@app_code@)!"
+//            resValue "string", "app_sid", "!(@app_sid@)!"
+//            resValue "string", "app_generalize", "!(@app_generalize@)!"
+//            manifestPlaceholders = [pro_id: "!(@file_paths@)!"
+//                                    ,JPUSH_APPKEY : "!(@jupsh_appkey@)!"
+//                                    , JPUSH_CHANNEL : "developer-default"
+//                                    , r_process: ":!(@r_process@)!"]
+//        }
+//        app_0_coffee {
+//            applicationId "com.pacakage.mother"
+//            resValue "string", "app_name", "!(@label@)!"
+//            resValue "string", "app_code", "!(@app_code@)!"
+//            resValue "string", "app_sid", "!(@app_sid@)!"
+//            resValue "string", "app_generalize", "!(@app_generalize@)!"
+//            manifestPlaceholders = [pro_id: "!(@file_paths@)!"
+//                                    ,JPUSH_APPKEY : "!(@jupsh_appkey@)!"
+//                                    , JPUSH_CHANNEL : "developer-default"
+//                                    , r_process: ":!(@r_process@)!"]
+//        }
+//        app_coffee_black {
+//            applicationId "com.pacakage.mother"
+//            resValue "string", "app_name", "!(@label@)!"
+//            resValue "string", "app_code", "!(@app_code@)!"
+//            resValue "string", "app_sid", "!(@app_sid@)!"
+//            resValue "string", "app_generalize", "!(@app_generalize@)!"
+//            manifestPlaceholders = [pro_id: "!(@file_paths@)!"
+//                                    ,JPUSH_APPKEY : "!(@jupsh_appkey@)!"
+//                                    , JPUSH_CHANNEL : "developer-default"
+//                                    , r_process: ":!(@r_process@)!"]
+//        }
+//        app_0_green {
+//            applicationId "com.pacakage.mother"
+//            resValue "string", "app_name", "!(@label@)!"
+//            resValue "string", "app_code", "!(@app_code@)!"
+//            resValue "string", "app_sid", "!(@app_sid@)!"
+//            resValue "string", "app_generalize", "!(@app_generalize@)!"
+//            manifestPlaceholders = [pro_id: "!(@file_paths@)!"
+//                                    ,JPUSH_APPKEY : "!(@jupsh_appkey@)!"
+//                                    , JPUSH_CHANNEL : "developer-default"
+//                                    , r_process: ":!(@r_process@)!"]
+//        }
+//        app_0_green_black {
+//            applicationId "com.pacakage.mother"
+//            resValue "string", "app_name", "!(@label@)!"
+//            resValue "string", "app_code", "!(@app_code@)!"
+//            resValue "string", "app_sid", "!(@app_sid@)!"
+//            resValue "string", "app_generalize", "!(@app_generalize@)!"
+//            manifestPlaceholders = [pro_id: "!(@file_paths@)!"
+//                                    ,JPUSH_APPKEY : "!(@jupsh_appkey@)!"
+//                                    , JPUSH_CHANNEL : "developer-default"
+//                                    , r_process: ":!(@r_process@)!"]
+//        }
+//        app_0_orange {
+//            applicationId "com.pacakage.mother"
+//            resValue "string", "app_name", "!(@label@)!"
+//            resValue "string", "app_code", "!(@app_code@)!"
+//            resValue "string", "app_sid", "!(@app_sid@)!"
+//            resValue "string", "app_generalize", "!(@app_generalize@)!"
+//            manifestPlaceholders = [pro_id: "!(@file_paths@)!"
+//                                    ,JPUSH_APPKEY : "!(@jupsh_appkey@)!"
+//                                    , JPUSH_CHANNEL : "developer-default"
+//                                    , r_process: ":!(@r_process@)!"]
+//        }
+//        app_0_orange_black {
+//            applicationId "com.pacakage.mother"
+//            resValue "string", "app_name", "!(@label@)!"
+//            resValue "string", "app_code", "!(@app_code@)!"
+//            resValue "string", "app_sid", "!(@app_sid@)!"
+//            resValue "string", "app_generalize", "!(@app_generalize@)!"
+//            manifestPlaceholders = [pro_id: "!(@file_paths@)!"
+//                                    ,JPUSH_APPKEY : "!(@jupsh_appkey@)!"
+//                                    , JPUSH_CHANNEL : "developer-default"
+//                                    , r_process: ":!(@r_process@)!"]
+//        }
+//        app_0_red {
+//            applicationId "com.pacakage.mother"
+//            resValue "string", "app_name", "!(@label@)!"
+//            resValue "string", "app_code", "!(@app_code@)!"
+//            resValue "string", "app_sid", "!(@app_sid@)!"
+//            resValue "string", "app_generalize", "!(@app_generalize@)!"
+//            manifestPlaceholders = [pro_id: "!(@file_paths@)!"
+//                                    ,JPUSH_APPKEY : "!(@jupsh_appkey@)!"
+//                                    , JPUSH_CHANNEL : "developer-default"
+//                                    , r_process: ":!(@r_process@)!"]
+//        }
+//        app_0_red_black {
+//            applicationId "com.pacakage.mother"
+//            resValue "string", "app_name", "!(@label@)!"
+//            resValue "string", "app_code", "!(@app_code@)!"
+//            resValue "string", "app_sid", "!(@app_sid@)!"
+//            resValue "string", "app_generalize", "!(@app_generalize@)!"
+//            manifestPlaceholders = [pro_id: "!(@file_paths@)!"
+//                                    ,JPUSH_APPKEY : "!(@jupsh_appkey@)!"
+//                                    , JPUSH_CHANNEL : "developer-default"
+//                                    , r_process: ":!(@r_process@)!"]
+//        }
+//
+//        app_0001 {
+//            applicationId "com.dawoo.gamebox.sid1"
+//            resValue "string", "app_name", "站点一"
+//            resValue "string", "app_code", "0001"
+//            resValue "string", "app_sid", "0352ac58de086e6cfe2831e9f22c825f"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+        app_wjbn {
+            applicationId "com.dawoo.gamebox.sid21"
+            resValue "string", "app_name", "TEST01[21]"
+            resValue "string", "app_code", "wjbn"
+            resValue "string", "app_sid", "f0581a9da25c2476d18f7675362f596c"
+            manifestPlaceholders = [pro_id: applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default", r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+        }
+
+        app_8l6r {
+            applicationId "com.dawoo.gamebox.sid71"
+            resValue "string", "app_name", "超博娱乐"
+            resValue "string", "app_code", "8l6r"
+            resValue "string", "app_sid", "6bf3b743e414045e5123fc317fb9b535"
+            manifestPlaceholders = [pro_id: applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default", r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+        }
+
+//
+//        app_1qkq {
+//            applicationId "com.dawoo.gamebox.sid65"
+//            resValue "string", "app_name", "宏图娱乐"
+//            resValue "string", "app_code", "1qkq"
+//            resValue "string", "app_sid", "b4bfa56b52af7e71aa01c972b83cb0c7"
+//            manifestPlaceholders = [pro_id: applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default", r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_erln {
+//            applicationId "com.dawoo.gamebox.sid66"
+//            resValue "string", "app_name", "太阳城集团"
+//            resValue "string", "app_code", "erln"
+//            resValue "string", "app_sid", "81a0d811edec500290dbbc094957396e"
+//            manifestPlaceholders = [pro_id: applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default", r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//
+//
+//        app_rimx {
+//            applicationId "com.dawoo.gamebox.sid72"
+//            resValue "string", "app_name", "超博娱乐72"
+//            resValue "string", "app_code", "rimx"
+//            resValue "string", "app_sid", "b24affc03924fcd4c9e872a53ea492cb"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_XH5Z {
+//            applicationId "com.dawoo.gamebox.sid76"
+//            resValue "string", "app_name", "澳门永利"
+//            resValue "string", "app_code", "XH5Z"
+//            resValue "string", "app_sid", "c163670887844d2cc4c26f7eaea7c39a"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_cabu {
+//            applicationId "com.dawoo.gamebox.sid110"
+//            resValue "string", "app_name", "超博娱乐"
+//            resValue "string", "app_code", "cabu"
+//            resValue "string", "app_sid", "49c7e4a3b15215ed1d3d346140a868fb"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//                app_jwdg {
+//            applicationId "com.dawoo.gamebox.sid113"
+//            resValue "string", "app_name", "伟德娱乐"
+//            resValue "string", "app_code", "jwdg"
+//            resValue "string", "app_sid", "4ea15a007c400d9ada295f73ef65c62d"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_yytt {
+//            applicationId "com.dawoo.gamebox.sid117"
+//            resValue "string", "app_name", "澳门威尼斯人"
+//            resValue "string", "app_code", "yytt"
+//            resValue "string", "app_sid", "c4fbcea83e54c41a3371195f9deda7fe"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//                app_ys3q {
+//            applicationId "com.dawoo.gamebox.sid118"
+//            resValue "string", "app_name", "澳门星际娱乐"
+//            resValue "string", "app_code", "ys3q"
+//            resValue "string", "app_sid", "dc13b54c08dd423af954e4709e0fedaa"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_nu9r {
+//            applicationId "com.apps3.gamebox.sid119"
+//            resValue "string", "app_name", "UEDBET"
+//            resValue "string", "app_code", "nu9r"
+//            resValue "string", "app_sid", "b5a693d5567e5b677f316a17063c1a28"
+//            manifestPlaceholders = [pro_id: applicationId + pid_pex, JPUSH_APPKEY: "6474cf94eea676728f54dad1", JPUSH_CHANNEL: "developer-default", r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_pnuw {
+//            applicationId "com.dawoo.gamebox.sid121"
+//            resValue "string", "app_name", "太阳城集团"
+//            resValue "string", "app_code", "pnuw"
+//            resValue "string", "app_sid", "d257cafbc03b30460955d2027b8c96b1"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_seck {
+//            applicationId "com.dawoo.gamebox.sid123"
+//            resValue "string", "app_name", "皇家赌场"
+//            resValue "string", "app_code", "seck"
+//            resValue "string", "app_sid", "f54031ee64b6fb35ecc464820a80941f"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//        app_98ph {
+//            applicationId "com.dawoo.gamebox.sid124"
+//            resValue "string", "app_name", "澳门金沙"
+//            resValue "string", "app_code", "98ph"
+//            resValue "string", "app_sid", "e341dce6fb39b4b42973916d2d4a63d2"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_ixpm {
+//            applicationId "com.dawoo.gamebox.sid130"
+//            resValue "string", "app_name", "澳门新葡京"
+//            resValue "string", "app_code", "ixpm"
+//            resValue "string", "app_sid", "e033cdd1a119af921cf1ce1e3598e04d"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//
+//        app_xwc7 {
+//            applicationId "com.dawoo.gamebox.sid133"
+//            resValue "string", "app_name", "澳门威尼斯人"
+//            resValue "string", "app_code", "xwc7"
+//            resValue "string", "app_sid", "0accd87069ed4e9c5adff95abaa9ab11"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_miv5 {
+//            applicationId "com.dawoo.gamebox.sid135"
+//            resValue "string", "app_name", "澳门金沙娱乐场"
+//            resValue "string", "app_code", "miv5"
+//            resValue "string", "app_sid", "0ce03f1c1fea88a6d13da09250afc538"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_5rdu {
+//            applicationId "com.dawoo.gamebox.sid136"
+//            resValue "string", "app_name", "澳门威尼斯人"
+//            resValue "string", "app_code", "5rdu"
+//            resValue "string", "app_sid", "7f2fd29cdb5fd604c287a62d18971f62"
+//            manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_ix2i {
+//            applicationId "com.dawoo.gamebox.sid140"
+//            resValue "string", "app_name", "澳门威尼斯人"
+//            resValue "string", "app_code", "ix2i"
+//            resValue "string", "app_sid", "bd13fc05b494390f5cfb4fbfc9efbd66"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_hihk {
+//            applicationId "com.dawoo.gamebox.sid141"
+//            resValue "string", "app_name", "BET365"
+//            resValue "string", "app_code", "hihk"
+//            resValue "string", "app_sid", "5c441ff853deb589cd515950950ef1ec"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_vbgt {
+//            applicationId "com.dawoo.gamebox.sid142"
+//            resValue "string", "app_name", "澳门新葡京娱乐场"
+//            resValue "string", "app_code", "vbgt"
+//            resValue "string", "app_sid", "339b0a632fbbac9bc037f5ed71ec448e"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_zqq5 {
+//            applicationId "com.dawoo.gamebox.sid155"
+//            resValue "string", "app_name", "澳门银河娱乐城"
+//            resValue "string", "app_code", "zqq5"
+//            resValue "string", "app_sid", "ac7e059f25431b97787abfdaf8a2cd2f"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_xmil {
+//            applicationId "com.dawoo.gamebox.sid156"
+//            resValue "string", "app_name", "新葡京娱乐场"
+//            resValue "string", "app_code", "xmil"
+//            resValue "string", "app_sid", "8bb5d641be4ff66df3da94eff3af5d74"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_uhte {
+//            applicationId "com.dawoo.gamebox.sid157"
+//            resValue "string", "app_name", "澳门金沙赌场"
+//            resValue "string", "app_code", "uhte"
+//            resValue "string", "app_sid", "68fa59ac569d0f24c6ca11f9b6f42333"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_n0o7 {
+//            applicationId "com.dawoo.gamebox.sid161"
+//            resValue "string", "app_name", "bet365亚洲官网"
+//            resValue "string", "app_code", "n0o7"
+//            resValue "string", "app_sid", "e4d184a0a43739444694a1687b2e6d9b"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//                app_bgst {
+//            applicationId "com.dawoo.gamebox.sid162"
+//            resValue "string", "app_name", "葡京娱乐场"
+//            resValue "string", "app_code", "bgst"
+//            resValue "string", "app_sid", "6839ac7a8a0fefebf80f1a9ed7dd80b0"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//                app_duzr {
+//            applicationId "com.dawoo.gamebox.sid163"
+//            resValue "string", "app_name", "FUNGAME"
+//            resValue "string", "app_code", "duzr"
+//            resValue "string", "app_sid", "6bc9c29317727dc1d1d9f4baf41a0396"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_hzy3 {
+//            applicationId "com.dawoo.gamebox.sid167"
+//            resValue "string", "app_name", "澳门新葡京赌场"
+//            resValue "string", "app_code", "hzy3"
+//            resValue "string", "app_sid", "9d6cebb3d62b129f78b61e2e0e19ab1b"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_lont {
+//            applicationId "com.dawoo.gamebox.sid168"
+//            resValue "string", "app_name", "澳门威尼斯人"
+//            resValue "string", "app_code", "lont"
+//            resValue "string", "app_sid", "8ba1df8f16a12831443035142c47bb24"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_ihqx {
+//            applicationId "com.dawoo.gamebox.sid171"
+//            resValue "string", "app_name", "宝开娱乐"
+//            resValue "string", "app_code", "ihqx"
+//            resValue "string", "app_sid", "9ba3cb8151c2a4ff24f4f013edbfcf74"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_jr3j {
+//            applicationId "com.dawoo.gamebox.sid173"
+//            resValue "string", "app_name", "濠利会娱乐城"
+//            resValue "string", "app_code", "jr3j"
+//            resValue "string", "app_sid", "762c84815fd244388e9839e85c0b132f"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_qgjl {
+//            applicationId "com.dawoo.gamebox.sid176"
+//            resValue "string", "app_name", "全胜娱乐"
+//            resValue "string", "app_code", "qgjl"
+//            resValue "string", "app_sid", "b8cbc0ef9e63e5eda26f86b31dead216"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//                app_x1dv {
+//            applicationId "com.dawoo.gamebox.sid177"
+//            resValue "string", "app_name", "威尼斯人娱乐场"
+//            resValue "string", "app_code", "x1dv"
+//            resValue "string", "app_sid", "8caf664f1f4e92b96e9e29d4f8229ceb"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_rosz {
+//            applicationId "com.dawoo.gamebox.sid179"
+//            resValue "string", "app_name", "澳门威尼斯人"
+//            resValue "string", "app_code", "rosz"
+//            resValue "string", "app_sid", "16a74a133f73078c2b549c06d3652fbe"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_4w3g {
+//            applicationId "com.dawoo.gamebox.sid181"
+//            resValue "string", "app_name", "超博娱乐"
+//            resValue "string", "app_code", "4w3g"
+//            resValue "string", "app_sid", "f8b3fcf717c9c2f205dc50efda18d0e0"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_nrpf {
+//            applicationId "com.dawoo.gamebox.sid183"
+//            resValue "string", "app_name", "美高梅赌场"
+//            resValue "string", "app_code", "nrpf"
+//            resValue "string", "app_sid", "f3272e5c9722dfab805aa1abc9d194a0"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//                app_fyxi {
+//            applicationId "com.dawoo.gamebox.sid185"
+//            resValue "string", "app_name", "Phoenix_Gaming"
+//            resValue "string", "app_code", "fyxi"
+//            resValue "string", "app_sid", "8d188612586e44c2184f4e08addb845f"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_cwad {
+//            applicationId "com.dawoo.gamebox.sid186"
+//            resValue "string", "app_name", "赛博体育"
+//            resValue "string", "app_code", "cwad"
+//            resValue "string", "app_sid", "c8826177aa6db7a1d99cf268ed8d9cd8"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_acpb {
+//            applicationId "com.dawoo.gamebox.sid188"
+//            resValue "string", "app_name", "鸿泰国际"
+//            resValue "string", "app_code", "acpb"
+//            resValue "string", "app_sid", "2c30016695163cac62b80893024234e4"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_a56r {
+//            applicationId "com.dawoo.gamebox.sid189"
+//            resValue "string", "app_name", "永利贵宾会"
+//            resValue "string", "app_code", "a56r"
+//            resValue "string", "app_sid", "211aa4e091e1794c2ecddf17400768a5"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_yj4v {
+//            applicationId "com.dawoo.gamebox.sid190"
+//            resValue "string", "app_name", "万博体育"
+//            resValue "string", "app_code", "yj4v"
+//            resValue "string", "app_sid", "43ed93b387d3c1c70ca129ce60c4048f"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//                app_d1hg {
+//            applicationId "com.dawoo.gamebox.sid191"
+//            resValue "string", "app_name", "澳门赌场"
+//            resValue "string", "app_code", "d1hg"
+//            resValue "string", "app_sid", "3eaac2872658a9f18290c5c801ab825f"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//                app_gc7p {
+//            applicationId "com.dawoo.gamebox.sid192"
+//            resValue "string", "app_name", "星河娱乐城"
+//            resValue "string", "app_code", "gc7p"
+//            resValue "string", "app_sid", "cb6ab7b77f628ebc4eedbb82cf127ee3"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//                app_xjvs {
+//            applicationId "com.dawoo.gamebox.sid195"
+//            resValue "string", "app_name", "大唐娱乐城"
+//            resValue "string", "app_code", "xjvs"
+//            resValue "string", "app_sid", "9f7bda603d773905462c6e7d7cf568b6"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_6rrt {
+//            applicationId "com.dawoo.gamebox.sid196"
+//            resValue "string", "app_name", "澳门巴黎人"
+//            resValue "string", "app_code", "6rrt"
+//            resValue "string", "app_sid", "2ef21c07ef132d4112196bd5eb06f8cf"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//                app_urbr {
+//            applicationId "com.dawoo.gamebox.sid198"
+//            resValue "string", "app_name", "澳门金沙娱乐场"
+//            resValue "string", "app_code", "urbr"
+//            resValue "string", "app_sid", "e7d86968b0683e73415e24a9beac00d2"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_n5ns {
+//            applicationId "com.dawoo.gamebox.sid199"
+//            resValue "string", "app_name", "澳门威尼斯人"
+//            resValue "string", "app_code", "n5ns"
+//            resValue "string", "app_sid", "774dada0ec94253e4b923f9b145f9980"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+
+//        app_vtfw {
+//            applicationId "com.dawoo.gamebox.sid201"
+//            resValue "string", "app_name", "澳门威尼斯人"
+//            resValue "string", "app_code", "vtfw"
+//            resValue "string", "app_sid", "a3fddb0bd94b64bc5567db8a7e45330c"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_lnd9 {
+//            applicationId "com.dawoo.gamebox.sid206"
+//            resValue "string", "app_name", "葡京国际"
+//            resValue "string", "app_code", "lnd9"
+//            resValue "string", "app_sid", "3a36755a7c5e81248d26a64967fa867d"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_npsa {
+//            applicationId "com.dawoo.gamebox.sid208"
+//            resValue "string", "app_name", "彩中彩"
+//            resValue "string", "app_code", "npsa"
+//            resValue "string", "app_sid", "ac5e915502f8dd1f2bd57de36e4b1022"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_arau {
+//            applicationId "com.dawoo.gamebox.sid209"
+//            resValue "string", "app_name", "lovebet爱博"
+//            resValue "string", "app_code", "arau"
+//            resValue "string", "app_sid", "35968f38b0b8075eedbd08a21d37eded"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_3qj8 {
+//            applicationId "com.dawoo.gamebox.sid211"
+//            resValue "string", "app_name", "BET365"
+//            resValue "string", "app_code", "3qj8"
+//            resValue "string", "app_sid", "c17df53748ec3c865c9fe0fefb09e62e"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_cbe1 {
+//            applicationId "com.dawoo.gamebox.sid216"
+//            resValue "string", "app_name", "COD娱樂"
+//            resValue "string", "app_code", "cbe1"
+//            resValue "string", "app_sid", "36e8f2576d26a2d9a92313cfcb2dd104"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_w7ls {
+//            applicationId "com.dawoo.gamebox.sid217"
+//            resValue "string", "app_name", "众盈国际"
+//            resValue "string", "app_code", "w7ls"
+//            resValue "string", "app_sid", "5613daa85f182719c359efbd2332ce12"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_osxg {
+//            applicationId "com.dawoo.gamebox.sid218"
+//            resValue "string", "app_name", "永利娱乐城"
+//            resValue "string", "app_code", "osxg"
+//            resValue "string", "app_sid", "71667414a4274b0883d3e0d492498bf1"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_tcjp {
+//            applicationId "com.dawoo.gamebox.sid219"
+//            resValue "string", "app_name", "鼎彩国际"
+//            resValue "string", "app_code", "tcjp"
+//            resValue "string", "app_sid", "d6d4dc315c5bec2139a9a47243f82f35"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//                app_yrdy {
+//            applicationId "com.dawoo.gamebox.sid220"
+//            resValue "string", "app_name", "皇朝娱乐"
+//            resValue "string", "app_code", "yrdy"
+//            resValue "string", "app_sid", "ed787d30af2456e15d16cb458c1f86f9"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_gwkk {
+//            applicationId "com.dawoo.gamebox.sid225"
+//            resValue "string", "app_name", "澳门永利娱乐场"
+//            resValue "string", "app_code", "gwkk"
+//            resValue "string", "app_sid", "73011fc7cb0b4546a386123017069d6c"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_oiqg {
+//            applicationId "com.dawoo.gamebox.sid226"
+//            resValue "string", "app_name", "新葡京娱乐场"
+//            resValue "string", "app_code", "oiqg"
+//            resValue "string", "app_sid", "7e25cde173684fd16cb76687f09ac243"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//        app_mkoz {
+//            applicationId "com.dawoo.gamebox.sid227"
+//            resValue "string", "app_name", "银河娱乐城"
+//            resValue "string", "app_code", "mkoz"
+//            resValue "string", "app_sid", "774b8cdf5ccfa039b0ba7ea3b6efa48c"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_idr9 {
+//            applicationId "com.dawoo.gamebox.sid228"
+//            resValue "string", "app_name", "亚盈国际"
+//            resValue "string", "app_code", "idr9"
+//            resValue "string", "app_sid", "3db0bcb0ae845959c7739038d75af064"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//
+//                app_mkoz {
+//            applicationId "com.dawoo.gamebox.sid227"
+//            resValue "string", "app_name", "银河娱乐城"
+//            resValue "string", "app_code", "mkoz"
+//            resValue "string", "app_sid", "774b8cdf5ccfa039b0ba7ea3b6efa48c"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_ixyu {
+//            applicationId "com.dawoo.gamebox.sid229"
+//            resValue "string", "app_name", "众博国际娱乐城"
+//            resValue "string", "app_code", "ixyu"
+//            resValue "string", "app_sid", "7aa03eb5c0997aa7ad934ece05ff6ce7"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_r7pt {
+//            applicationId "com.dawoo.gamebox.sid230"
+//            resValue "string", "app_name", "金沙娱乐城"
+//            resValue "string", "app_code", "r7pt"
+//            resValue "string", "app_sid", "eb43af815ff7fd97bb0f7882e6b81f04"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_vxcb {
+//            applicationId "com.dawoo.gamebox.sid231"
+//            resValue "string", "app_name", "新濠国际"
+//            resValue "string", "app_code", "vxcb"
+//            resValue "string", "app_sid", "52530f616a9a14fa83aa1dbba28d9df8"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_87lr {
+//            applicationId "com.dawoo.gamebox.sid233"
+//            resValue "string", "app_name", "澳门金沙娱乐城"
+//            resValue "string", "app_code", "87lr"
+//            resValue "string", "app_sid", "fda48978af8fb2425bf09ab2779f1ff7"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//
+//        app_cspr {
+//            applicationId "com.dawoo.gamebox.sid235"
+//            resValue "string", "app_name", "美高梅娱乐城"
+//            resValue "string", "app_code", "cspr"
+//            resValue "string", "app_sid", "25c606fbc2d92fc2cb043c5f43fcf457"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_8gez {
+//            applicationId "com.dawoo.gamebox.sid236"
+//            resValue "string", "app_name", "拉斯维加斯国际娱乐城"
+//            resValue "string", "app_code", "8gez"
+//            resValue "string", "app_sid", "42e9f047a8217a7f3b492622b9ac1598"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_akm1 {
+//            applicationId "com.dawoo.gamebox.sid237"
+//            resValue "string", "app_name", "金沙娱乐城"
+//            resValue "string", "app_code", "akm1"
+//            resValue "string", "app_sid", "c71111f833ef712e9c0ff6ebeba57dfe"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_wlf6 {
+//            applicationId "com.dawoo.gamebox.sid238"
+//            resValue "string", "app_name", "bet365"
+//            resValue "string", "app_code", "wlf6"
+//            resValue "string", "app_sid", "ae091e504c980c925c64c5f2105f070a"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_5e7b {
+//            applicationId "com.dawoo.gamebox.sid239"
+//            resValue "string", "app_name", "云顶娱乐"
+//            resValue "string", "app_code", "5e7b"
+//            resValue "string", "app_sid", "6fe91aa71b5bc3f26bf2007177f1677e"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_e2ce {
+//            applicationId "com.dawoo.gamebox.sid251"
+//            resValue "string", "app_name", "威尼斯人"
+//            resValue "string", "app_code", "e2ce"
+//            resValue "string", "app_sid", "ed02339f84759f139d19024e553e324c"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_pox4 {
+//            applicationId "com.dawoo.gamebox.sid252"
+//            resValue "string", "app_name", "COBO超博"
+//            resValue "string", "app_code", "pox4"
+//            resValue "string", "app_sid", "000f81e0f185390db9544410a36fd562"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+
+//        app_7rda {
+//            applicationId "com.dawoo.gamebox.sid253"
+//            resValue "string", "app_name", "澳门威尼斯人"
+//            resValue "string", "app_code", "7rda"
+//            resValue "string", "app_sid", "d554451a96f65df06ea2b2f1103ffdba"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//                app_p0a7 {
+//            applicationId "com.dawoo.gamebox.sid255"
+//            resValue "string", "app_name", "澳门威尼斯人"
+//            resValue "string", "app_code", "p0a7"
+//            resValue "string", "app_sid", "3696df22e3f3b210f1973ce194176dda"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_wnmt {
+//            applicationId "com.dawoo.gamebox.sid257"
+//            resValue "string", "app_name", "盛大国际"
+//            resValue "string", "app_code", "wnmt"
+//            resValue "string", "app_sid", "82c01fa2f5c8ef697e80e0d92af8c853"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_jzgy {
+//            applicationId "com.dawoo.gamebox.sid260"
+//            resValue "string", "app_name", "拉斯维加斯"
+//            resValue "string", "app_code", "jzgy"
+//            resValue "string", "app_sid", "52cd0033f39fb4db5b88df061fa69dae"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_xmwf {
+//            applicationId "com.dawoo.gamebox.sid261"
+//            resValue "string", "app_name", "澳门威尼斯人"
+//            resValue "string", "app_code", "xmwf"
+//            resValue "string", "app_sid", "723e8fb7e5907eabf4f90483776b989e"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_nt6y {
+//            applicationId "com.dawoo.gamebox.sid262"
+//            resValue "string", "app_name", "9发bet"
+//            resValue "string", "app_code", "nt6y"
+//            resValue "string", "app_sid", "385c02cc2239963703e4075ce043d384"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_n6pg {
+//            applicationId "com.dawoo.gamebox.sid263"
+//            resValue "string", "app_name", "太阳城集团"
+//            resValue "string", "app_code", "n6pg"
+//            resValue "string", "app_sid", "e2b05b1f43f4b4358799164a676c436b"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_x70n {
+//            applicationId "com.dawoo.gamebox.sid265"
+//            resValue "string", "app_name", "葡京娱乐场"
+//            resValue "string", "app_code", "x70n"
+//            resValue "string", "app_sid", "a3fe8abcdf5c2864c2a8f965b161106a"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_0ru7 {
+//            applicationId "com.dawoo.gamebox.sid266"
+//            resValue "string", "app_name", "太阳城集团"
+//            resValue "string", "app_code", "0ru7"
+//            resValue "string", "app_sid", "d0d5771115ac221bb153a07d98996d60"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_q1mv {
+//            applicationId "com.dawoo.gamebox.sid268"
+//            resValue "string", "app_name", "bet365"
+//            resValue "string", "app_code", "q1mv"
+//            resValue "string", "app_sid", "b3d4e9a7c092f99593253226dad03efe"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        //269 黑紅
+//        app_7ybc {
+//            applicationId "com.dawoo.gamebox.sid269"
+//            resValue "string", "app_name", "金沙娱乐城"
+//            resValue "string", "app_code", "7ybc"
+//            resValue "string", "app_sid", "e4bb0225da3363be6c6881c265bb1a3c"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+        app_57h0 {
+            applicationId "com.info.gamebox.sid270"
+            resValue "string", "app_name", "LOVEBET"
+            resValue "string", "app_code", "57h0"
+            resValue "string", "app_sid", "ce7767ba430031b73cdb0ebd7ed38c7a"
+            manifestPlaceholders = [pro_id: applicationId + pid_pex, JPUSH_APPKEY: "c90cbc31f7b5b2d38502fad8", JPUSH_CHANNEL: "developer-default", r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+        }
+//
+//        app_zrax {
+//            applicationId "com.dawoo.gamebox.sid271"
+//            resValue "string", "app_name", "VIPbet"
+//            resValue "string", "app_code", "zrax"
+//            resValue "string", "app_sid", "90e974e3fbae299946d2f89935dc509a"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//                app_rqcc {
+//            applicationId "com.dawoo.gamebox.sid272"
+//            resValue "string", "app_name", "金沙娱乐场"
+//            resValue "string", "app_code", "rqcc"
+//            resValue "string", "app_sid", "151c699021898f3706e5b544ae28ff20"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_xngu {
+//            applicationId "com.dawoo.gamebox.sid301"
+//            resValue "string", "app_name", "亚洲娱乐"
+//            resValue "string", "app_code", "xngu"
+//            resValue "string", "app_sid", "8bbe8d8c9784edf8c20161176d8adde5"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_cdrx {
+//            applicationId "com.dawoo.gamebox.sid302"
+//            resValue "string", "app_name", "澳门新葡京电玩城"
+//            resValue "string", "app_code", "cdrx"
+//            resValue "string", "app_sid", "c4c4c2086eea3774953407635e9277eb"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_dpmi {
+//            applicationId "com.dawoo.gamebox.sid303"
+//            resValue "string", "app_name", "银河娱乐场官网"
+//            resValue "string", "app_code", "dpmi"
+//            resValue "string", "app_sid", "167b92cdc52238a737679bc01352c56b"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_mpyz {
+//            applicationId "com.dawoo.gamebox.sid305"
+//            resValue "string", "app_name", "澳门娱乐城"
+//            resValue "string", "app_code", "mpyz"
+//            resValue "string", "app_sid", "891c275665274e31b0b04b6d79c5175b"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_sv8i {
+//            applicationId "com.dawoo.gamebox.sid306"
+//            resValue "string", "app_name", "银河娱乐城"
+//            resValue "string", "app_code", "sv8i"
+//            resValue "string", "app_sid", "ee65478134fcdeba198c793a26d510b7"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_7dfu {
+//            applicationId "com.dawoo.gamebox.sid307"
+//            resValue "string", "app_name", "云顶至尊娱乐城"
+//            resValue "string", "app_code", "7dfu"
+//            resValue "string", "app_sid", "2bb2c4538cf4ec9bef8fe2cbed393053"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//                app_whsl {
+//            applicationId "com.dawoo.gamebox.sid308"
+//            resValue "string", "app_name", "澳门威尼斯人"
+//            resValue "string", "app_code", "whsl"
+//            resValue "string", "app_sid", "5ba771f5e1693efea32fcc2ef8521585"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_we64 {
+//            applicationId "com.dawoo.gamebox.sid310"
+//            resValue "string", "app_name", "萬象城国际"
+//            resValue "string", "app_code", "we64"
+//            resValue "string", "app_sid", "a9234113dc1baaaf761c7bdf2bbd2f16"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_x3wl {
+//            applicationId "com.dawoo.gamebox.sid311"
+//            resValue "string", "app_name", "亚赢国际"
+//            resValue "string", "app_code", "x3wl"
+//            resValue "string", "app_sid", "2667c66f52574b43732dca4d1f533ac3"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_no9y {
+//            applicationId "com.dawoo.gamebox.sid313"
+//            resValue "string", "app_name", "巴黎人贵宾会"
+//            resValue "string", "app_code", "no9y"
+//            resValue "string", "app_sid", "77b5741f647310a8e20da52717444794"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_reft {
+//            applicationId "com.dawoo.gamebox.sid315"
+//            resValue "string", "app_name", "福8彩票网"
+//            resValue "string", "app_code", "reft"
+//            resValue "string", "app_sid", "0a87917f96eaabb2c6604d41e41bc6da"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_r54t {
+//            applicationId "com.dawoo.gamebox.sid316"
+//            resValue "string", "app_name", "澳门新葡京娱乐城"
+//            resValue "string", "app_code", "r54t"
+//            resValue "string", "app_sid", "4b6746ce9c99bf1a4b5a8ba641dd8f14"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_0chi {
+//            applicationId "com.dawoo.gamebox.sid317"
+//            resValue "string", "app_name", "葡京娱乐城"
+//            resValue "string", "app_code", "0chi"
+//            resValue "string", "app_sid", "133b05b6e1d7835cf34ad05409885151"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_iugy {
+//            applicationId "com.dawoo.gamebox.sid318"
+//            resValue "string", "app_name", "澳门太阳城"
+//            resValue "string", "app_code", "iugy"
+//            resValue "string", "app_sid", "b0e13ebdd89985595238bb14d6d68943"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_huih {
+//            applicationId "com.dawoo.gamebox.sid320"
+//            resValue "string", "app_name", "澳门新葡京赌场"
+//            resValue "string", "app_code", "huih"
+//            resValue "string", "app_sid", "dcf79ae77974c0bb315ef4ba1e7f4e04"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_djig {
+//            applicationId "com.dawoo.gamebox.sid321"
+//            resValue "string", "app_name", "新澳门娱乐城"
+//            resValue "string", "app_code", "djig"
+//            resValue "string", "app_sid", "b6f963230122edeb138781837c76a808"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_xrql {
+//            applicationId "com.dawoo.gamebox.sid322"
+//            resValue "string", "app_name", "TSV天时娱乐"
+//            resValue "string", "app_code", "xrql"
+//            resValue "string", "app_sid", "676d4412fcc80db776fe1a6f5c7097ac"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_nekt {
+//            applicationId "com.dawoo.gamebox.sid323"
+//            resValue "string", "app_name", "澳门巴黎人"
+//            resValue "string", "app_code", "nekt"
+//            resValue "string", "app_sid", "7ec0f9335f88b8176cdd5be3ffb2afd0"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_q6gw {
+//            applicationId "com.dawoo.gamebox.sid325"
+//            resValue "string", "app_name", "澳门威尼斯人"
+//            resValue "string", "app_code", "q6gw"
+//            resValue "string", "app_sid", "bf9a7aec14afdaa27e6f2484786d2f32"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_whk7 {
+//            applicationId "com.dawoo.gamebox.sid326"
+//            resValue "string", "app_name", "澳门百乐门娱乐城"
+//            resValue "string", "app_code", "whk7"
+//            resValue "string", "app_sid", "09a39312956823dc58c439c011edbe8d"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_pf8z {
+//            applicationId "com.dawoo.gamebox.sid327"
+//            resValue "string", "app_name", "威尼斯人娱乐城"
+//            resValue "string", "app_code", "pf8z"
+//            resValue "string", "app_sid", "dcf1530d73a175291070aa46874a1697"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_9tjq {
+//            applicationId "com.dawoo.gamebox.sid328"
+//            resValue "string", "app_name", "全民体育"
+//            resValue "string", "app_code", "9tjq"
+//            resValue "string", "app_sid", "508df917ddab2f47ac33713d44cf7a42"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_ghng {
+//            applicationId "com.dawoo.gamebox.sid329"
+//            resValue "string", "app_name", "金汇国际"
+//            resValue "string", "app_code", "ghng"
+//            resValue "string", "app_sid", "1e600a1a1c0a470773d7e8e31f5a8342"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_rb4b {
+//            applicationId "com.dawoo.gamebox.sid330"
+//            resValue "string", "app_name", "澳门银河线上赌场"
+//            resValue "string", "app_code", "rb4b"
+//            resValue "string", "app_sid", "02d0b739ec970c92aba0ba76aa6c63f5"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_wzt8 {
+//            applicationId "com.dawoo.gamebox.sid332"
+//            resValue "string", "app_name", "金尊娱乐城"
+//            resValue "string", "app_code", "wzt8"
+//            resValue "string", "app_sid", "a895535f5c2dbb0b0c3fd1eeb561cebe"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_fluv {
+//            applicationId "com.dawoo.gamebox.sid333"
+//            resValue "string", "app_name", "大赢家娱乐城"
+//            resValue "string", "app_code", "fluv"
+//            resValue "string", "app_sid", "1aeec332b2951b8a2f64e94c47e66606"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_sy7u {
+//            applicationId "com.dawoo.gamebox.sid335"
+//            resValue "string", "app_name", "恒大娱乐城"
+//            resValue "string", "app_code", "sy7u"
+//            resValue "string", "app_sid", "17a3e6031779fbac4a87992bc0204f28"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_hnvv {
+//            applicationId "com.dawoo.gamebox.sid336"
+//            resValue "string", "app_name", "CH娱乐城"
+//            resValue "string", "app_code", "hnvv"
+//            resValue "string", "app_sid", "f1a8a4adbaacee35fca82cba7cbdd737"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_j8kq {
+//            applicationId "com.dawoo.gamebox.sid337"
+//            resValue "string", "app_name", "澳门威尼斯人"
+//            resValue "string", "app_code", "j8kq"
+//            resValue "string", "app_sid", "c19e8ca17a0f2bc82467f62449ecb4d8"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_kbmv {
+//            applicationId "com.dawoo.gamebox.sid338"
+//            resValue "string", "app_name", "澳门银河赌场"
+//            resValue "string", "app_code", "kbmv"
+//            resValue "string", "app_sid", "9c45d23ba918c53c4ec659b1dc2869e7"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_jeia {
+//            applicationId "com.dawoo.gamebox.sid339"
+//            resValue "string", "app_name", "幸运女神"
+//            resValue "string", "app_code", "jeia"
+//            resValue "string", "app_sid", "5e16369b35dbaf9b27107cab926a7de7"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//                app_g2mj {
+//            applicationId "com.dawoo.gamebox.sid350"
+//            resValue "string", "app_name", "新博娱乐"
+//            resValue "string", "app_code", "g2mj"
+//            resValue "string", "app_sid", "ab86858b4cc1186ec020667039657aa8"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_nnop {
+//            applicationId "com.dawoo.gamebox.sid351"
+//            resValue "string", "app_name", "五环娱乐"
+//            resValue "string", "app_code", "nnop"
+//            resValue "string", "app_sid", "3d44d26c22d07d9af491e63437b2df59"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_j1ms {
+//            applicationId "com.dawoo.gamebox.sid352"
+//            resValue "string", "app_name", "威尼斯人娱乐城"
+//            resValue "string", "app_code", "j1ms"
+//            resValue "string", "app_sid", "3e049b600c7956be0bc97266e2132f5c"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_wqck {
+//            applicationId "com.dawoo.gamebox.sid353"
+//            resValue "string", "app_name", "bet365"
+//            resValue "string", "app_code", "wqck"
+//            resValue "string", "app_sid", "54e87151f9fc49e18e19292fbf4c68d1"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_dllb {
+//            applicationId "com.dawoo.gamebox.sid355"
+//            resValue "string", "app_name", "金沙娱乐场"
+//            resValue "string", "app_code", "dllb"
+//            resValue "string", "app_sid", "7ffa67b40eea93a97805d59970d76b94"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        //356
+//        app_wbzt {
+//            applicationId "com.dawoo.gamebox.sid356"
+//            resValue "string", "app_name", " 澳门永利集团"
+//            resValue "string", "app_code", "wbzt"
+//            resValue "string", "app_sid", "dcf3bec6f41a870e00212e7cc99606a7"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//
+//        app_opmi {
+//            applicationId "com.dawoo.gamebox.sid357"
+//            resValue "string", "app_name", "永利娱乐城"
+//            resValue "string", "app_code", "opmi"
+//            resValue "string", "app_sid", "eed63a75cb98f902830477f5cba04f31"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//                app_n5gl {
+//            applicationId "com.dawoo.gamebox.sid358"
+//            resValue "string", "app_name", "澳门威尼斯人"
+//            resValue "string", "app_code", "n5gl"
+//            resValue "string", "app_sid", "c57b52e0aeaf5563980d277c3c05c7d1"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+        app_lt1x {
+            applicationId "com.dawoo.gamebox.sid359"
+            resValue "string", "app_name", "金鹰国际"
+            resValue "string", "app_code", "lt1x"
+            resValue "string", "app_sid", "c5b440c9aa0e1cdfcfff8b34cba8dda3"
+              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+        }
+//
+//        app_vyx1 {
+//            applicationId "com.dawoo.gamebox.sid360"
+//            resValue "string", "app_name", "大大彩票"
+//            resValue "string", "app_code", "vyx1"
+//            resValue "string", "app_sid", "a52956857d670202ac6828b28c6daeb6"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_1mw8 {
+//            applicationId "com.dawoo.gamebox.sid361"
+//            resValue "string", "app_name", "海皇亚洲"
+//            resValue "string", "app_code", "1mw8"
+//            resValue "string", "app_sid", "369df4553269ac2239fd48568f543dfc"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_tw1z {
+//            applicationId "com.dawoo.gamebox.sid362"
+//            resValue "string", "app_name", "万事达娱乐城"
+//            resValue "string", "app_code", "tw1z"
+//            resValue "string", "app_sid", "0245625bcdb1642edc81eba7262d43da"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_r4pf {
+//            applicationId "com.dawoo.gamebox.sid363"
+//            resValue "string", "app_name", "胜益国际娱乐"
+//            resValue "string", "app_code", "r4pf"
+//            resValue "string", "app_sid", "b83cd9f681d8110048b9a90021e1c7e3"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_5zx5 {
+//            applicationId "com.dawoo.gamebox.sid365"
+//            resValue "string", "app_name", "BET365"
+//            resValue "string", "app_code", "5zx5"
+//            resValue "string", "app_sid", "14f959961d722629de413926602f7ccc"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_feas {
+//            applicationId "com.dawoo.gamebox.sid366"
+//            resValue "string", "app_name", "澳门威尼斯人"
+//            resValue "string", "app_code", "feas"
+//            resValue "string", "app_sid", "fd7b632187397070a9110e6baacec702"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_xc95 {
+//            applicationId "com.dawoo.gamebox.sid367"
+//            resValue "string", "app_name", "星空娱乐城"
+//            resValue "string", "app_code", "xc95"
+//            resValue "string", "app_sid", "443110d6d974f61ab6ce1f23f27af7b5"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_kgu6 {
+//            applicationId "com.dawoo.gamebox.sid368"
+//            resValue "string", "app_name", "爵士城"
+//            resValue "string", "app_code", "kgu6"
+//            resValue "string", "app_sid", "2f240a46f97291908f8a911c19f1c6d4"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_vksg {
+//            applicationId "com.dawoo.gamebox.sid369"
+//            resValue "string", "app_name", "新葡京娱乐场"
+//            resValue "string", "app_code", "vksg"
+//            resValue "string", "app_sid", "c9f96fda5423febc3e50072c8a272bc1"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        //370
+//        app_covy {
+//            applicationId "com.dawoo.gamebox.sid370"
+//            resValue "string", "app_name", "皇冠亚洲"
+//            resValue "string", "app_code", "covy"
+//            resValue "string", "app_sid", "56a9b81c0991acfdff36dad643a84bae"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_mppv {
+//            applicationId "com.dawoo.gamebox.sid371"
+//            resValue "string", "app_name", "澳门新葡京娱乐城"
+//            resValue "string", "app_code", "mppv"
+//            resValue "string", "app_sid", "607ab31471b2f18220fb03b685a62f60"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_dufx {
+//            applicationId "com.dawoo.gamebox.sid372"
+//            resValue "string", "app_name", "腾龙国际"
+//            resValue "string", "app_code", "dufx"
+//            resValue "string", "app_sid", "92aadf5a5d2983c63de760e80681ccf1"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_gvzi {
+//            applicationId "com.dawoo.gamebox.sid375"
+//            resValue "string", "app_name", "威尼斯人娱乐城"
+//            resValue "string", "app_code", "gvzi"
+//            resValue "string", "app_sid", "fd9f96277a8b15125bceb0a0f2c0a3f7"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_8egp {
+//            applicationId "com.dawoo.gamebox.sid376"
+//            resValue "string", "app_name", "VNS娱乐城"
+//            resValue "string", "app_code", "8egp"
+//            resValue "string", "app_sid", "e76ec6a5be41b5f0f829df3f01537784"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_suxr {
+//            applicationId "com.dawoo.gamebox.sid377"
+//            resValue "string", "app_name", "澳门巴黎人"
+//            resValue "string", "app_code", "suxr"
+//            resValue "string", "app_sid", "ff8bb0c6818bdd5c9668d99666309bbd"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_unje {
+//            applicationId "com.dawoo.gamebox.sid379"
+//            resValue "string", "app_name", "99彩票网"
+//            resValue "string", "app_code", "unje"
+//            resValue "string", "app_sid", "84b458cd4cb4ca24d46e6a81bf4ece92"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//                app_n0pd {
+//            applicationId "com.dawoo.gamebox.sid380"
+//            resValue "string", "app_name", "永利娱乐场"
+//            resValue "string", "app_code", "n0pd"
+//            resValue "string", "app_sid", "d2e5fb741951d83172cbbb80df5ddde6"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_wrde {
+//            applicationId "com.dawoo.gamebox.sid381"
+//            resValue "string", "app_name", "胜通国际娱乐城"
+//            resValue "string", "app_code", "wrde"
+//            resValue "string", "app_sid", "bd146695de21fa924ab420c3fdd9e6a2"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_3mdk {
+//            applicationId "com.dawoo.gamebox.sid382"
+//            resValue "string", "app_name", "皇家俱乐部"
+//            resValue "string", "app_code", "3mdk"
+//            resValue "string", "app_sid", "75abeacc4d0a3086679751ff456ef5cf"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_4pja {
+//            applicationId "com.dawoo.gamebox.sid383"
+//            resValue "string", "app_name", "新葡京娱乐城"
+//            resValue "string", "app_code", "4pja"
+//            resValue "string", "app_sid", "a92f1c2e0e2bc618f0189e71fa3cc943"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_1xtq {
+//            applicationId "com.dawoo.gamebox.sid385"
+//            resValue "string", "app_name", "大庄家娱乐城"
+//            resValue "string", "app_code", "1xtq"
+//            resValue "string", "app_sid", "e0bad6dbd6a30ba8051f9a3b7f3651b8"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_72wu {
+//            applicationId "com.dawoo.gamebox.sid387"
+//            resValue "string", "app_name", "百乐"
+//            resValue "string", "app_code", "72wu"
+//            resValue "string", "app_sid", "5b9d2f0441f113328fe09ae90101d303"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_llnd {
+//            applicationId "com.dawoo.gamebox.sid388"
+//            resValue "string", "app_name", "钱柜娱乐"
+//            resValue "string", "app_code", "llnd"
+//            resValue "string", "app_sid", "aaf1d647920c3e71895ec04bdce5994c"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_gplw {
+//            applicationId "com.dawoo.gamebox.sid389"
+//            resValue "string", "app_name", "波贝娱乐城"
+//            resValue "string", "app_code", "gplw"
+//            resValue "string", "app_sid", "c364e2b323a78247f8fb08288b760206"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_palx {
+//            applicationId "com.dawoo.gamebox.sid390"
+//            resValue "string", "app_name", "大興娱乐"
+//            resValue "string", "app_code", "palx"
+//            resValue "string", "app_sid", "f4685c68383a005aba9d5dafbac82b85"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_yym8 {
+//            applicationId "com.dawoo.gamebox.sid391"
+//            resValue "string", "app_name", "趣博娱乐"
+//            resValue "string", "app_code", "yym8"
+//            resValue "string", "app_sid", "2b5e9600578283fe9d94846b75ac0573"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_wjxd {
+//            applicationId "com.dawoo.gamebox.sid392"
+//            resValue "string", "app_name", "bet365"
+//            resValue "string", "app_code", "wjxd"
+//            resValue "string", "app_sid", "370b30415132ae26108c9892cedce99c"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_nkwz {
+//            applicationId "com.dawoo.gamebox.sid393"
+//            resValue "string", "app_name", "BB国际"
+//            resValue "string", "app_code", "nkwz"
+//            resValue "string", "app_sid", "88ed3838acf048e50042f5162fc87373"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_wjrd {
+//            applicationId "com.dawoo.gamebox.sid395"
+//            resValue "string", "app_name", "双赢国际城"
+//            resValue "string", "app_code", "wjrd"
+//            resValue "string", "app_sid", "0660d80d757222e0d6d411f2b7e9809b"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_ajco {
+//            applicationId "com.dawoo.gamebox.sid396"
+//            resValue "string", "app_name", "新葡京娱乐城"
+//            resValue "string", "app_code", "ajco"
+//            resValue "string", "app_sid", "f8dca777f90a628bd097b7746e9ac5e6"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//
+//
+//        app_gm5w {
+//            applicationId "com.dawoo.gamebox.sid397"
+//            resValue "string", "app_name", "聚福国际"
+//            resValue "string", "app_code", "gm5w"
+//            resValue "string", "app_sid", "32fc60e36d1c2f3a1a7bd945b1797f5e"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_i63i {
+//            applicationId "com.dawoo.gamebox.sid398"
+//            resValue "string", "app_name", "澳门新葡京"
+//            resValue "string", "app_code", "i63i"
+//            resValue "string", "app_sid", "bd5018e9d2342eb3916fd43047a7ffa3"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_ptmx {
+//            applicationId "com.dawoo.gamebox.sid399"
+//            resValue "string", "app_name", "世茂国际娱乐"
+//            resValue "string", "app_code", "ptmx"
+//            resValue "string", "app_sid", "86a652360bbafb98c857c9dd9d389c54"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_skab {
+//            applicationId "com.dawoo.gamebox.sid501"
+//            resValue "string", "app_name", "金尊娱乐城"
+//            resValue "string", "app_code", "skab"
+//            resValue "string", "app_sid", "428e4e6432322311a7748bab8b7d50a0"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_838o {
+//            applicationId "com.dawoo.gamebox.sid502"
+//            resValue "string", "app_name", "皇冠现金网"
+//            resValue "string", "app_code", "838o"
+//            resValue "string", "app_sid", "adee5dceec613dc609cd516185101f92"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_izlr {
+//            applicationId "com.dawoo.gamebox.sid503"
+//            resValue "string", "app_name", "澳门威尼斯人"
+//            resValue "string", "app_code", "izlr"
+//            resValue "string", "app_sid", "e11149b6b9debd71c96e3aaf991e4ab1"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_eobp {
+//            applicationId "com.dawoo.gamebox.sid505"
+//            resValue "string", "app_name", "威尼斯人"
+//            resValue "string", "app_code", "eobp"
+//            resValue "string", "app_sid", "75d43e5aa136d83be57969e3d0f6a65f"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_fap9 {
+//            applicationId "com.dawoo.gamebox.sid506"
+//            resValue "string", "app_name", "威尼斯人娱乐城"
+//            resValue "string", "app_code", "fap9"
+//            resValue "string", "app_sid", "725c32c05cc389f73b8e5a2debf72caa"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_u0er {
+//            applicationId "com.dawoo.gamebox.sid507"
+//            resValue "string", "app_name", "琅琊国际娱乐"
+//            resValue "string", "app_code", "u0er"
+//            resValue "string", "app_sid", "2e23942c041257c8f9a3e9a49b9960fb"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_45jj {
+//            applicationId "com.dawoo.gamebox.sid508"
+//            resValue "string", "app_name", "澳门金沙娱乐场"
+//            resValue "string", "app_code", "45jj"
+//            resValue "string", "app_sid", "206339808ae0021a59fe506d1a620956"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_pgvj {
+//            applicationId "com.dawoo.gamebox.sid509"
+//            resValue "string", "app_name", "阿德国际"
+//            resValue "string", "app_code", "pgvj"
+//            resValue "string", "app_sid", "722628a57559aa13183225f7149e1b9c"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_xmpk {
+//            applicationId "com.dawoo.gamebox.sid510"
+//            resValue "string", "app_name", "奥林匹克娱乐城"
+//            resValue "string", "app_code", "xmpk"
+//            resValue "string", "app_sid", "96e58050eea52e86de4fad2566666f79"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+
+//        app_lboi {
+//            applicationId "com.dawoo.gamebox.sid511"
+//            resValue "string", "app_name", "繁星国际"
+//            resValue "string", "app_code", "lboi"
+//            resValue "string", "app_sid", "550e127694b6fda273e7c8398229a019"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+
+//        app_aioz {
+//            applicationId "com.dawoo.gamebox.sid512"
+//            resValue "string", "app_name", "九州国际"
+//            resValue "string", "app_code", "aioz"
+//            resValue "string", "app_sid", "54cf6901851b41953a4e44a4c24354c5"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_jtet {
+//            applicationId "com.dawoo.gamebox.sid513"
+//            resValue "string", "app_name", "新濠天地"
+//            resValue "string", "app_code", "jtet"
+//            resValue "string", "app_sid", "690999104d29bb013529e3316dad7d25"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        //515　蓝白
+//        app_rl4o {
+//            applicationId "com.dawoo.gamebox.sid515"
+//            resValue "string", "app_name", "AUY澳盈"
+//            resValue "string", "app_code", "rl4o"
+//            resValue "string", "app_sid", "a089b492c353d9420a09f4b5d07d6a22"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_ex57 {
+//            applicationId "com.dawoo.gamebox.sid516"
+//            resValue "string", "app_name", "皇家娱乐城"
+//            resValue "string", "app_code", "ex57"
+//            resValue "string", "app_sid", "68365cff4e5d13ac70f7d982a3a68908"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_qec8 {
+//            applicationId "com.dawoo.gamebox.sid517"
+//            resValue "string", "app_name", "澳门金沙娱乐场"
+//            resValue "string", "app_code", "qec8"
+//            resValue "string", "app_sid", "861ce7c81d29d7b0e69ab5cd2dcf9380"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_sa7t {
+//            applicationId "com.dawoo.gamebox.sid518"
+//            resValue "string", "app_name", "亿豪国际娱乐城"
+//            resValue "string", "app_code", "sa7t"
+//            resValue "string", "app_sid", "443a4284df376987b2e0f02d2291a39e"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_z3vd {
+//            applicationId "com.dawoo.gamebox.sid519"
+//            resValue "string", "app_name", "手中世界"
+//            resValue "string", "app_code", "z3vd"
+//            resValue "string", "app_sid", "23ea49cfa527338548edc7259ba330b9"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_rbld {
+//            applicationId "com.dawoo.gamebox.sid520"
+//            resValue "string", "app_name", "绝地求生"
+//            resValue "string", "app_code", "rbld"
+//            resValue "string", "app_sid", "40257bec45d99c35310e09503e20df31"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_2etb {
+//            applicationId "com.dawoo.gamebox.sid521"
+//            resValue "string", "app_name", "太阳城集团"
+//            resValue "string", "app_code", "2etb"
+//            resValue "string", "app_sid", "b5a9a1752759113ae4664234d9e47481"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_uvvu {
+//            applicationId "com.dawoo.gamebox.sid522"
+//            resValue "string", "app_name", "澳门银河娱乐城"
+//            resValue "string", "app_code", "uvvu"
+//            resValue "string", "app_sid", "620fcc14a88a86e10188ef8c41184d11"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//                app_mmrx {
+//            applicationId "com.dawoo.gamebox.sid523"
+//            resValue "string", "app_name", "澳门威尼斯人"
+//            resValue "string", "app_code", "mmrx"
+//            resValue "string", "app_sid", "643d4492d9ef6250664d77f7b66c0746"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_2x6s {
+//            applicationId "com.dawoo.gamebox.sid525"
+//            resValue "string", "app_name", "澳门威尼斯"
+//            resValue "string", "app_code", "2x6s"
+//            resValue "string", "app_sid", "144799c80f96c3abcd2303e00c7e21ac"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_ma0e {
+//            applicationId "com.dawoo.gamebox.sid526"
+//            resValue "string", "app_name", " 澳门威尼斯人"
+//            resValue "string", "app_code", "ma0e"
+//            resValue "string", "app_sid", "1b07b9228aee224cd1ebe70e3f0a9a48"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_mqsb {
+//            applicationId "com.dawoo.gamebox.sid527"
+//            resValue "string", "app_name", "澳门威尼斯人"
+//            resValue "string", "app_code", "mqsb"
+//            resValue "string", "app_sid", "0f34701d38b26783723ae97161ccee19"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_pvbs {
+//            applicationId "com.dawoo.gamebox.sid528"
+//            resValue "string", "app_name", "大富豪娱乐城"
+//            resValue "string", "app_code", "pvbs"
+//            resValue "string", "app_sid", "47b46779b9b9ae4e98d3998d5e127d03"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_87y8 {
+//            applicationId "com.dawoo.gamebox.sid529"
+//            resValue "string", "app_name", "抖音娱乐"
+//            resValue "string", "app_code", "87y8"
+//            resValue "string", "app_sid", "de68a78ac54f4ae9d6c24c4f17aff909"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_5br6 {
+//            applicationId "com.dawoo.gamebox.sid530"
+//            resValue "string", "app_name", "非凡国际"
+//            resValue "string", "app_code", "5br6"
+//            resValue "string", "app_sid", "ab99d8d4ab1908c89caba0d5e452a7ea"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_5jko {
+//            applicationId "com.dawoo.gamebox.sid531"
+//            resValue "string", "app_name", "澳门金沙娱乐城"
+//            resValue "string", "app_code", "5jko"
+//            resValue "string", "app_sid", "df2aafeffbabaccf1d82ad67df7e6fb1"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+        app_13gs {
+            applicationId "com.dawoo.gamebox.sid532"
+            resValue "string", "app_name", "威尼斯人娱乐城"
+            resValue "string", "app_code", "13gs"
+            resValue "string", "app_sid", "78058ea317d5d8729fdac9c54cd26594"
+             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+        }
+//
+//        app_fhfd {
+//            applicationId "com.dawoo.gamebox.sid533"
+//            resValue "string", "app_name", "环宇国际"
+//            resValue "string", "app_code", "fhfd"
+//            resValue "string", "app_sid", "5f85627618c759474f2831b87dc54cc1"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_0ltm {
+//            applicationId "com.dawoo.gamebox.sid535"
+//            resValue "string", "app_name", "永利娱乐场"
+//            resValue "string", "app_code", "0ltm"
+//            resValue "string", "app_sid", "7cf8876ef85e242c1e405c551330188f"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_xngr {
+//            applicationId "com.dawoo.gamebox.sid536"
+//            resValue "string", "app_name", "大西洋娱乐城"
+//            resValue "string", "app_code", "xngr"
+//            resValue "string", "app_sid", "9693d26d315c9871935daba2257167f4"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//                app_clfb {
+//            applicationId "com.dawoo.gamebox.sid537"
+//            resValue "string", "app_name", "鑫濠天地"
+//            resValue "string", "app_code", "clfb"
+//            resValue "string", "app_sid", "418685c38cd8bbc0baa14780db932cfb"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_ovgr {
+//            applicationId "com.dawoo.gamebox.sid538"
+//            resValue "string", "app_name", "恒鑫互娱"
+//            resValue "string", "app_code", "ovgr"
+//            resValue "string", "app_sid", "46e13ff2b91890b84034091b7a89701f"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_zbtq {
+//            applicationId "com.dawoo.gamebox.sid539"
+//            resValue "string", "app_name", "威尼斯人"
+//            resValue "string", "app_code", "zbtq"
+//            resValue "string", "app_sid", "bd73ff12753a5f436d7729da7c590de1"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_bqub {
+//            applicationId "com.dawoo.gamebox.sid550"
+//            resValue "string", "app_name", "云顶娱乐城"
+//            resValue "string", "app_code", "bqub"
+//            resValue "string", "app_sid", "f9af7597d5b2f9443e1463e084c985df"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//        app_zwue {
+//            applicationId "com.dawoo.gamebox.sid551"
+//            resValue "string", "app_name", "太阳城集团"
+//            resValue "string", "app_code", "zwue"
+//            resValue "string", "app_sid", "b84df65ae29d9fb5782f86e84ac88e96"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//        app_o7wq {
+//            applicationId "com.dawoo.gamebox.sid552"
+//            resValue "string", "app_name", "博赢国际"
+//            resValue "string", "app_code", "o7wq"
+//            resValue "string", "app_sid", "37cca9f6e0b36bae50e82fd1337bd998"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_tbxz {
+//            applicationId "com.dawoo.gamebox.sid553"
+//            resValue "string", "app_name", "澳盈"
+//            resValue "string", "app_code", "tbxz"
+//            resValue "string", "app_sid", "816b8d80467dc11d6a30594f9f979d45"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_ayzb {
+//            applicationId "com.dawoo.gamebox.sid555"
+//            resValue "string", "app_name", "澳门威尼斯人"
+//            resValue "string", "app_code", "ayzb"
+//            resValue "string", "app_sid", "aa09524cfca3e7c72078306678097f10"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//        app_ava3 {
+//            applicationId "com.dawoo.gamebox.sid556"
+//            resValue "string", "app_name", "多多博"
+//            resValue "string", "app_code", "ava3"
+//            resValue "string", "app_sid", "1435bb6617d9e65d2326943aac358dc8"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//        app_pqgn {
+//            applicationId "com.dawoo.gamebox.sid557"
+//            resValue "string", "app_name", "云顶国际"
+//            resValue "string", "app_code", "pqgn"
+//            resValue "string", "app_sid", "8fce32a428f301b15142b26fbda2c35b"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//        app_f6gu {
+//            applicationId "com.dawoo.gamebox.sid558"
+//            resValue "string", "app_name", "澳门新葡京娱乐城"
+//            resValue "string", "app_code", "f6gu"
+//            resValue "string", "app_sid", "84000fb5ff567e537dcafbde992b8481"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//        app_yodd {
+//            applicationId "com.dawoo.gamebox.sid559"
+//            resValue "string", "app_name", "百胜娱乐城"
+//            resValue "string", "app_code", "yodd"
+//            resValue "string", "app_sid", "3d2cf92667c59ccd35b7b262d5e81024"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//        app_nrfn {
+//            applicationId "com.dawoo.gamebox.sid560"
+//            resValue "string", "app_name", "王牌国际"
+//            resValue "string", "app_code", "nrfn"
+//            resValue "string", "app_sid", "7571c9eff8ce032c289a4d26dba0ecda"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_zekm {
+//            applicationId "com.dawoo.gamebox.sid561"
+//            resValue "string", "app_name", "盈凤凰娱乐城"
+//            resValue "string", "app_code", "zekm"
+//            resValue "string", "app_sid", "fc1e2df692c00cf80fcf20986ccbc7ab"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_ywi5 {
+//            applicationId "com.dawoo.gamebox.sid563"
+//            resValue "string", "app_name", "澳门巴黎人"
+//            resValue "string", "app_code", "ywi5"
+//            resValue "string", "app_sid", "13379d7eee6b00ab295c8782ed8eef65"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_rucr {
+//            applicationId "com.dawoo.gamebox.sid565"
+//            resValue "string", "app_name", "永利娱乐城"
+//            resValue "string", "app_code", "rucr"
+//            resValue "string", "app_sid", "08629052698392ab0d57acafeb0bcb6d"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_jwki {
+//            applicationId "com.dawoo.gamebox.sid566"
+//            resValue "string", "app_name", "七星娱乐"
+//            resValue "string", "app_code", "jwki"
+//            resValue "string", "app_sid", "59233a9ed5d9a18567222169c1d0450b"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_kizq {
+//            applicationId "com.dawoo.gamebox.sid567"
+//            resValue "string", "app_name", "澳门葡京"
+//            resValue "string", "app_code", "kizq"
+//            resValue "string", "app_sid", "e3e53ce1e6962150d2f31cd4dd6ece91"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_glym {
+//            applicationId "com.dawoo.gamebox.sid568"
+//            resValue "string", "app_name", "太阳城集团"
+//            resValue "string", "app_code", "glym"
+//            resValue "string", "app_sid", "a239e02ad89d648b19335376958b3686"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_9sgz {
+//            applicationId "com.dawoo.gamebox.sid569"
+//            resValue "string", "app_name", "彩盟娱乐"
+//            resValue "string", "app_code", "9sgz"
+//            resValue "string", "app_sid", "e4870da704a6b390f75b12ff1afe6539"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_xzqz {
+//            applicationId "com.dawoo.gamebox.sid570"
+//            resValue "string", "app_name", "皇家娱乐城"
+//            resValue "string", "app_code", "xzqz"
+//            resValue "string", "app_sid", "fc735e392c5510c9a405f36a2afde4f9"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_91ea {
+//            applicationId "com.dawoo.gamebox.sid571"
+//            resValue "string", "app_name", "皇冠娱乐城"
+//            resValue "string", "app_code", "91ea"
+//            resValue "string", "app_sid", "998793e33249fc64b329dfcdfc1b609a"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_mrle {
+//            applicationId "com.dawoo.gamebox.sid572"
+//            resValue "string", "app_name", "盛乾娱乐城"
+//            resValue "string", "app_code", "mrle"
+//            resValue "string", "app_sid", "44f8913fd3f1921e37c64270231cf5dd"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_1kfc {
+//            applicationId "com.dawoo.gamebox.sid573"
+//            resValue "string", "app_name", "YY678娱乐城"
+//            resValue "string", "app_code", "1kfc"
+//            resValue "string", "app_sid", "b6b967a9b16af35b0549260537ef1b9d"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_oqpv {
+//            applicationId "com.dawoo.gamebox.sid575"
+//            resValue "string", "app_name", "迪士尼国际娱乐城"
+//            resValue "string", "app_code", "oqpv"
+//            resValue "string", "app_sid", "158f20010e354e9eeba5c976c8303a3d"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_uesp {
+//            applicationId "com.dawoo.gamebox.sid576"
+//            resValue "string", "app_name", "新葡京娱乐场"
+//            resValue "string", "app_code", "uesp"
+//            resValue "string", "app_sid", "53fe22629c2a42989b3b7a1a6d112d60"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//
+//        app_zm3w {
+//            applicationId "com.dawoo.gamebox.sid577"
+//            resValue "string", "app_name", "东利娱乐"
+//            resValue "string", "app_code", "zm3w"
+//            resValue "string", "app_sid", "45a915ad1ff1f6d160a449872f456f30"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//        app_hz3b {
+//            applicationId "com.dawoo.gamebox.sid578"
+//            resValue "string", "app_name", "太阳城集团"
+//            resValue "string", "app_code", "hz3b"
+//            resValue "string", "app_sid", "9efe1c9f8c1e78982cff4d2410c18995"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_maoy {
+//            applicationId "com.dawoo.gamebox.sid579"
+//            resValue "string", "app_name", "澳门银河"
+//            resValue "string", "app_code", "maoy"
+//            resValue "string", "app_sid", "04246d0a032342225d5e1d4b99c62388"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_xguf {
+//            applicationId "com.dawoo.gamebox.sid580"
+//            resValue "string", "app_name", "澳门银河"
+//            resValue "string", "app_code", "xguf"
+//            resValue "string", "app_sid", "80dd80d64bf3e5df12aa66a7aaa0f568"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_ktal {
+//            applicationId "com.dawoo.gamebox.sid581"
+//            resValue "string", "app_name", "众博国际"
+//            resValue "string", "app_code", "ktal"
+//            resValue "string", "app_sid", "9c1fa85834f858b1a1527d4bd5ca8066"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_xmjq {
+//            applicationId "com.dawoo.gamebox.sid582"
+//            resValue "string", "app_name", "大红鹰娱乐城"
+//            resValue "string", "app_code", "xmjq"
+//            resValue "string", "app_sid", "c18d1d22d2952b6e832cdae69290aee9"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_rjgk {
+//            applicationId "com.dawoo.gamebox.sid583"
+//            resValue "string", "app_name", "新葡京娱乐场"
+//            resValue "string", "app_code", "rjgk"
+//            resValue "string", "app_sid", "676e43e50f72cfdd89e4aa0a1913c796"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_kqv5 {
+//            applicationId "com.dawoo.gamebox.sid585"
+//            resValue "string", "app_name", "澳门威尼斯人赌场"
+//            resValue "string", "app_code", "kqv5"
+//            resValue "string", "app_sid", "85b1a7940833c91e307d9767b8d508d6"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_taxv {
+//            applicationId "com.dawoo.gamebox.sid586"
+//            resValue "string", "app_name", "宝能娱乐"
+//            resValue "string", "app_code", "taxv"
+//            resValue "string", "app_sid", "116ae41ed0880f51203ae39b830babb8"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_jkkx {
+//            applicationId "com.dawoo.gamebox.sid587"
+//            resValue "string", "app_name", "世界城国际娱乐城"
+//            resValue "string", "app_code", "jkkx"
+//            resValue "string", "app_sid", "d7d6d1167cc592efb792602e59116f4f"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_hpvl {
+//            applicationId "com.dawoo.gamebox.sid588"
+//            resValue "string", "app_name", "星河国际"
+//            resValue "string", "app_code", "hpvl"
+//            resValue "string", "app_sid", "823201cd45e2e180c609bf56f4773aa8"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_vygf {
+//            applicationId "com.dawoo.gamebox.sid589"
+//            resValue "string", "app_name", "bet365"
+//            resValue "string", "app_code", "vygf"
+//            resValue "string", "app_sid", "903a2421bffa390de617bdfdfc567ce9"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_51fz {
+//            applicationId "com.dawoo.gamebox.sid590"
+//            resValue "string", "app_name", "王者娱乐"
+//            resValue "string", "app_code", "51fz"
+//            resValue "string", "app_sid", "c850c67c5c72994d6cfd6c9a8a9d1d7a "
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_atrf {
+//            applicationId "com.dawoo.gamebox.sid591"
+//            resValue "string", "app_name", "拉斯维加斯"
+//            resValue "string", "app_code", "atrf"
+//            resValue "string", "app_sid", "7ca16ed02569b037f028e8d35b38a434"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//
+//        app_mc2v {
+//            applicationId "com.dawoo.gamebox.sid592"
+//            resValue "string", "app_name", "澳门御匾会"
+//            resValue "string", "app_code", "mc2v"
+//            resValue "string", "app_sid", "00b50c4da1b9d62b1d4dbd04991385ab"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//
+//        app_cghg {
+//            applicationId "com.dawoo.gamebox.sid593"
+//            resValue "string", "app_name", "新橙娱乐"
+//            resValue "string", "app_code", "cghg"
+//            resValue "string", "app_sid", "ebf8c3750cb923563701476cc87cb14e"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_elsd {
+//            applicationId "com.dawoo.gamebox.sid595"
+//            resValue "string", "app_name", "龙_spacee"
+//            resValue "string", "app_code", "elsd"
+//            resValue "string", "app_sid", "d1ca20af10f9e82cabde50f745bfec45"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_wopw {
+//            applicationId "com.dawoo.gamebox.sid596"
+//            resValue "string", "app_name", "金沙娱乐城"
+//            resValue "string", "app_code", "wopw"
+//            resValue "string", "app_sid", "318b1b35afb2c84531e3627b0d2a827c"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//
+//        app_yyvd {
+//            applicationId "com.dawoo.gamebox.sid597"
+//            resValue "string", "app_name", "易   博"
+//            resValue "string", "app_code", "yyvd"
+//            resValue "string", "app_sid", "b3e6117adb0e4cd3308e1eceba2b1c74"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//
+//
+//        app_s90r {
+//            applicationId "com.dawoo.gamebox.sid598"
+//            resValue "string", "app_name", "戰神國際"
+//            resValue "string", "app_code", "s90r"
+//            resValue "string", "app_sid", "2578dfd960cf5fa3c7c623b3fc7eac64"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_udpt {
+//            applicationId "com.dawoo.gamebox.sid599"
+//            resValue "string", "app_name", "澳门新葡京"
+//            resValue "string", "app_code", "udpt"
+//            resValue "string", "app_sid", "42eebed071aff197e42fa377385392ff"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_81m3 {
+//            applicationId "com.dawoo.gamebox.sid600"
+//            resValue "string", "app_name", "澳门美高梅娱乐城"
+//            resValue "string", "app_code", "81m3"
+//            resValue "string", "app_sid", "8656ca8ca164b923502c77ec11453a41"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_35vx {
+//            applicationId "com.dawoo.gamebox.sid601"
+//            resValue "string", "app_name", "鸿盛国际"
+//            resValue "string", "app_code", "35vx"
+//            resValue "string", "app_sid", "10c36d720230ab735a439364dce5ac13"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//
+//        app_ulub {
+//            applicationId "com.dawoo.gamebox.sid602"
+//            resValue "string", "app_name", "澳门新葡京"
+//            resValue "string", "app_code", "ulub"
+//            resValue "string", "app_sid", "ead77c487878c728ebb7e90e0963d88f"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//
+//        app_ra3c {
+//            applicationId "com.dawoo.gamebox.sid603"
+//            resValue "string", "app_name", "澳门星际娱乐"
+//            resValue "string", "app_code", "ra3c"
+//            resValue "string", "app_sid", "c3d7eb03c86becb26588804bb8eaac55"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_iei4 {
+//            applicationId "com.dawoo.gamebox.sid605"
+//            resValue "string", "app_name", "金沙娱乐"
+//            resValue "string", "app_code", "iei4"
+//            resValue "string", "app_sid", "958ec9fdbfe64ff713da1b321769e445"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_pf6g {
+//            applicationId "com.dawoo.gamebox.sid606"
+//            resValue "string", "app_name", "天美娱乐"
+//            resValue "string", "app_code", "pf6g"
+//            resValue "string", "app_sid", "eb8993d4aa81203faaef4e033c30040e"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//
+//        app_jktb {
+//            applicationId "com.dawoo.gamebox.sid607"
+//            resValue "string", "app_name", "恒 利"
+//            resValue "string", "app_code", "jktb"
+//            resValue "string", "app_sid", "d0e4eebb67579d5b08170aa9cefc5abe"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_tjyo {
+//            applicationId "com.dawoo.gamebox.sid608"
+//            resValue "string", "app_name", "朝盈集团"
+//            resValue "string", "app_code", "tjyo"
+//            resValue "string", "app_sid", "f45b8cbf1f1c810f74761ab615992124"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_k5sg {
+//            applicationId "com.dawoo.gamebox.sid609"
+//            resValue "string", "app_name", "新葡京"
+//            resValue "string", "app_code", "k5sg"
+//            resValue "string", "app_sid", "c3d3c50270414d0b104db62f46f74cf6"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//
+//        app_2d4n {
+//            applicationId "com.dawoo.gamebox.sid610"
+//            resValue "string", "app_name", "九五至尊"
+//            resValue "string", "app_code", "2d4n"
+//            resValue "string", "app_sid", "f0d5c4147eb905e306a5781eb891bc26"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//
+//        app_pse0 {
+//            applicationId "com.dawoo.gamebox.sid611"
+//            resValue "string", "app_name", "万博体育"
+//            resValue "string", "app_code", "pse0"
+//            resValue "string", "app_sid", "508f3384b53b2b35adba5603c0cc4a24"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//
+//        app_qlms {
+//            applicationId "com.dawoo.gamebox.sid612"
+//            resValue "string", "app_name", "新葡京娱乐城"
+//            resValue "string", "app_code", "qlms"
+//            resValue "string", "app_sid", "5c563cc890fde6da9092e1fd10f70b75"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_3hld {
+//            applicationId "com.dawoo.gamebox.sid613"
+//            resValue "string", "app_name", "手中世界"
+//            resValue "string", "app_code", "3hld"
+//            resValue "string", "app_sid", "23ba37e42586c925fd53d29283756fde"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_tdlt {
+//            applicationId "com.dawoo.gamebox.sid615"
+//            resValue "string", "app_name", "金沙娱乐城"
+//            resValue "string", "app_code", "tdlt"
+//            resValue "string", "app_sid", "74ff7d8ec1479e2c36056ebd6ca7be88"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//
+//        app_kdli {
+//            applicationId "com.dawoo.gamebox.sid616"
+//            resValue "string", "app_name", "环球娱乐"
+//            resValue "string", "app_code", "kdli"
+//            resValue "string", "app_sid", "edc535ff8f4cfa9fcb12dee9b89060ea"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_cepa {
+//            applicationId "com.dawoo.gamebox.sid617"
+//            resValue "string", "app_name", "博赢彩票"
+//            resValue "string", "app_code", "cepa"
+//            resValue "string", "app_sid", "5215c56a6e7efd6d4d547a135248fc0d"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_q9uv {
+//            applicationId "com.dawoo.gamebox.sid618"
+//            resValue "string", "app_name", "万发娱乐"
+//            resValue "string", "app_code", "q9uv"
+//            resValue "string", "app_sid", "447cacd6d721a6d0722c8804bc0e15fe"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_4bzo {
+//            applicationId "com.dawoo.gamebox.sid619"
+//            resValue "string", "app_name", "永利娱乐城"
+//            resValue "string", "app_code", "4bzo"
+//            resValue "string", "app_sid", "cf665e4d03f897d6dbe8946cdfa1896c"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_aba6 {
+//            applicationId "com.dawoo.gamebox.sid620"
+//            resValue "string", "app_name", "天宏娱乐"
+//            resValue "string", "app_code", "aba6"
+//            resValue "string", "app_sid", "6046d851484858a29b6e17d71ae0ac37"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//
+//        app_vqxy {
+//            applicationId "com.dawoo.gamebox.sid621"
+//            resValue "string", "app_name", "马来西亚云顶赌场"
+//            resValue "string", "app_code", "vqxy"
+//            resValue "string", "app_sid", "461a98e924bf708ef486d8f2f32061ec"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_7zn0 {
+//            applicationId "com.dawoo.gamebox.sid622"
+//            resValue "string", "app_name", "新盈博国际"
+//            resValue "string", "app_code", "7zn0"
+//            resValue "string", "app_sid", "74375211885617c45ccae01550acc1df"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//        app_3qzt {
+//            applicationId "com.dawoo.gamebox.sid623"
+//            resValue "string", "app_name", "金沙娱乐城"
+//            resValue "string", "app_code", "3qzt"
+//            resValue "string", "app_sid", "189ba1fde0b97467ca976eb521a3480e"
+//             manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_orng {
+//            applicationId "com.dawoo.gamebox.sid625"
+//            resValue "string", "app_name", "金沙娱乐场"
+//            resValue "string", "app_code", "orng"
+//            resValue "string", "app_sid", "219e7ad8024e527a439ce4f589558385"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//
+//        app_avz3 {
+//            applicationId "com.dawoo.gamebox.sid626"
+//            resValue "string", "app_name", "皇冠国际"
+//            resValue "string", "app_code", "avz3"
+//            resValue "string", "app_sid", "f3cdf337b96fc6ad4d330faa1519d7f6"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_pfx2 {
+//            applicationId "com.dawoo.gamebox.sid627"
+//            resValue "string", "app_name", "bet365"
+//            resValue "string", "app_code", "pfx2"
+//            resValue "string", "app_sid", "39f4b09c378a825ff245bf504c854f4d"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_drxn {
+//            applicationId "com.dawoo.gamebox.sid628"
+//            resValue "string", "app_name", "易胜博"
+//            resValue "string", "app_code", "drxn"
+//            resValue "string", "app_sid", "3ae1a55c3c52f15b50cd1f53331a2f01"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_vywq {
+//            applicationId "com.dawoo.gamebox.sid629"
+//            resValue "string", "app_name", "新葡京娱乐城"
+//            resValue "string", "app_code", "vywq"
+//            resValue "string", "app_sid", "5d4117395f9dfe983b51bb4852c94a1b"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//
+//        app_p3xh {
+//            applicationId "com.dawoo.gamebox.sid630"
+//            resValue "string", "app_name", "澳门美高梅赌场"
+//            resValue "string", "app_code", "p3xh"
+//            resValue "string", "app_sid", "7921d2f1a157793d042ffdc8da75d5a1"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_3tnr {
+//            applicationId "com.dawoo.gamebox.sid631"
+//            resValue "string", "app_name", "新葡京集团"
+//            resValue "string", "app_code", "3tnr"
+//            resValue "string", "app_sid", "1d56fbd2bf5948d7148b51166d90241f"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_eqr7 {
+//            applicationId "com.dawoo.gamebox.sid632"
+//            resValue "string", "app_name", "太阳城娱乐"
+//            resValue "string", "app_code", "eqr7"
+//            resValue "string", "app_sid", "9fbb1b370b7c65078563c1bb66dcdbb0"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//
+//        app_fy8f {
+//            applicationId "com.dawoo.gamebox.sid633"
+//            resValue "string", "app_name", "皇朝娱乐"
+//            resValue "string", "app_code", "fy8f"
+//            resValue "string", "app_sid", "27a04fa240bbfcc30d4673e2323f255d"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_njtk {
+//            applicationId "com.dawoo.gamebox.sid635"
+//            resValue "string", "app_name", "永利娱乐城"
+//            resValue "string", "app_code", "njtk"
+//            resValue "string", "app_sid", "ef16d4629a453e4826ffcba53d44d993"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_1kdc {
+//            applicationId "com.dawoo.gamebox.sid636"
+//            resValue "string", "app_name", "太阳城娱乐城"
+//            resValue "string", "app_code", "1kdc"
+//            resValue "string", "app_sid", "b56cff02138d84ead19414d6b850dc5e"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_nbyt {
+//            applicationId "com.dawoo.gamebox.sid637"
+//            resValue "string", "app_name", "澳门新葡京"
+//            resValue "string", "app_code", "nbyt"
+//            resValue "string", "app_sid", "e7f80c736e58788a504f2c1ff66fe119"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_kzpl {
+//            applicationId "com.dawoo.gamebox.sid638"
+//            resValue "string", "app_name", "澳门国际"
+//            resValue "string", "app_code", "kzpl"
+//            resValue "string", "app_sid", "6b2c85224448f32b5b7a185f6b915775"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+
+//        app_04du {
+//            applicationId "com.dawoo.gamebox.sid639"
+//            resValue "string", "app_name", "金立方国际娱乐"
+//            resValue "string", "app_code", "04du"
+//            resValue "string", "app_sid", "4073a0344ddc9f46b16505f567a3d2ea"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_sftj {
+//            applicationId "com.dawoo.gamebox.sid650"
+//            resValue "string", "app_name", "新葡京娱乐场"
+//            resValue "string", "app_code", "sftj"
+//            resValue "string", "app_sid", "376f2e7efecc47673ce261628f9c4dce"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_0fh3 {
+//            applicationId "com.dawoo.gamebox.sid651"
+//            resValue "string", "app_name", "乾宝国际娱乐"
+//            resValue "string", "app_code", "0fh3"
+//            resValue "string", "app_sid", "baeb8ae52bbfcaeefc60430ee2c54090"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//
+//        app_fdhc {
+//            applicationId "com.dawoo.gamebox.sid652"
+//            resValue "string", "app_name", "澳门银河"
+//            resValue "string", "app_code", "fdhc"
+//            resValue "string", "app_sid", "86a68da943c369178984a79eab6b3723"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_eiz9 {
+//            applicationId "com.dawoo.gamebox.sid653"
+//            resValue "string", "app_name", "澳门美高梅娱乐场"
+//            resValue "string", "app_code", "eiz9"
+//            resValue "string", "app_sid", "246e3adb12db1ec047809bebf41182d6"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_mz0n {
+//            applicationId "com.dawoo.gamebox.sid655"
+//            resValue "string", "app_name", "添好运"
+//            resValue "string", "app_code", "mz0n"
+//            resValue "string", "app_sid", "1bffd74a7dd3137bf9e7bfba64f98281"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_u1o1 {
+//            applicationId "com.dawoo.gamebox.sid656"
+//            resValue "string", "app_name", "太阳城集团"
+//            resValue "string", "app_code", "u1o1"
+//            resValue "string", "app_sid", "66fa0e94a1b15bf835569faf2a68c1e5"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+
+//
+//        app_0zir {
+//            applicationId "com.dawoo.gamebox.sid657"
+//            resValue "string", "app_name", "澳门威尼斯人"
+//            resValue "string", "app_code", "0zir"
+//            resValue "string", "app_sid", "d7d4b1f13043845cd4721cd2c005e271"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_ehe0 {
+//            applicationId "com.dawoo.gamebox.sid658"
+//            resValue "string", "app_name", "钜星亚博"
+//            resValue "string", "app_code", "ehe0"
+//            resValue "string", "app_sid", "ee7e2dc0588755a3482a511ed3ad41c4"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_b8gi {
+//            applicationId "com.dawoo.gamebox.sid659"
+//            resValue "string", "app_name", "星际娱乐城"
+//            resValue "string", "app_code", "b8gi"
+//            resValue "string", "app_sid", "84e3e801d917ed451bd5363d5b5959b6"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_y0hn {
+//            applicationId "com.dawoo.gamebox.sid660"
+//            resValue "string", "app_name", "电子娱乐"
+//            resValue "string", "app_code", "y0hn"
+//            resValue "string", "app_sid", "4645472372f1b02b13f86001dfe192eb"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_i1bh {
+//            applicationId "com.dawoo.gamebox.sid661"
+//            resValue "string", "app_name", "博赢-国际"
+//            resValue "string", "app_code", "i1bh"
+//            resValue "string", "app_sid", "b024d2922898f1bd491b1d3213b0e423"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_dvzh {
+//            applicationId "com.dawoo.gamebox.sid662"
+//            resValue "string", "app_name", "澳门银河赌场"
+//            resValue "string", "app_code", "dvzh"
+//            resValue "string", "app_sid", "05d01509c201e04f860841a36e099bee"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//
+//        app_wscm {
+//            applicationId "com.dawoo.gamebox.sid663"
+//            resValue "string", "app_name", "威尼斯娱乐城"
+//            resValue "string", "app_code", "wscm"
+//            resValue "string", "app_sid", "8f8abdbfe1d768c7547ea633c3654ee1"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_f7hi {
+//            applicationId "com.dawoo.gamebox.sid665"
+//            resValue "string", "app_name", "澳门金沙娱乐城"
+//            resValue "string", "app_code", "f7hi"
+//            resValue "string", "app_sid", "bc1a69b6463f7da9c2e93a6d33cdffa0"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_otuc {
+//            applicationId "com.dawoo.gamebox.sid666"
+//            resValue "string", "app_name", "518纵博"
+//            resValue "string", "app_code", "otuc"
+//            resValue "string", "app_sid", "75c4a3365bdd5294524acc2f48c4758d"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_yltk {
+//            applicationId "com.dawoo.gamebox.sid667"
+//            resValue "string", "app_name", "UBbet"
+//            resValue "string", "app_code", "yltk"
+//            resValue "string", "app_sid", "de91d537a04a7d873d4ce512d9aa4e70"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//
+//        app_otec {
+//            applicationId "com.dawoo.gamebox.sid668"
+//            resValue "string", "app_name", "澳门威尼斯人"
+//            resValue "string", "app_code", "otec"
+//            resValue "string", "app_sid", "e21cdf94efe0ac695dc59066465ed97b"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_2mxu {
+//            applicationId "com.dawoo.gamebox.sid669"
+//            resValue "string", "app_name", "佳盈国际"
+//            resValue "string", "app_code", "2mxu"
+//            resValue "string", "app_sid", "bc90236eca1c2184f2789c4fc98949cf"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//
+//        app_xnkw {
+//            applicationId "com.dawoo.gamebox.sid670"
+//            resValue "string", "app_name", "美高梅娱乐城"
+//            resValue "string", "app_code", "xnkw"
+//            resValue "string", "app_sid", "dbf991d8fa2bebb519c054982c25c830"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_ikyu {
+//            applicationId "com.dawoo.gamebox.sid671"
+//            resValue "string", "app_name", "澳门银河娱乐城"
+//            resValue "string", "app_code", "ikyu"
+//            resValue "string", "app_sid", "cda92007474d9756daf046c579546ce5"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_kh0t {
+//            applicationId "com.dawoo.gamebox.sid672"
+//            resValue "string", "app_name", "瑞沃娱乐"
+//            resValue "string", "app_code", "kh0t"
+//            resValue "string", "app_sid", "d75f6fb030fbb4acdef35cbc78665b75"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//        app_wj9a {
+//            applicationId "com.dawoo.gamebox.sid673"
+//            resValue "string", "app_name", "E博国际"
+//            resValue "string", "app_code", "wj9a"
+//            resValue "string", "app_sid", "b6817fdb54a102b458bf15c5f3430ddb"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_nhbr {
+//            applicationId "com.dawoo.gamebox.sid675"
+//            resValue "string", "app_name", "澳门巴黎人"
+//            resValue "string", "app_code", "nhbr"
+//            resValue "string", "app_sid", "ff1d7e52baad9b88ebc3ab452187323f"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//
+//        app_1yp9 {
+//            applicationId "com.dawoo.gamebox.sid676"
+//            resValue "string", "app_name", "澳门金沙娱乐城"
+//            resValue "string", "app_code", "1yp9"
+//            resValue "string", "app_sid", "047a9bb97719d8629753e9cba0da28d3"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_wmmp {
+//            applicationId "com.dawoo.gamebox.sid677"
+//            resValue "string", "app_name", "太陽城集團|_spaceSuncity_spaceGroup"
+//            resValue "string", "app_code", "wmmp"
+//            resValue "string", "app_sid", "ad09559f0c32cddcab515bc2bbc02acb"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_mqau {
+//            applicationId "com.dawoo.gamebox.sid678"
+//            resValue "string", "app_name", "澳门威尼斯人"
+//            resValue "string", "app_code", "mqau"
+//            resValue "string", "app_sid", "56935c1d0712905a3aba8fb97d8bae79"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_0uco {
+//            applicationId "com.dawoo.gamebox.sid679"
+//            resValue "string", "app_name", "云贝娱乐"
+//            resValue "string", "app_code", "0uco"
+//            resValue "string", "app_sid", "1891f28c14965cd31a1d114a5c0e2919"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_lloi {
+//            applicationId "com.dawoo.gamebox.sid680"
+//            resValue "string", "app_name", "亿博娱乐"
+//            resValue "string", "app_code", "lloi"
+//            resValue "string", "app_sid", "7617466219c938bc8f575a09ca04e122"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_rtyw {
+//            applicationId "com.dawoo.gamebox.sid681"
+//            resValue "string", "app_name", "万通国际"
+//            resValue "string", "app_code", "rtyw"
+//            resValue "string", "app_sid", "438e949e813874333719134df8be3d75"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//        app_bvxu {
+//            applicationId "com.dawoo.gamebox.sid682"
+//            resValue "string", "app_name", "宝天坊"
+//            resValue "string", "app_code", "bvxu"
+//            resValue "string", "app_sid", "881f456182a1e3c7b3bf6eb55ab89b40"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_efd8 {
+//            applicationId "com.dawoo.gamebox.sid683"
+//            resValue "string", "app_name", "盈丰娛樂"
+//            resValue "string", "app_code", "efd8"
+//            resValue "string", "app_sid", "d0d84fbb3611b8360c89ae128fcc1767"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_qawi {
+//            applicationId "com.dawoo.gamebox.sid685"
+//            resValue "string", "app_name", "威尼斯人娱乐城"
+//            resValue "string", "app_code", "qawi"
+//            resValue "string", "app_sid", "136a6ff0e33c127ee0b08f0fb92db2b7"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_mt4z {
+//            applicationId "com.dawoo.gamebox.sid686"
+//            resValue "string", "app_name", "美高梅娱乐城"
+//            resValue "string", "app_code", "mt4z"
+//            resValue "string", "app_sid", "28d3d94f57633eea110fda9b9486b226"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_oun2 {
+//            applicationId "com.dawoo.gamebox.sid687"
+//            resValue "string", "app_name", "恒升娱乐"
+//            resValue "string", "app_code", "oun2"
+//            resValue "string", "app_sid", "2559a8bd5405ab079745a9596878a390"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_toia {
+//            applicationId "com.dawoo.gamebox.sid688"
+//            resValue "string", "app_name", "永利娱乐场"
+//            resValue "string", "app_code", "toia"
+//            resValue "string", "app_sid", "5709376e705a1b2d80265da46e6f6a33"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+
+//        app_ncw6 {
+//            applicationId "com.dawoo.gamebox.sid689"
+//            resValue "string", "app_name", "悉尼国际"
+//            resValue "string", "app_code", "ncw6"
+//            resValue "string", "app_sid", "6a30751b15735606c3dcf45cd1bcbf90"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+
+//        app_6fhk {
+//            applicationId "com.dawoo.gamebox.sid690"
+//            resValue "string", "app_name", "酷驰娱乐城"
+//            resValue "string", "app_code", "6fhk"
+//            resValue "string", "app_sid", "ce03a0126afa6fed8b0e597c285ffacc"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_dnob {
+//            applicationId "com.dawoo.gamebox.sid691"
+//            resValue "string", "app_name", "bet365"
+//            resValue "string", "app_code", "dnob"
+//            resValue "string", "app_sid", "5cbc78a02af617578dd8d8db74547c1a"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+
+//
+//        app_hbon {
+//            applicationId "com.dawoo.gamebox.sid692"
+//            resValue "string", "app_name", "鼎   彩"
+//            resValue "string", "app_code", "hbon"
+//            resValue "string", "app_sid", "cf8b26493880393b636d78da04ab11ce"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//
+//        app_s9q3 {
+//            applicationId "com.dawoo.gamebox.sid693"
+//            resValue "string", "app_name", "银河国际"
+//            resValue "string", "app_code", "s9q3"
+//            resValue "string", "app_sid", "0db36578229bdf5a27e2e4ced8ad1adb"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//        app_sikm {
+//            applicationId "com.dawoo.gamebox.sid695"
+//            resValue "string", "app_name", "保 利"
+//            resValue "string", "app_code", "sikm"
+//            resValue "string", "app_sid", "9b5d36486f270bc5509714b9d3dc67c1"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+
+//        app_0chk {
+//            applicationId "com.dawoo.gamebox.sid696"
+//            resValue "string", "app_name", "永利娱乐场"
+//            resValue "string", "app_code", "0chk"
+//            resValue "string", "app_sid", "e84b6d23674439cfa1c0bae1c90abec2"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_ccnr {
+//            applicationId "com.dawoo.gamebox.sid697"
+//            resValue "string", "app_name", "新葡京娱乐"
+//            resValue "string", "app_code", "ccnr"
+//            resValue "string", "app_sid", "43a8384ccb3e712f2a0cd0d7c7aabaf2"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_r23s {
+//            applicationId "com.dawoo.gamebox.sid698"
+//            resValue "string", "app_name", "九亿娱乐"
+//            resValue "string", "app_code", "r23s"
+//            resValue "string", "app_sid", "c8624448dd38fb4a3d79969d08eeae31"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//
+//        app_c7pd {
+//            applicationId "com.dawoo.gamebox.sid699"
+//            resValue "string", "app_name", "新發娱乐"
+//            resValue "string", "app_code", "c7pd"
+//            resValue "string", "app_sid", "f9ca5c49646ccddcd65877d778b23b37"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_hc9f {
+//            applicationId "com.dawoo.gamebox.sid700"
+//            resValue "string", "app_name", "金沙娱乐场"
+//            resValue "string", "app_code", "hc9f"
+//            resValue "string", "app_sid", "1f2f220c5584bbb1790864ec21b5f862"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_noun {
+//            applicationId "com.dawoo.gamebox.sid701"
+//            resValue "string", "app_name", "辰龙娱乐"
+//            resValue "string", "app_code", "noun"
+//            resValue "string", "app_sid", "0891c71176a1d89aac472c204c7b7252"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_mope {
+//            applicationId "com.dawoo.gamebox.sid702"
+//            resValue "string", "app_name", "新万博"
+//            resValue "string", "app_code", "mope"
+//            resValue "string", "app_sid", "20484947515a5a4b46eb01df9a657155"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_fxni {
+//            applicationId "com.dawoo.gamebox.sid703"
+//            resValue "string", "app_name", "自由在线"
+//            resValue "string", "app_code", "fxni"
+//            resValue "string", "app_sid", "b6a567b7b26b0701a1ee69ad9c7cfa0a"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+
+//        app_rcs7 {
+//            applicationId "com.dawoo.gamebox.sid705"
+//            resValue "string", "app_name", "大西洋城娱乐场"
+//            resValue "string", "app_code", "rcs7"
+//            resValue "string", "app_sid", "fcebfb9ab9defdd66e227ad4e08a96de"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_mkqw {
+//            applicationId "com.dawoo.gamebox.sid706"
+//            resValue "string", "app_name", "澳门威尼斯人"
+//            resValue "string", "app_code", "mkqw"
+//            resValue "string", "app_sid", "00db32e411b82ee29d81aab2d2d560a3"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_obwn {
+//            applicationId "com.dawoo.gamebox.sid707"
+//            resValue "string", "app_name", "荣鼎国际"
+//            resValue "string", "app_code", "obwn"
+//            resValue "string", "app_sid", "73b9e91d7298f2397d2a3154d4754efe"
+//            manifestPlaceholders = [pro_id: applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default", r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+
+//        app_b855 {
+//            applicationId "com.dawoo.gamebox.sid708"
+//            resValue "string", "app_name", "澳门威尼斯人"
+//            resValue "string", "app_code", "b855"
+//            resValue "string", "app_sid", "625d1139d1d9e453c289a432383ba220"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_palc {
+//            applicationId "com.dawoo.gamebox.sid709"
+//            resValue "string", "app_name", "易博娱乐城"
+//            resValue "string", "app_code", "palc"
+//            resValue "string", "app_sid", "ca4da7ffddaaa54e9ce476cf677e147a"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_cbw8 {
+//            applicationId "com.dawoo.gamebox.sid711"
+//            resValue "string", "app_name", "澳门威尼斯人"
+//            resValue "string", "app_code", "cbw8"
+//            resValue "string", "app_sid", "dd7d3983f302bd196a44f8d86f856259"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//        app_eguy {
+//            applicationId "com.dawoo.gamebox.sid712"
+//            resValue "string", "app_name", "太阳城集团"
+//            resValue "string", "app_code", "eguy"
+//            resValue "string", "app_sid", "b9fa7c9dd34dd9fe4a37eb6245bca9bf"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_pzib {
+//            applicationId "com.dawoo.gamebox.sid713"
+//            resValue "string", "app_name", "太阳城集团"
+//            resValue "string", "app_code", "pzib"
+//            resValue "string", "app_sid", "da631f389bbe822194560dcfcb66c0f6"
+//            manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+
+        app_fgbw {
+            applicationId "com.dawoo.gamebox.sid715"
+            resValue "string", "app_name", "永利皇宫娱乐城"
+            resValue "string", "app_code", "fgbw"
+            resValue "string", "app_sid", "a2483f1e3a90526c1909e920da16d507"
+              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+        }
+//
+//        app_de33 {
+//            applicationId "com.dawoo.gamebox.sid716"
+//            resValue "string", "app_name", "億 來"
+//            resValue "string", "app_code", "de33"
+//            resValue "string", "app_sid", "f4ebcd661ac856ee14327a1e183c39ee"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+
+//        app_imhs {
+//            applicationId "com.dawoo.gamebox.sid717"
+//            resValue "string", "app_name", "好运来"
+//            resValue "string", "app_code", "imhs"
+//            resValue "string", "app_sid", "d5df2b98ffb7d30f060a581bf0f472e6"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_aper {
+//            applicationId "com.dawoo.gamebox.sid718"
+//            resValue "string", "app_name", "大西洋娱乐城"
+//            resValue "string", "app_code", "aper"
+//            resValue "string", "app_sid", "57f9ce64d6780cf7faa5e340a0a835bf"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//        app_vrgv {
+//            applicationId "com.dawoo.gamebox.sid719"
+//            resValue "string", "app_name", "澳门新葡京官网"
+//            resValue "string", "app_code", "vrgv"
+//            resValue "string", "app_sid", "adb1aedfcb67820f897443f8740d248d"
+//            manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//        app_yqfj {
+//            applicationId "com.dawoo.gamebox.sid720"
+//            resValue "string", "app_name", "兴隆国际娱乐"
+//            resValue "string", "app_code", "yqfj"
+//            resValue "string", "app_sid", "33c1bacff8259b84d1c93852c60b2d7d"
+//            manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_m6ql {
+//            applicationId "com.dawoo.gamebox.sid721"
+//            resValue "string", "app_name", "万达国际娱乐城"
+//            resValue "string", "app_code", "m6ql"
+//            resValue "string", "app_sid", "f61e8336d53e766440545a05fdae2f7e"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//        app_notj {
+//            applicationId "com.dawoo.gamebox.sid722"
+//            resValue "string", "app_name", "万利汇娱乐"
+//            resValue "string", "app_code", "notj"
+//            resValue "string", "app_sid", "848c9fea09a47ed5ce5bc856d31f057c"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+
+//        app_qzk9 {
+//            applicationId "com.dawoo.gamebox.sid723"
+//            resValue "string", "app_name", "必赢亚洲"
+//            resValue "string", "app_code", "qzk9"
+//            resValue "string", "app_sid", "3277a876295c505b29a1a44359189eb3"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_hzya {
+//            applicationId "com.dawoo.gamebox.sid725"
+//            resValue "string", "app_name", "新葡京娱乐城"
+//            resValue "string", "app_code", "hzya"
+//            resValue "string", "app_sid", "9a9b8538677c042764ac6c331e933950"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_bsrz {
+//            applicationId "com.dawoo.gamebox.sid726"
+//            resValue "string", "app_name", "188金宝博"
+//            resValue "string", "app_code", "bsrz"
+//            resValue "string", "app_sid", "a3162eb524c1d919287abecb843f4e79"
+//            manifestPlaceholders = [pro_id: applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default", r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//
+//        app_jecq {
+//            applicationId "com.dawoo.gamebox.sid727"
+//            resValue "string", "app_name", "BET365"
+//            resValue "string", "app_code", "jecq"
+//            resValue "string", "app_sid", "8667e3820d24a90da7392cf7c2a66ff7"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_ruuh {
+//            applicationId "com.dawoo.gamebox.sid728"
+//            resValue "string", "app_name", "威尼斯人娱乐城"
+//            resValue "string", "app_code", "ruuh"
+//            resValue "string", "app_sid", "09d835bf9dfac8ea9f6028fedecb5eee"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_iwgz {
+//            applicationId "com.dawoo.gamebox.sid729"
+//            resValue "string", "app_name", "名 门"
+//            resValue "string", "app_code", "iwgz"
+//            resValue "string", "app_sid", "7f30d62574b4984ed79144d01b2e724b"
+//              manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_0ixl {
+//            applicationId "com.dawoo.gamebox.sid730"
+//            resValue "string", "app_name", "澳门威尼斯人娱乐场"
+//            resValue "string", "app_code", "0ixl"
+//            resValue "string", "app_sid", "61f8d54f42ba6906730205db99c01970"
+//            manifestPlaceholders = [pro_id: applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default", r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_ii7l {
+//            applicationId "com.dawoo.gamebox.sid731"
+//            resValue "string", "app_name", "顺8国际"
+//            resValue "string", "app_code", "ii7l"
+//            resValue "string", "app_sid", "70bd31842e05b278eb64d6917d6cd2b6"
+//            manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_uqgx {
+//            applicationId "com.dawoo.gamebox.sid733"
+//            resValue "string", "app_name", "澳门金沙"
+//            resValue "string", "app_code", "uqgx"
+//            resValue "string", "app_sid", "45ff5f5fbfa6aec841f858e426e450aa"
+//            manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_22vj {
+//            applicationId "com.dawoo.gamebox.sid735"
+//            resValue "string", "app_name", "永丰国际"
+//            resValue "string", "app_code", "22vj"
+//            resValue "string", "app_sid", "c604c64d6985c2f5f3d7d65cc827d4aa"
+//            manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+
+//        app_gwsu {
+//            applicationId "com.dawoo.gamebox.sid736"
+//            resValue "string", "app_name", "钻石国际"
+//            resValue "string", "app_code", "gwsu"
+//            resValue "string", "app_sid", "a846b0664f4d181b15cb19da667b21fd"
+//            manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_mhux {
+//            applicationId "com.dawoo.gamebox.sid737"
+//            resValue "string", "app_name", "天合娱乐"
+//            resValue "string", "app_code", "mhux"
+//            resValue "string", "app_sid", "e215d92d47aaa927c4ec51f39274ae4b"
+//            manifestPlaceholders = [pro_id: applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default", r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+
+//        app_2tr1 {
+//            applicationId "com.dawoo.gamebox.sid738"
+//            resValue "string", "app_name", "亚博国际"
+//            resValue "string", "app_code", "2tr1"
+//            resValue "string", "app_sid", "dbb0ecf3cb03934d26f137abed47bb66"
+//            manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_5eab {
+//            applicationId "com.dawoo.gamebox.sid739"
+//            resValue "string", "app_name", "BET365"
+//            resValue "string", "app_code", "5eab"
+//            resValue "string", "app_sid", "d1d3e5a7a553664d3641d91aef80789a"
+//            manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_utpk {
+//            applicationId "com.dawoo.gamebox.sid750"
+//            resValue "string", "app_name", "至尊娱乐"
+//            resValue "string", "app_code", "utpk"
+//            resValue "string", "app_sid", "241ec125c8c7d77d981f0d7bb608fefa"
+//            manifestPlaceholders = [pro_id: applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default", r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+//        app_2njx {
+//            applicationId "com.dawoo.gamebox.sid751"
+//            resValue "string", "app_name", "弘宝娱乐"
+//            resValue "string", "app_code", "2njx"
+//            resValue "string", "app_sid", "ca0a62b07f14a6bbd80e656b28a9d5b9"
+//            manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+//        }
+//
+        app_ktad {
+            applicationId "com.dawoo.gamebox.sid752"
+            resValue "string", "app_name", "万博体育"
+            resValue "string", "app_code", "ktad"
+            resValue "string", "app_sid", "fe130d7286180ccc21ba3006ad635b58"
+            manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+        }
+//
+        app_mlbc {
+            applicationId "com.dawoo.gamebox.sid753"
+            resValue "string", "app_name", "大众娱乐"
+            resValue "string", "app_code", "mlbc"
+            resValue "string", "app_sid", "d5ed3b137a40acb2b48d005b0d40df2d"
+            manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+        }
+
+        app_djgt {
+            applicationId "com.dawoo.gamebox.sid756"
+            resValue "string", "app_name", "聚名彩票网"
+            resValue "string", "app_code", "djgt"
+            resValue "string", "app_sid", "595f2729c110b0732d15e2f139ab4ba8"
+            manifestPlaceholders = [pro_id  : applicationId + pid_pex, JPUSH_APPKEY: "待申请", JPUSH_CHANNEL: "developer-default" , r_process: ":" + applicationId.substring(applicationId.lastIndexOf(".") + 1)]
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "com.android.support:appcompat-v7:${rootProject.ext.supportVersion}"
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation "com.android.support:design:${rootProject.ext.supportVersion}"
+    implementation "com.android.support:support-v4:${rootProject.ext.supportVersion}"
+    implementation "com.android.support:recyclerview-v7:${rootProject.ext.supportVersion}"
+
+    // testImplementation 'junit:junit:4.12'
+
+    // androidTestImplementation 'com.android.support.test:runner:1.0.1'
+
+    // androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    implementation 'com.gyf.barlibrary:barlibrary:2.3.0'
+
+    // 沉浸式
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava:2.3.0'
+    implementation 'com.google.code.gson:gson:2.8.2'
+
+    // gson
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+
+    // okhttp
+
+    //日志拦截器
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+    implementation 'io.reactivex:rxjava:1.3.0'
+    implementation 'io.reactivex:rxandroid:1.2.1'
+
+    //    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+
+    //    implementation 'io.reactivex.rxjava2:rxjava:2.1.7'
+
+    // implementation 'org.ligboy.retrofit2:converter-fastjson-android:2.1.0'
+
+    // implementation 'com.trello.rxlifecycle2:rxlifecycle:2.2.1'
+
+    // implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.1'
+    implementation 'com.github.Aspsine:SwipeToLoadLayout:1.0.4'
+
+    // recycleview加载刷新
+    implementation 'com.github.bumptech.glide:glide:4.6.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
+    implementation 'com.github.bumptech.glide:annotations:4.6.1'
+    implementation 'com.github.bumptech.glide:okhttp3-integration:4.6.1'
+
+    //glide
+    implementation 'com.youth.banner:banner:1.4.10'
+
+    //banner
+    implementation 'com.wang.avi:library:2.1.3'
+
+    // 指示器
+    implementation 'com.zhy:okhttputils:2.6.2'
+
+    //zhy okutils
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'com.dyhdyh.loadingbar:loadingbar:1.4.4'
+    implementation 'com.hwangjr.rxbus:rxbus:1.0.6'
+
+    // rxbus
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+    implementation 'com.weigan:loopView:0.1.2'
+
+    // 滚动
+
+    // compile 'com.github.hackware1993:MagicIndicator:1.5.0' //替代tablayout
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    implementation 'com.guoqi.widget:iosdialog:0.2'
+    implementation 'org.apache.httpcomponents:httpcore:4.4.4'
+    implementation files('libs/tbs_sdk_thirdapp_v3.5.0.1004_43500_sharewithdownload_withoutGame_obfs_20170801_113025.jar')
+    implementation project(':coretool')
+    implementation 'com.github.arcadefire:nice-spinner:1.3.4'
+
+    // 下拉框Spinner
+    implementation project(':pushsdk')
+    implementation 'com.alibaba:fastjson:1.2.47'
+
+    //jpush
+    implementation files('libs/jcore-android-1.2.5.jar')
+}

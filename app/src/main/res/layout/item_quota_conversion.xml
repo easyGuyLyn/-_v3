@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/quota_conversion_item_height"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/tv_game_name"
+        style="@style/TextView_Record_Hint"
+        android:layout_marginLeft="@dimen/record_margin"
+        android:text="我的钱包"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:id="@+id/tv_quota"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_14_sp"
+        android:textColor="@color/record_entry_info"
+        android:layout_marginRight="@dimen/record_margin"
+        android:text="0.00"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/iv_quota_fresh"/>
+
+    <ImageView
+        android:id="@+id/iv_quota_fresh"
+        style="@style/TextView_Record_Info"
+        android:layout_marginRight="@dimen/record_margin"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/quota_fresh"/>
+
+    <TextView
+        android:id="@+id/tv_quota_back"
+        style="@style/TextView_Record_Info"
+        android:layout_marginRight="@dimen/record_margin"
+        android:layout_centerVertical="true"
+        android:text="@string/quota_back"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/record_margin"
+        android:background="@color/bgColor"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>

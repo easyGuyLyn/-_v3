@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/open_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="30dp" />
+
+        <RelativeLayout
+            android:layout_width="280dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@mipmap/hongbao_04"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/open_tip_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="52dp"
+                android:gravity="center"
+                android:textColor="#FFC000"
+                android:textSize="16sp"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/open_hongbao_iv"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_below="@+id/open_tip_tv"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="18dp"
+                android:scaleType="fitXY"
+                android:src="@mipmap/hongbao_chai_unclick"
+                android:visibility="visible" />
+
+
+            <TextView
+                android:id="@+id/ramian_count_lable_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/open_hongbao_iv"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:text="@string/haobao_chance"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+            <LinearLayout
+                android:id="@+id/remain_count_ll"
+                android:layout_width="100dp"
+                android:layout_height="35dp"
+                android:layout_below="@id/ramian_count_lable_tv"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/home_fragment_remain_count_bg"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/ramian_count_value_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="3dp"
+                    android:layout_marginTop="-4dp"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="#ffc000"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginTop="-8dp"
+                    android:gravity="center"
+                    android:text="次"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/time_lable_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/remain_count_ll"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:text="@string/next_time"
+                android:textColor="#e6a7aa"
+                android:textSize="13sp"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/time_value_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/time_lable_tv"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="2018-12-14 50:50:50:"
+                android:textColor="@color/color_text_hongbao"
+                android:textSize="10sp"
+                android:visibility="visible" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="36dp" />
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/success_ll"
+        android:layout_width="375dp"
+        android:layout_height="414dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="-50dp"
+        android:layout_marginStart="8dp"
+        android:background="@mipmap/hongbao_02"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+
+        <TextView
+            android:id="@+id/success_tip_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="165dp"
+            android:gravity="center"
+            android:text="@string/hongbao_get_partten"
+            android:textColor="#8c141c"
+            android:textSize="17sp" />
+
+
+        <ImageView
+            android:id="@+id/success_hongbao_iv"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_below="@+id/success_tip_tv"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/hongbao_chai_unclick" />
+
+        <ImageView
+            android:id="@+id/success_sure_iv"
+            android:layout_width="100dp"
+            android:layout_height="35dp"
+            android:layout_below="@+id/success_hongbao_iv"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="39dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/hongbao_querding" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/faile_ll"
+        android:layout_width="375dp"
+        android:layout_height="414dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="-50dp"
+        android:layout_marginStart="8dp"
+        android:background="@mipmap/hongbao_01"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/faile_tip_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="175dp"
+            android:gravity="center"
+            android:text="@string/hongbao_faile"
+            android:textColor="#8c141c"
+            android:textSize="15sp" />
+
+
+        <ImageView
+            android:id="@+id/faile_chai_iv"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_below="@id/faile_tip_tv"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/hongbao_chai_unclick" />
+
+        <ImageView
+            android:id="@+id/faile_again_iv"
+            android:layout_width="108dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/faile_chai_iv"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="37dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/hongbao_again"
+            android:visibility="visible" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/open_close_iv"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="-10dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@mipmap/close" />
+
+</LinearLayout>

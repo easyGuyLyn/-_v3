@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/bgColor">
+
+        <com.dawoo.gamebox.view.view.HeaderView
+            android:id="@+id/head_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="12dp"
+            android:background="@drawable/shap_set_detail_bg"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                style="@style/LinearLayout_Record_Detail">
+                
+                <TextView
+                    style="@style/TextView_Record_Hint"
+                    android:text="玩家账号"/>
+                <TextView
+                    android:id="@+id/tv_user_name"
+                    android:text="--"
+                    style="@style/TextView_Record_Info" />
+
+            </RelativeLayout>
+            
+            <View style="@style/line" />
+
+
+            <RelativeLayout
+                style="@style/LinearLayout_Record_Detail">
+
+                <TextView
+                    style="@style/TextView_Record_Hint"
+                    android:text="注单号"/>
+                <TextView
+                    android:id="@+id/tv_betId"
+                    android:text="--"
+                    style="@style/TextView_Record_Info" />
+
+            </RelativeLayout>
+
+            <View style="@style/line" />
+
+            <RelativeLayout
+                style="@style/LinearLayout_Record_Detail">
+
+                <TextView
+                    style="@style/TextView_Record_Hint"
+                    android:text="游戏供应商"/>
+                <TextView
+                    android:id="@+id/tv_game_business"
+                    android:text="--"
+                    style="@style/TextView_Record_Info" />
+
+            </RelativeLayout>
+
+            <View style="@style/line" />
+
+            <RelativeLayout
+                style="@style/LinearLayout_Record_Detail">
+
+                <TextView
+                    style="@style/TextView_Record_Hint"
+                    android:text="游戏种类"/>
+                <TextView
+                    android:id="@+id/tv_game_type"
+                    android:text="--"
+                    style="@style/TextView_Record_Info" />
+
+            </RelativeLayout>
+
+            <View style="@style/line" />
+
+            <RelativeLayout
+                style="@style/LinearLayout_Record_Detail">
+
+                <TextView
+                    style="@style/TextView_Record_Hint"
+                    android:text="投注时间"/>
+                <TextView
+                    android:id="@+id/tv_bet_time"
+                    android:text="--"
+                    style="@style/TextView_Record_Info" />
+
+            </RelativeLayout>
+
+            <View style="@style/line" />
+
+
+            <RelativeLayout
+                style="@style/LinearLayout_Record_Detail">
+
+                <TextView
+                    style="@style/TextView_Record_Hint"
+                    android:text="投注额"/>
+                <TextView
+                    android:id="@+id/tv_trade_amount"
+                    android:text="--"
+                    style="@style/TextView_Record_Info" />
+
+            </RelativeLayout>
+
+            <View style="@style/line" />
+
+            <RelativeLayout
+                style="@style/LinearLayout_Record_Detail">
+
+                <TextView
+                    style="@style/TextView_Record_Hint"
+                    android:text="有效投注额"/>
+                <TextView
+                    android:id="@+id/tv_effective_trade_amount"
+                    android:text="--"
+                    style="@style/TextView_Record_Info" />
+
+            </RelativeLayout>
+
+            <View style="@style/line" />
+
+
+
+            <RelativeLayout
+                style="@style/LinearLayout_Record_Detail">
+
+                <TextView
+                    style="@style/TextView_Record_Hint"
+                    android:text="派彩时间"/>
+                <TextView
+                    android:id="@+id/tv_payout_time"
+                    android:text="--"
+                    style="@style/TextView_Record_Info" />
+
+            </RelativeLayout>
+
+            <View style="@style/line" />
+
+            <RelativeLayout
+                style="@style/LinearLayout_Record_Detail">
+
+                <TextView
+                    style="@style/TextView_Record_Hint"
+                    android:text="派彩"/>
+                <TextView
+                    android:id="@+id/tv_payout"
+                    android:text="--"
+                    style="@style/TextView_Record_Info" />
+
+            </RelativeLayout>
+            <RelativeLayout
+                style="@style/LinearLayout_Record_Detail">
+
+                <TextView
+                    style="@style/TextView_Record_Hint"
+                    android:text="彩池贡献金"/>
+                <TextView
+                    android:id="@+id/tv_contribution_amount"
+                    android:text="--"
+                    style="@style/TextView_Record_Info" />
+
+            </RelativeLayout>
+
+            <View style="@style/line" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/record_entry_height"
+                android:layout_marginLeft="@dimen/record_margin"
+                android:gravity="center_vertical"
+                android:text="游戏API记录"
+                android:textColor="@color/record_entry_hint"
+                android:textSize="@dimen/text_14_sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="@dimen/record_margin"
+                android:layout_marginRight="@dimen/record_margin"
+                android:layout_marginBottom="@dimen/record_margin">
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   android:background="@drawable/shape_game_api_record"
+                  >
+                   <TextView
+                       android:text="彩种:"
+                       style="@style/TextView_Record_API" />
+                   <TextView
+                       android:id="@+id/tv_game_type_api"
+                       android:text="——"
+                       android:layout_marginTop="@dimen/dp_10"
+                       android:layout_marginLeft="6dp"
+                       android:layout_marginBottom="@dimen/dp_10"
+                       style="@style/TextView_Record_Hint" />
+               </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_game_api_record"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:text="期号："
+                        style="@style/TextView_Record_API" />
+                    <TextView
+                        android:id="@+id/tv_game_number_api"
+                        android:text="——"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_marginLeft="6dp"
+                        android:layout_marginBottom="@dimen/dp_10"
+                        style="@style/TextView_Record_Hint" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_game_api_record"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:text="赔率："
+                        style="@style/TextView_Record_API" />
+                    <TextView
+                        android:id="@+id/tv_bet_type_api"
+                        android:text="——"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_marginLeft="6dp"
+                        android:layout_marginBottom="@dimen/dp_10"
+                        style="@style/TextView_Record_Hint"  />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_game_api_record"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:text="下注内容："
+                        style="@style/TextView_Record_API" />
+
+                    <TextView
+                        android:id="@+id/tv_player_bet_api"
+                        android:text="——"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_marginLeft="6dp"
+                        android:layout_marginBottom="@dimen/dp_10"
+                        style="@style/TextView_Record_Hint"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_game_api_record"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:text="开奖号码："
+                        style="@style/TextView_Record_API" />
+                    <TextView
+                        android:id="@+id/tv_let_ball_api"
+                        android:text="——"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_marginLeft="6dp"
+                        android:layout_marginBottom="@dimen/dp_10"
+                        style="@style/TextView_Record_Hint"/>
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/tv_Handicap_api"
+                    android:text=""
+                    android:visibility="gone"
+                    style="@style/TextView_Record_API" />
+
+                <TextView
+                    android:id="@+id/tv_odds_api"
+                    android:text=""
+                    android:visibility="gone"
+                    style="@style/TextView_Record_API" />
+
+                <TextView
+                    android:id="@+id/tv_score_api"
+                    android:text=""
+                    android:visibility="gone"
+                    style="@style/TextView_Record_API"
+                    android:layout_marginBottom="10dp"/>
+
+            </LinearLayout>
+            
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

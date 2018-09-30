@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1b75d9</color>
+    <color name="colorPrimaryDark">#1b75d9</color>
+    <color name="colorAccent">#55A3F7</color>
+    <color name="navigation_background">#444444</color>
+    <color name="divider_color">#d8d8d8</color>
+    <color name="fragment_bg">#EFEFEF</color>
+    <color name="colorPrimary_theme">@color/colorPrimary</color>
+
+    <color name="color_theme_blue">#1B75D9</color>
+    <color name="color_theme_red">#F2205F</color>
+    <color name="color_theme_black">#151515</color>
+    <color name="color_theme_green">#14805e</color>
+    <color name="color_theme_orange">#ff7700</color>
+    <color name="color_theme_coffee">#7b340d</color>
+    <color name="color_theme_green_black">#046D4F</color>
+    <color name="color_theme_red_black">#C82721</color>
+    <color name="color_theme_blue_black">#1766bb</color>
+    <color name="color_theme_orange_black">#ff7701</color>
+    <color name="color_theme_coffee_black">#7b341d</color>
+
+
+    <color name="color_head">#1b75d9</color>
+
+    <color name="color_activity_background">#EFEFEF</color>
+    <color name="color_fragment_background">#EFEFEF</color>
+    <color name="color_fragment_mine">#EFEFEF</color>
+
+
+    <color name="color_notice_btn">#1B75D9</color>
+    <color name="color_login_btn">#1B75D9</color>
+    <color name="color_message_center">#1B75D9</color>
+    <color name="notic_line_bg">#E2E2E2</color>
+
+
+    <color name="transparent">#00000000</color>
+    <color name="text_color_gray_333333">#333333</color>
+    <color name="text_color_gray_666666">#666666</color>
+    <color name="text_color_gray_999999">#999999</color>
+    <color name="text_color_gray_E2E2E2">#E2E2E2</color>
+    <color name="text_color_gray_cccccc">#cccccc</color>
+
+
+    <!-- 底部导航颜色-->
+    <color name="tab_bg">#d3d3d3</color>
+    <color name="tab_text_selected">#55A3F7</color>
+    <color name="tab_text_normal">#666666</color>
+
+
+    <color name="white">#FFFFFF</color> <!-- 白色 -->
+    <color name="black">#000000</color> <!-- 黑色 -->
+    <color name="ivory">#fffff0</color> <!-- 象牙色 -->
+    <color name="snow">#fffafa</color> <!-- 雪白色 -->
+    <color name="moccasin">#ffe4b5</color> <!-- 鹿皮色 -->
+
+    <!-- 首页第一层导航颜色-->
+    <color name="custom_tab_up_down_tab_indicator">#ffe4b5</color>
+    <color name="custom_tab_up_down_tab_tv_normal">#ffe4b5</color>
+    <color name="custom_tab_up_down_tab_tv_selected">#ffe4b5</color>
+    <color name="custom_tab_up_down_bg">#E2E2E2</color>
+    <color name="custom_tab_up_down_tab_selected_bg">#FFFFFF</color>
+    <color name="custom_tab_up_down_tab_unselected_bg">#F5F5F5</color>
+    <color name="custom_tab_up_down_tab_text_selected">#333333</color>
+    <color name="custom_tab_up_down_tab_text_unselected">#666666</color>
+    <!--过渡页-->
+    <color name="colorLine">#e4e3e3</color>
+    <color name="tabTopLine">#131313</color>
+
+    <!--登录-->
+    <color name="login_prompt">#AAAAAA</color>
+    <color name="colorMain">#09102c</color>
+    <color name="colorSub">#1766bb</color>
+    <color name="colorTitle">#ffffff</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorGray">#898989</color>
+    <color name="text_gray">#999999</color>
+    <color name="bgColor">#f2f2f2</color>
+    <color name="divide_line">#e6e6e6</color>
+    <color name="setting_divide_line">#cdcdcd</color>
+    <color name="setting_text_color">#8a8a8a</color>
+    <color name="buttonPress">@color/colorPrimary</color>
+    <color name="background_blue">#1766bb</color>
+    <color name="verification_name_hint">#c78583</color>
+
+    <!--首页-->
+    <color name="btn_yellow_normal">#F0af01</color>
+    <color name="btn_yellow_press">#F17F01</color>f
+    <color name="btn_greenBlue_normal">#1dc28e</color>
+    <color name="btn_greenBlue_press">#1Ea28F</color>
+    <color name="btn_blue_normal">#1C75D9</color>
+    <color name="btn_blue_press">#1C75D9</color>
+    <color name="list_item">#EFEFEF</color>
+    <color name="tabIndicatorColor">#168df6</color>
+    <color name="account_deposit_btn_color">#0ec392</color>
+    <color name="red">#ff0000</color>
+    <color name="bak_blue">#3691ff</color>
+
+    <!--我的-->
+    <color name="text_money_blue_mine_fragment">#1b75d9</color>
+    <color name="text_money_green_mine_fragment">#0bba87</color>
+    <color name="divider_block_mine_fragment">#f2f2f2</color>
+    <color name="security_center_level">#FA6200</color>
+    <color name="conent_bg_mine_fragment">#FFFFFF</color>
+    <!--记录-->
+    <color name="note_record_bottom_bg">#E3ECF7</color>
+    <color name="record_entry_hint">#333333</color>
+    <color name="record_entry_info">#999999</color>
+    <color name="divider_modify">#E5E4E7</color>
+
+
+    <!--资金记录-->
+    <color name="text_capital_record_green">#51d683</color>
+    <color name="text_capital_record_yellow">#fe9e2e</color>
+    <color name="but_search_blue">#1b75d9</color>
+    <color name="process">#4171C1</color>
+    <color name="failure">#B33334</color>
+    <color name="sucess">#2A8B58</color>
+    <!--取款-->
+    <color name="tab_button_blue">@color/colorPrimary</color>
+    <color name="text_bind_bank_card">#1987FF</color>
+    <color name="text_winthdraw_money_item_hint">#363636</color>
+    <color name="bt_winthdraw_money">#6e9dd0</color>
+    <color name="color_text_hongbao">#FEBE00</color>
+
+
+    <color name="bac">#889568</color>
+    <color name="promo_bg">#efefef</color>
+    <color name="promo_text_color">#323232</color>
+    <color name="promo_text_will">#317ec2</color>
+    <color name="promo_text">#323333</color>
+
+
+    <!--theme-->
+    <color name="theme_bgColor">#f2f2f2</color>"
+    <color name="item_theme_white">#FFFFFF</color>
+    <color name="item_theme_white_">#FFFFFF</color>
+    <color name="theme_white">#FFFFFF</color>
+    <color name="theme_custom_tab_up_down_tab_text_unselected">#666666</color>
+    <color name="theme_text_color_gray_333333">#333333</color>
+    <color name="theme_text_color_gray_333333_mine">#333333</color>
+    <color name="theme_text_color_gray_999999">#999999</color>
+    <color name="theme_text_color_gray_666666">#666666</color>
+    <color name="theme_text_color_gray_999999_mine">#999999</color>
+    <color name="promo_item_stroke">#e3e2e2</color>
+    <color name="promo_item_bg_green">#353535</color>
+    <color name="promo_item_stroke_green">#454545</color>
+    <color name="line_view_bg">#E5E4E7</color>
+    <color name="line_view_gray">#939394</color>
+    <color name="line_view_bg_green">#252525</color>
+    <color name="promo_bg_mine">#efefef</color>
+    <!--theme-->
+
+    <color name="share_bootom_bg">#e4f7e7</color>
+
+    <color name="share_bootom_bg_text">#e4ebf7</color>
+
+
+    <!--分享好友-->
+    <color name="share_person_number">#1BB1D9</color>
+
+    <color name="share_money">#F09402</color>
+
+    <color name="colorDarkGray">#ff333333</color>
+
+    <color name="pay_bg_gray">#FFF1F1F1</color>
+
+    <color name="pay_copy_bg_color">#7e6e9dd0</color>
+
+    <color name="deposit_gray">#f1f1f1</color>
+    <color name="deposit_success">#FF53B961</color>
+    <color name="half_bg">#57060606</color>
+
+    <color name="maintenance_bg">@color/white</color>
+    <color name="maintenance_title">@color/text_color_gray_666666</color>
+    <color name="maintenance_content">@color/text_color_gray_333333</color>
+    <color name="maintenance_cs_text">@color/white</color>
+    <color name="maintenance_cs_bg">@color/colorPrimary</color>
+    <color name="one_title_tablayout">@color/white</color>
+
+    <color name="itemm_share_color">#FFB241</color>
+    <color name="homefragment_asset_text">#666666</color>
+    <color name="homefragment_asset_bg_green">#353535</color>
+    <color name="home_banner">#1e68b8</color>
+</resources>

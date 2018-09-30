@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bgColor"
+        android:orientation="vertical">
+
+
+        <com.dawoo.gamebox.view.view.HeaderView
+            android:id="@+id/head_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height" />
+
+        <LinearLayout
+            android:id="@+id/ll_conversion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/quota_conversion_item_height"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/record_margin"
+                    android:text="@string/conversion_ing"
+                    android:textColor="@color/text_color_gray_999999"
+                    android:textSize="@dimen/text_14_sp" />
+
+                <TextView
+                    android:id="@+id/tv_transfer_pending_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="￥0.00"
+                    android:textColor="@color/text_capital_record_yellow"
+                    android:textSize="@dimen/text_14_sp" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/quota_conversion_item_height"
+                android:layout_marginTop="@dimen/record_margin"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/TextView_Record_Hint"
+                    android:layout_marginLeft="@dimen/record_margin"
+                    android:text="@string/out_account" />
+
+                <TextView
+                    android:id="@+id/tv_out_account"
+                    style="@style/TextView_Record_Info"
+                    android:layout_marginRight="@dimen/record_margin"
+                    android:text="@string/please_choose" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="@dimen/record_margin"
+                android:layout_height="1dp"
+                android:background="@color/white" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/quota_conversion_item_height"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/TextView_Record_Hint"
+                    android:layout_marginLeft="@dimen/record_margin"
+                    android:text="@string/in_account" />
+
+                <TextView
+                    android:id="@+id/tv_in_account"
+                    style="@style/TextView_Record_Info"
+                    android:layout_marginRight="@dimen/record_margin"
+                    android:text="@string/please_choose" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="@dimen/record_margin"
+                android:layout_height="1dp"
+                android:background="@color/white" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/quota_conversion_item_height"
+                android:background="@color/white"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/TextView_Record_Hint"
+                    android:layout_marginLeft="@dimen/record_margin"
+                    android:text="@string/capital_transactionMoney" />
+
+                <EditText
+                    android:id="@+id/ed_input_money"
+                    style="@style/TextView_Record_Info"
+                    android:layout_marginRight="@dimen/record_margin"
+                    android:background="@null"
+                    android:digits="0123456789"
+                    android:gravity="center_vertical|right"
+                    android:hint="@string/please_input" />
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/sure_submit"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="@dimen/record_margin"
+                android:layout_marginRight="@dimen/record_margin"
+                android:layout_marginTop="@dimen/record_margin"
+                android:background="@drawable/frame_fillet_blue"
+                android:text="@string/sure_submit"
+                android:textColor="@color/colorTitle"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/fresh_quota"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginBottom="@dimen/record_margin"
+                android:layout_marginRight="@dimen/record_margin"
+                android:layout_marginTop="@dimen/record_margin"
+                android:background="@drawable/shap_set_detail_bg"
+                android:padding="@dimen/dp_4"
+                android:text="@string/fresh_quota" />
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/ryl_game_quota"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/bt_one_key_back"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="@dimen/record_margin"
+            android:layout_marginRight="@dimen/record_margin"
+            android:layout_marginTop="@dimen/record_margin"
+            android:background="@drawable/frame_fillet_blue"
+            android:text="@string/account_one_key_back"
+            android:textColor="@color/colorTitle"
+            android:textSize="16sp"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/bt_one_key_fresh"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="@dimen/record_margin"
+            android:layout_marginRight="@dimen/record_margin"
+            android:layout_marginTop="@dimen/record_margin"
+            android:layout_marginBottom="@dimen/record_margin"
+            android:background="@drawable/frame_fillet_blue"
+            android:text="@string/account_one_key_refersh"
+            android:textColor="@color/colorTitle"
+            android:textSize="16sp"
+            android:visibility="gone"/>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

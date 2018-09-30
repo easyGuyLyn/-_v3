@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/nav_tab_transfer"
+        android:title="tab_transfer"
+        android:checkableBehavior="single">
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@mipmap/navigation_home_icon_unclick"
+        android:title="@string/title_home" />
+
+    <item
+        android:id="@+id/navigation_promo"
+        android:icon="@mipmap/navigation_promo_icon_unlick"
+        android:title="@string/title_promo" />
+
+    <item
+        android:id="@+id/navigation_transfer"
+        android:icon="@mipmap/navigation_deposit_icon_unclick"
+        android:title="@string/title_transfer" />
+    <item
+        android:id="@+id/navigation_deposit"
+        android:icon="@mipmap/navigation_deposit_icon_unclick"
+        android:title="@string/title_deposit" />
+    <item
+        android:id="@+id/navigation_service"
+        android:icon="@mipmap/navigation_service_icon_unclick"
+        android:title="@string/title_service" />
+
+    </group>
+
+    <group
+        android:id="@+id/nav_setting"
+        android:title="tab_setting"
+        android:checkableBehavior="single" >
+    <item
+        android:id="@+id/navigation_questions"
+        android:icon="@mipmap/navigation_questions_icon_unclick"
+        android:title="@string/title_questions" />
+    <item
+        android:id="@+id/navigation_protocol"
+        android:icon="@mipmap/navigation_register_icon_unclick"
+        android:title="@string/title_protocol" />
+    <item
+        android:id="@+id/navigation_about"
+        android:icon="@mipmap/navigtion_about_icon_unclick"
+        android:title="@string/title_about" />
+
+    </group>
+
+</menu>

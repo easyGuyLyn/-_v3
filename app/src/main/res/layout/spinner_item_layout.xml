@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="41dp">
+
+    <TextView
+        android:id="@+id/spinner_textView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:gravity="center"
+        android:textColor="@color/text_color_gray_666666"
+        android:textSize="14sp"></TextView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:id="@+id/bottom_line"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        android:background="@color/line_view_bg" />
+
+</RelativeLayout>

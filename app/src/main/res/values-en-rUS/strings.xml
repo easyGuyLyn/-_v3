@@ -1,0 +1,271 @@
+<resources>
+    <string name="title_name_Login_activity">login</string>
+
+    <!--侧边栏-->
+    <string name="title_home">Home</string>
+    <string name="title_promo">Promo</string>
+    <string name="title_transfer">Transfer</string>
+    <string name="title_deposit">Deposit</string>
+    <string name="title_service">Service</string>
+    <string name="title_mine">Mine</string>
+    <string name="title_questions">Common problem</string>
+    <string name="title_protocol">Registration Terms</string>
+    <string name="title_about">About us</string>
+
+    <!--过渡页-->
+    <string name="checkLine">The line is being tested, please...</string>
+    <string name="checkOk">The test is complete and is about to enter...</string>
+    <string name="unNet">The network is not available, please check the network Settings</string>
+    <string name="checking_line">Detecting line:%1$s</string>
+    <string name="checking_line_fail">Line detection failed:%1$s</string>
+    <string name="checking_line_success">Line detection successful:%1$s</string>
+    <string name="get_checking_line_fail">Line acquisition failure:%1$s</string>
+    <string name="get_checking_line_success">Route success:%1$s</string>
+    <string name="get_checking_line_null">The return line is empty</string>
+    <string name="stop_get_check_line">Stop fetch circuit</string>
+
+    <!--登录注册 -->
+    <string name="username_hint">Please enter account</string>
+    <string name="password_hint">Please enter password</string>
+    <string name="captcha_hint">Please Enter Verify Code</string>
+    <string name="enter_captcha">Please enter the correct verification code</string>
+    <string name="username_validate">The account cannot be empty</string>
+    <string name="password_validate">The password cannot be empty</string>
+    <string name="captcha_validate">The verification code format is incorrect</string>
+    <string name="loginSoon">Login immediately</string>
+    <string name="noAccount">No account</string>
+    <string name="registerSoon">Account Opening Free</string>
+    <string name="loading_tip">loading…</string>
+    <string name="login_loading">be logging in…</string>
+    <string name="net_busy_error">Service is busy, please try again later！</string>
+    <string name="getCaptchaFail">Failed to get verification code</string>
+
+    <!--首页-->
+    <string name="login">login</string>
+    <string name="register">registere</string>
+    <string name="notice">registered</string>
+    <string name="next_time">The next time to open the red envelope is</string>
+    <string name="rule_lable">game rules</string>
+    <string name="hongbao_confirm">determine</string>
+    <string name="hongbao_get_partten">To obtain%1$s ¥</string>
+    <string name="hongbao_faile">You just won the lottery！</string>
+    <string name="close_notice">Shut down</string>
+    <string name="hongbao_end">Activity has ended</string>
+    <string name="haobao_qiangguang">A red envelope has gone</string>
+    <string name="haobao_times_0">Grab a red envelope number has been finished</string>
+    <string name="haobao_next_time">Next time you come back</string>
+    <string name="account_total_asset">Total assets</string>
+    <string name="account_wallet">The wallet</string>
+    <string name="account_one_key_back">A key recovery</string>
+    <string name="account_one_key_refersh">A key to refresh</string>
+    <string name="hongbao_get_null">Cannot obtain the information about red packets</string>
+    <string name="login_first">please login first </string>
+    <string name="hongbao_snatched_out">A red envelope has grabbed the</string>
+    <string name="hongbao_condition_not_satisfied">A red envelope conditions are not satisfied</string>
+    <string name="hongbao_activity_end">A red envelope activities end</string>
+    <string name="hongbao_excepttion">A red envelope draw abnormal</string>
+    <string name="hongbao_chou_wan">A red envelope has been finished</string>
+    <string name="hongbao_have_end">A red envelope is over</string>
+
+    <!--优惠-->
+    <string name="promo_all_selector_lable">All preferential</string>
+    <string name="join_right_now">Immediately to join</string>
+
+    <!--我的-->
+    <string name="captal_record">Money record</string>
+    <string name="captal_record_tip">See all of the funds</string>
+    <string name="security_center">Security center</string>
+    <string name="security_center_tip">To protect your account security</string>
+    <string name="security_center_level_low">low</string>
+    <string name="security_center_level_mid">mid</string>
+    <string name="security_center_level_high">high</string>
+    <string name="concession_record">Discount records</string>
+    <string name="concession_record_tip">Check the participating offers</string>
+    <string name="message_center">Message Center</string>
+    <string name="message_center_tip">View historical message content</string>
+    <string name="share_friend">Share friends</string>
+    <string name="share_friend_tip">Share content to friends</string>
+    <string name="aplication_for_preferential">Apply for a discount</string>
+    <string name="aplication_for_preferential_tip">Send a discount Apply for a discount</string>
+    <string name="see_more">see more</string>
+    <string name="see_more_tip">Feedback</string>
+    <string name="total_asset">Total assets/</string>
+    <string name="total_asset_value_pattern">¥%1$2f</string>
+    <string name="purse_balance_value_pattern">¥%1$2f</string>
+    <string name="purse_balance">Wallet balance/</string>
+    <string name="last_login_time">Last Login Time:</string>
+    <string name="recharge_money">Recharge</string>
+    <string name="withdraw_label">withdraw</string>
+    <string name="withdraw_label_pattern">Processing%1$s%2$2f</string>
+    <string name="note_record">betting record</string>
+    <string name="note_record_tip">Check the participating game records</string>
+    <string name="quota_conversion">Quota conversion</string>
+    <string name="quota_conversion_tip">Recycling and transfer of funds</string>
+    <string name="promo_activity">Discount</string>
+    <string name="url_null">Request link is empty</string>
+
+    <!--webview-->
+    <string name="game_maintenance">Game is being maintained</string>
+    <string name="url_is_null">Incoming address is blank！</string>
+    <string name="imageUrlNil">Image address is blank</string>
+    <string name="saveImgFailed">Image saved unsuccessfully</string>
+    <string name="saveImgSuccess">Saved to album</string>
+
+    <!--加载刷洗-->
+    <string name="REFRESHING">Refreshing</string>
+    <string name="RELEASE_TO_REFRESH">Loosen refresh</string>
+    <string name="SWIPE_TO_REFRESH">Click Refresh</string>
+    <string name="REFRESH_RETURNING">Refreshing is returning</string>
+    <string name="REFRESH_COMPLETE">Refresh completed</string>
+    <string name="LOADING_MORE">Loading more</string>
+    <string name="RELEASE_TO_LOAD_MORE">Loosen the load more</string>
+    <string name="SWIPE_TO_LOAD_MORE">Click to load more</string>
+    <string name="LOAD_MORE_RETURNING">Loading is returning</string>
+    <string name="LOAD_MORE_COMPLETE">Load more done</string>
+    <string name="NO_MORE_DATA">No more data</string>
+
+    <!--更多   设置  消息中心-->
+    <string name="more_acitivity">More</string>
+    <string name="message_center_activity">Message Center</string>
+    <string name="common_problems">common problem</string>
+    <string name="register_protocol">Registration Terms</string>
+    <string name="about_us">about us</string>
+    <string name="luanguage_choice">language selection</string>
+    <string name="setting_acitivity">Set</string>
+    <string name="voice_setting">sound</string>
+    <string name="logout_setting">sign out</string>
+    <string name="game_noitce">Game noitce</string>
+    <string name="sys_notice">system notice</string>
+    <string name="sys_msg">system message</string>
+    <string name="my_msg">My message</string>
+    <string name="send_msg">Send a message</string>
+    <string name="zhan_message">Site message</string>
+    <string name="please_choose">please choose</string>
+    <string name="send_msg_title">title:</string>
+    <string name="send_msg_title_set">Please enter the title</string>
+    <string name="send_msg_content_set">Please enter the content</string>
+    <string name="send_msg_upload">submit</string>
+    <string name="send_msg_cancel">cancel</string>
+    <string name="site_msg_all_choose">select all</string>
+    <string name="site_msg_delete">delete</string>
+    <string name="site_msg_sign_read">Mark has been read</string>
+    <string name="game_type">game type</string>
+
+
+    <!--投注记录 资金记录 优惠记录-->
+    <string name="note_record_acitivity">betting record</string>
+    <string name="note_record_detail_activity">betting record-Details</string>
+    <string name="capital_record_acitivity">Funding records</string>
+    <string name="capital_record_acitivity_detail">Funding records details</string>
+    <string name="promo_record_acitivity">Discount records</string>
+    <string name="note_date">Betting date</string>
+    <string name="search">search</string>
+    <string name="game_name">game name</string>
+    <string name="note_time">Betting time</string>
+    <string name="note_account">Betting amount</string>
+    <string name="payout">Payout</string>
+    <string name="status">status</string>
+    <string name="note_count">Total%1$s</string>
+    <string name="account_banlance">Account Balance:%1$s</string>
+    <string name="payout_reward">Payout bonus:%1$s</string>
+    <string name="effective_betting">Effective betting:%1$s</string>
+    <string name="lottery_bonus">Pool bonus:%1$s</string>
+    <string name="total_account">total:</string>
+    <string name="fast_choose">selection</string>
+    <string name="type_choose">Types of:</string>
+    <string name="all_type">All types</string>
+    <string name="drawcash_dealwith">Withdrawal processing:</string>
+    <string name="transfer_dealwith">Transfer processing:</string>
+    <string name="no_data">No relevant data</string>
+    <string name="capital_tsNo">Transaction number</string>
+    <string name="capital_crateTime">Create time</string>
+    <string name="capital_tsWayName">description</string>
+    <string name="capital_errReson">Reason of failure</string>
+    <string name="rechargeAddress">Place of transaction</string>
+    <string name="capital_realName">Name:</string>
+    <string name="rechargeAmount">Deposit amount:</string>
+    <string name="transactionMoney">Withdrawal amount:</string>
+    <string name="capital_deductFavorable">Deduct the discount:</string>
+    <string name="capital_poundage">Fee:</string>
+    <string name="administrativeFee">Administrative costs:</string>
+    <string name="rechargeTotalAmount">Actual arrival:</string>
+    <string name="capital_statusName">status:</string>
+
+    <!--安全防护 修改登录密码 修改安全密码 -->
+    <string name="name_security">Dear%1$s,</string>
+    <string name="tip_security">Your account information is enjoying full security protection</string>
+    <string name="modify_login_pwd">Modify login secret</string>
+    <string name="modify_security_pwd">Change security password</string>
+    <string name="set_security_pwd">Set security password</string>
+    <string name="lock_screen_gisture">Lock screen gesture</string>
+    <string name="bank_card">Bank card</string>
+    <string name="btb_account">Bitcoin wallet</string>
+    <string name="modify">modify</string>
+    <string name="setting">Set</string>
+    <string name="old_pwd">current password</string>
+    <string name="input_old_pwd">Please enter the current password</string>
+    <string name="new_pwd">new password</string>
+    <string name="input_new_pwd">Please enter a new password</string>
+    <string name="confrim_pwd">confirm password</string>
+    <string name="action_success">Successful operation</string>
+    <string name="input_new_pwd_again">Please re-enter the new password</string>
+    <string name="input_cant_null">input box can not be empty</string>
+    <string name="pwd_at_lest_six">Password at least six</string>
+    <string name="pwd_input_different">password input different</string>
+    <string name="set_real_name_error">set real name erro</string>
+    <string name="real_name">actual name</string>
+    <string name="check_real_name">check real name</string>
+    <string name="set_real_name">Set real name</string>
+    <string name="input_real_name">Enter real name</string>
+    <string name="set_safe_name">Set security password</string>
+    <string name="pwd">password</string>
+    <string name="input_not_blank">Input can not be empty</string>
+    <string name="gesture_pwd">Gesture password</string>
+    <string name="gesture_pwd_setting">Gesture password set</string>
+    <string name="set_gesture_pwd">Set gesture password</string>
+    <string name="check_gesture_pwd">Verify gesture password</string>
+    <string name="clear_gesture_pwd">Clear the password of the gesture</string>
+    <string name="clear_gesture_pwd_ok">Clear the password password successfully</string>
+    <string name="set_gesture_pwd_ok">Set gesture password successfully</string>
+    <string name="check_gesture_pwd_ok">Verify gesture password successfully</string>
+    <string name="check_gesture_pwd_ok_andReset">Verify password successfully, please reset</string>
+
+
+    <!-- HttpCodeException -->
+    <string name="http_code_default">unknown mistake%1$d</string>
+    <string name="http_code_400">No permission to access</string>
+    <string name="http_code_404">Request link or page not found</string>
+    <string name="http_code_500">The code is wrong</string>
+    <string name="http_code_502">service problems</string>
+    <string name="http_code_600">session Expired</string>
+    <string name="http_code_601">Need to enter a security password</string>
+    <string name="http_code_602">Service is busy</string>
+    <string name="http_code_603">Domain name does not exist</string>
+    <string name="http_code_604">Temporary domain name expired</string>
+    <string name="http_code_605">ip is limited</string>
+    <string name="http_code_606">Was forced to kick out</string>
+    <string name="http_code_607">Site maintenance</string>
+    <string name="http_code_608">Repeat request</string>
+    <string name="http_code_609">Site does not exist</string>
+
+    <!--取款、添加银行卡、添加比特币-->
+    <string name="withdraw_money_activity">Withdrawal</string>
+    <string name="add_bank_card_activity">Add bank card</string>
+    <string name="add_bitcoin_activity">Add bitcoin</string>
+    <string name="bank_name">bank</string>
+    <string name="real_name_hint">Bank card name and real name in order to withdraw funds successfully</string>
+    <string name="please_select">please choose</string>
+    <string name="card_number">card number</string>
+    <string name="input_card_hint">Please enter the card number</string>
+    <string name="open_account_bank">open Bank</string>
+    <string name="get_card_error">Sorry, we did not get bank information</string>
+    <string name="open_account_bank_hint">Such as：Hebei Tangshan Construction Bank</string>
+    <string name="not_sufficient_funds_hint">Withdrawal amount of at least %1$s ¥\nYour current wallet balance is not enough, you can first go to the wallet money in the game！</string>
+    <string name="input_withdrawals_amount">Please enter the withdrawal amount</string>
+    <string name="card_lenght_hint">Bank card length should be in the range of 10-25</string>
+    <string name="bind_bank_card_hind">Please bind the bank card first</string>
+    <string name="add_card_Success">Add a bank card successfully</string>
+    <string name="bind_bitcoin">Binding bitcoin wallet</string>
+    <string name="bitcoin_address">Bitcoin wallet address:</string>
+
+</resources>

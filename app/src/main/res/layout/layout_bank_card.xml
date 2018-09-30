@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_bank_bg"
+    android:orientation="vertical"
+    android:paddingBottom="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_20">
+
+        <ImageView
+            android:id="@+id/bank_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_30" />
+
+        <TextView
+            android:id="@+id/bank_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/bank_iv"
+            android:paddingRight="@dimen/dp_20"
+            android:text="广发"
+            android:textColor="@color/text_color_gray_333333"
+            android:textSize="@dimen/text_12_sp" />
+
+        <LinearLayout
+            android:id="@+id/bank_create_address_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/is_bank_tv"
+            android:layout_toRightOf="@id/bank_name_tv"
+            android:orientation="horizontal"
+            android:paddingRight="@dimen/dp_10"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/bank_create_address_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/text_color_gray_333333"
+                android:textSize="@dimen/text_12_sp" />
+
+            <TextView
+                android:id="@+id/copy_bank_create_address_tv"
+                android:layout_width="36dp"
+                android:layout_height="22dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginStart="@dimen/dp_10"
+                android:background="@drawable/shape_copy_bg"
+                android:gravity="center"
+                android:text="@string/copy"
+                android:textColor="@color/btn_blue_press"
+                android:textSize="@dimen/sp_12" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/is_bank_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="@dimen/dp_20"
+            android:text="储蓄卡"
+            android:textColor="@color/text_color_gray_333333"
+            android:textSize="@dimen/text_12_sp"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="18dp"
+        android:background="@drawable/shape_white_bg"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <RelativeLayout
+            android:id="@+id/card_id_rl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@color/white"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/card_id_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="40dp"
+                android:maxLength="23"
+                android:text="6214 6234 2100 0648 515"
+                android:textColor="@color/text_color_gray_333333"
+                android:textSize="@dimen/text_14_sp" />
+
+            <TextView
+                android:id="@+id/copy_id_tv"
+                android:layout_width="36dp"
+                android:layout_height="22dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/shape_copy_bg"
+                android:gravity="center"
+                android:text="@string/copy"
+                android:textColor="@color/btn_blue_press"
+                android:textSize="@dimen/sp_12" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/name_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/open_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="40dp"
+                android:text="开户人名称："
+                android:textColor="@color/text_color_gray_666666"
+                android:textSize="@dimen/sp_14"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/open_name_copy_tv"
+                android:layout_width="36dp"
+                android:layout_height="22dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/shape_copy_bg"
+                android:gravity="center"
+                android:text="@string/copy"
+                android:textColor="@color/btn_blue_press"
+                android:textSize="@dimen/sp_12" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/address_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/open_address_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="40dp"
+                android:text="开户号："
+                android:textColor="@color/text_color_gray_666666"
+                android:textSize="@dimen/sp_14"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/open_address_copy_tv"
+                android:layout_width="36dp"
+                android:layout_height="22dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/shape_copy_bg"
+                android:gravity="center"
+                android:text="@string/copy"
+                android:textColor="@color/btn_blue_press"
+                android:textSize="@dimen/sp_12" />
+        </RelativeLayout>
+    </LinearLayout>
+
+
+
+</LinearLayout>

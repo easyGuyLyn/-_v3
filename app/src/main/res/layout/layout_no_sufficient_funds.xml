@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/record_margin"
+        android:background="@drawable/shape_dialog_hint"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/record_margin">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/record_margin"
+            android:src="@mipmap/button_01" />
+
+        <TextView
+            android:id="@+id/tv_withdraw_state"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/record_margin"
+            android:layout_marginRight="@dimen/record_margin"
+            android:gravity="center"
+            android:padding="20dp"
+            android:text="@string/not_sufficient_funds_hint" />
+
+        <Button
+            android:id="@+id/bt_cycle"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="@dimen/record_margin"
+            android:background="@drawable/shape_withdraw_money_bt"
+            android:onClick="Recycling"
+            android:text="一键回收"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/bt_deposit"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="@dimen/record_margin"
+            android:background="@drawable/shape_withdraw_money_bt"
+            android:text="快速存款"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+</LinearLayout>

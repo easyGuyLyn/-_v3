@@ -1,0 +1,708 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <com.dawoo.gamebox.view.view.HeaderView
+        android:id="@+id/head_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="271dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="53dp"
+                android:layout_marginRight="53dp"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/ll_invent_code"
+                    style="@style/ll_root_style">
+
+                    <LinearLayout style="@style/register_item_head_root_style">
+
+                        <TextView
+                            style="@style/register_item_head_title"
+                            android:text="@string/invent_code" />
+
+                        <ImageView
+                            android:id="@+id/iv_invent_code"
+                            style="@style/register_item_head_iv_style" />
+                    </LinearLayout>
+
+
+                    <!--账号-->
+                    <LinearLayout style="@style/register_item_body_root_style">
+
+                        <EditText
+                            android:id="@+id/etYaoQinMa"
+                            style="@style/register_item_body_input_style"
+                            android:hint="@string/please_input_invent_code" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_username"
+                    style="@style/ll_root_style">
+
+                    <LinearLayout style="@style/register_item_head_root_style">
+
+                        <TextView
+                            style="@style/register_item_head_title"
+                            android:text="@string/register_username" />
+
+                        <ImageView
+                            android:id="@+id/iv_username"
+                            style="@style/register_item_head_iv_style" />
+                    </LinearLayout>
+
+
+                    <!--账号-->
+                    <LinearLayout style="@style/register_item_body_root_style">
+
+                        <EditText
+                            android:id="@+id/etUsername"
+                            style="@style/register_item_body_input_style"
+                            android:hint="@string/please_input_username" />
+
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_code"
+                    style="@style/ll_root_style">
+
+                    <LinearLayout style="@style/register_item_head_root_style">
+
+                        <TextView
+                            style="@style/register_item_head_title"
+                            android:text="@string/register_password" />
+
+                        <ImageView
+                            android:id="@+id/iv_password"
+                            style="@style/register_item_head_iv_style" />
+                    </LinearLayout>
+
+
+                    <!--密码-->
+                    <LinearLayout style="@style/register_item_body_root_style">
+
+                        <EditText
+                            android:id="@+id/etFirstPassword"
+                            android:layout_width="220dp"
+                            style="@style/register_item_body_input_style"
+                            android:hint="@string/please_6_20_inpout"
+                            android:inputType="textPassword"
+                             />
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@mipmap/eyeclose"
+                            android:id="@+id/iv_see_code"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_commit_code"
+                    style="@style/ll_root_style">
+
+                    <LinearLayout style="@style/register_item_head_root_style">
+
+                        <TextView
+                            style="@style/register_item_head_title"
+                            android:text="@string/please_commit_password" />
+
+                        <ImageView
+                            android:id="@+id/iv_commit_password"
+                            style="@style/register_item_head_iv_style" />
+
+                    </LinearLayout>
+
+
+                    <!--密码-->
+                    <LinearLayout style="@style/register_item_body_root_style">
+
+                        <EditText
+                            android:id="@+id/etCommitPassword"
+                            style="@style/register_item_body_input_style"
+                            android:hint="@string/please_input_commit_password"
+                            android:inputType="textPassword"
+                            android:layout_width="220dp"/>
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@mipmap/eyeclose"
+                            android:id="@+id/iv_see_commit_code"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_wechat"
+                    style="@style/ll_root_style">
+
+                    <LinearLayout style="@style/register_item_head_root_style">
+
+                        <TextView
+                            style="@style/register_item_head_title"
+                            android:text="@string/register_wechat" />
+
+                        <ImageView
+                            android:id="@+id/iv_weChat"
+                            style="@style/register_item_head_iv_style" />
+
+                    </LinearLayout>
+
+
+                    <!--密码-->
+                    <LinearLayout style="@style/register_item_body_root_style">
+
+                        <EditText
+                            android:id="@+id/etWeChatNumber"
+                            style="@style/register_item_body_input_style"
+                            android:hint="@string/please_input_wechat" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_phone_number"
+                    style="@style/ll_root_style">
+
+                    <LinearLayout style="@style/register_item_head_root_style">
+
+                        <TextView
+                            style="@style/register_item_head_title"
+                            android:text="@string/register_phone"
+                            />
+
+                        <ImageView
+                            android:id="@+id/iv_phone_number"
+                            style="@style/register_item_head_iv_style" />
+
+                    </LinearLayout>
+
+
+                    <!--密码-->
+                    <LinearLayout android:layout_width="match_parent"
+                        android:layout_height="37dp"
+                        android:background="@drawable/frame_fillet_line_gray">
+
+                        <TextView
+                            android:id="@+id/tv_qu"
+                            android:layout_width="59dp"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/frame_fillet_line_gray_text"
+                            android:gravity="center"
+                            android:text="+86"
+                            android:textColor="@color/text_color_gray_999999"
+                            android:textSize="@dimen/text_11_sp" />
+
+                        <EditText
+                            android:id="@+id/etPhoneNumber"
+                            style="@style/register_item_body_input_style"
+                            android:hint="@string/please_intput_phone"
+                            android:layout_marginLeft="7dp"
+                            android:inputType="phone" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_sms_code"
+                        android:layout_width="match_parent"
+                        android:layout_height="37dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@drawable/frame_fillet_line_gray"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <EditText
+                            android:id="@+id/et_sms"
+                            style="@style/register_item_body_input_style"
+                            android:layout_width="0dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:hint="@string/register_sms_phone_code"
+                            android:paddingLeft="16dp" />
+
+                        <TextView
+                            android:id="@+id/tv_send_sms"
+                            android:layout_width="90dp"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/frame_fillet_line_gray_text_end"
+                            android:gravity="center"
+                            android:padding="8dp"
+                            android:text="@string/send_sms_code"
+                            android:textColor="@color/text_color_gray_999999"
+                            android:textSize="@dimen/text_11_sp" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_email"
+                    style="@style/ll_root_style">
+
+                    <LinearLayout style="@style/register_item_head_root_style">
+
+                        <TextView
+                            style="@style/register_item_head_title"
+                            android:text="@string/register_email" />
+
+                        <ImageView
+                            android:id="@+id/iv_email"
+                            style="@style/register_item_head_iv_style" />
+
+                    </LinearLayout>
+
+
+                    <!--密码-->
+                    <LinearLayout style="@style/register_item_body_root_style">
+
+                        <EditText
+                            android:id="@+id/etEmail"
+                            style="@style/register_item_body_input_style"
+                            android:hint="@string/please_input_email"
+                            android:inputType="textEmailAddress" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_real_name"
+                    style="@style/ll_root_style">
+
+                    <LinearLayout style="@style/register_item_head_root_style">
+
+                        <TextView
+                            style="@style/register_item_head_title"
+                            android:text="@string/register_realname" />
+
+                        <ImageView
+                            android:id="@+id/iv_real_name"
+                            style="@style/register_item_head_iv_style" />
+
+                    </LinearLayout>
+
+
+                    <!--密码-->
+                    <LinearLayout style="@style/register_item_body_root_style">
+
+                        <EditText
+                            android:id="@+id/etRealName"
+                            style="@style/register_item_body_input_style"
+                            android:hint="@string/please_input_realname"
+                            android:inputType="textPersonName" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_qq"
+                    style="@style/ll_root_style">
+
+                    <LinearLayout style="@style/register_item_head_root_style">
+
+                        <TextView
+                            style="@style/register_item_head_title"
+                            android:text="@string/register_qq" />
+
+                        <ImageView
+                            android:id="@+id/iv_qq"
+                            style="@style/register_item_head_iv_style" />
+
+                    </LinearLayout>
+
+
+                    <!--密码-->
+                    <LinearLayout style="@style/register_item_body_root_style">
+
+                        <EditText
+                            android:id="@+id/etQQ"
+                            style="@style/register_item_body_input_style"
+                            android:hint="@string/please_input_qq" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_ss_code"
+                    style="@style/ll_root_style">
+
+                    <LinearLayout style="@style/register_item_head_root_style">
+
+                        <TextView
+                            style="@style/register_item_head_title"
+                            android:text="@string/reigster_6_number_code" />
+
+                        <ImageView
+                            android:id="@+id/iv_ss_code"
+                            style="@style/register_item_head_iv_style" />
+
+                    </LinearLayout>
+
+
+                    <!--密码-->
+                    <LinearLayout style="@style/register_item_body_root_style">
+
+                        <EditText
+                            android:id="@+id/etSSCode"
+                            style="@style/register_item_body_input_style"
+                            android:hint="@string/please_input_6_register_code"
+                            android:inputType="textPassword"
+                            android:maxLength="6" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_commit_ss_code"
+                    style="@style/ll_root_style">
+
+                    <LinearLayout style="@style/register_item_head_root_style">
+
+                        <TextView
+                            style="@style/register_item_head_title"
+                            android:text="@string/reigister_commit_6_numnber_code" />
+
+                        <ImageView
+                            android:id="@+id/iv_commit_ss"
+                            style="@style/register_item_head_iv_style" />
+
+                    </LinearLayout>
+
+
+                    <!--密码-->
+                    <LinearLayout style="@style/register_item_body_root_style">
+
+                        <EditText
+                            android:id="@+id/etSSCommit"
+                            style="@style/register_item_body_input_style"
+                            android:hint="@string/please_input_commit_6_number_code"
+                            android:inputType="textPassword"
+                            android:maxLength="6" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_time"
+                    style="@style/ll_root_style">
+
+                    <LinearLayout style="@style/register_item_head_root_style">
+
+                        <TextView
+                            style="@style/register_item_head_title"
+                            android:text="@string/register_time_loccal" />
+
+                        <ImageView
+                            android:id="@+id/iv_time"
+                            style="@style/register_item_head_iv_style" />
+                    </LinearLayout>
+                        <org.angmarch.views.NiceSpinner
+                            android:id="@+id/nice_spinner_time"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:textSize="@dimen/text_12_sp"
+                            app:backgroundSelector="@drawable/frame_fillet_line_gray"
+                            app:arrowDrawable="@mipmap/icon_more_select"
+                            />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_birthday"
+                    style="@style/ll_root_style">
+
+                    <LinearLayout style="@style/register_item_head_root_style">
+
+                        <TextView
+                            style="@style/register_item_head_title"
+                            android:text="@string/register_birthday" />
+
+                        <ImageView
+                            android:id="@+id/iv_birthday"
+                            style="@style/register_item_head_iv_style" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_select_birthday"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/frame_fillet_line_gray"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_birth_data"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="13dp"
+                            android:layout_weight="1"
+                            android:textSize="@dimen/text_12_sp"
+                            android:text="@string/please_choose_birthday" />
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="14dp"
+                            android:src="@mipmap/time" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_sex"
+                    style="@style/ll_root_style">
+
+                    <LinearLayout style="@style/register_item_head_root_style">
+
+                        <TextView
+                            style="@style/register_item_head_title"
+                            android:text="@string/register_sex" />
+
+                        <ImageView
+                            android:id="@+id/iv_sex"
+                            style="@style/register_item_head_iv_style" />
+                    </LinearLayout>
+
+                    <org.angmarch.views.NiceSpinner
+                        android:id="@+id/nice_spinner_sex"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        app:arrowDrawable="@mipmap/icon_more_select"
+                        android:textSize="@dimen/text_12_sp"
+                        app:backgroundSelector="@drawable/frame_fillet_line_gray"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_money"
+                    style="@style/ll_root_style">
+
+                    <LinearLayout style="@style/register_item_head_root_style">
+
+                        <TextView
+                            style="@style/register_item_head_title"
+                            android:text="@string/register_money" />
+
+                        <ImageView
+                            android:id="@+id/iv_money"
+                            style="@style/register_item_head_iv_style" />
+                    </LinearLayout>
+
+                    <org.angmarch.views.NiceSpinner
+                        android:background="@drawable/frame_fillet_line_gray"
+                        android:id="@+id/nice_spinner_money"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        app:arrowDrawable="@mipmap/icon_more_select"
+                        android:textSize="@dimen/text_12_sp"
+                        app:backgroundSelector="@drawable/frame_fillet_line_gray"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_launage"
+                    style="@style/ll_root_style">
+
+                    <LinearLayout style="@style/register_item_head_root_style">
+
+                        <TextView
+                            style="@style/register_item_head_title"
+                            android:text="@string/register_main_lauange" />
+
+                        <ImageView
+                            android:id="@+id/iv_lauange"
+                            style="@style/register_item_head_iv_style" />
+                    </LinearLayout>
+
+                    <org.angmarch.views.NiceSpinner
+                        android:background="@drawable/frame_fillet_line_gray"
+                        android:id="@+id/nice_spinner_lanuage"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        app:arrowDrawable="@mipmap/icon_more_select"
+                        android:textSize="@dimen/text_12_sp"
+                        app:backgroundSelector="@drawable/frame_fillet_line_gray"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_question"
+                    style="@style/ll_root_style">
+
+                    <LinearLayout style="@style/register_item_head_root_style">
+
+                        <TextView
+                            style="@style/register_item_head_title"
+                            android:text="@string/regiseter_question" />
+
+                        <ImageView
+                            android:id="@+id/iv_question"
+                            style="@style/register_item_head_iv_style" />
+                    </LinearLayout>
+
+                    <org.angmarch.views.NiceSpinner
+                        android:id="@+id/nice_spinner_question"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        app:arrowDrawable="@mipmap/icon_more_select"
+                        android:background="@null"
+                        android:textSize="@dimen/text_12_sp"
+                        app:backgroundSelector="@drawable/frame_fillet_line_gray" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_input_question"
+                    style="@style/ll_root_style">
+
+                    <LinearLayout style="@style/register_item_head_root_style">
+
+                        <TextView
+                            style="@style/register_item_head_title"
+                            android:text="@string/register_answer" />
+
+                        <ImageView
+                            android:id="@+id/iv_input_question"
+                            style="@style/register_item_head_iv_style" />
+                    </LinearLayout>
+
+                    <!--密码-->
+                    <LinearLayout style="@style/register_item_body_root_style">
+
+                        <EditText
+                            android:id="@+id/etAnswer"
+                            style="@style/register_item_body_input_style"
+                            android:hint="@string/please_input_answer"
+                            android:inputType="text" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_captcha"
+                    style="@style/ll_root_style">
+
+                    <LinearLayout style="@style/register_item_head_root_style">
+
+                        <TextView
+                            android:id="@+id/tv_captcha"
+                            style="@style/register_item_head_title"
+                            android:text="@string/register_vc_code" />
+
+                        <ImageView
+                            android:id="@+id/iv_input_captcha"
+                            style="@style/register_item_head_iv_style" />
+                    </LinearLayout>
+
+
+                    <!--验证码-->
+                    <RelativeLayout
+                        android:id="@+id/rlCaptcha"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:visibility="visible">
+
+                        <EditText
+                            android:id="@+id/etCaptcha"
+                            android:layout_width="181dp"
+                            android:layout_height="35dp"
+                            android:layout_centerVertical="true"
+                            android:layout_toEndOf="@id/iv3"
+                            android:background="@drawable/frame_fillet_line_gray"
+                            android:hint="@string/captcha_hint"
+                            android:maxLength="4"
+                            android:maxLines="1"
+                            android:paddingLeft="13dp"
+                            android:textColor="@color/colorMain"
+                            android:textColorHint="@color/colorGray"
+                            android:textSize="@dimen/text_12_sp"
+                            android:layout_marginRight="9dp"/>
+
+                        <ImageView
+                            android:id="@+id/ivCaptcha"
+                            android:layout_width="80dp"
+                            android:layout_height="35dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@+id/etCaptcha"
+                            android:background="#cde9c0" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+            <RelativeLayout
+                android:id="@+id/rl_register_allow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/iv_allow_choose"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="14dp"
+                    android:layout_marginRight="-13dp"
+                    android:layout_marginLeft="22dp"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/choose" />
+
+                <TextView
+                    android:id="@+id/tv_commit_messaa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/register_allow"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/text_12_sp"
+                    android:visibility="visible"
+                    android:layout_marginLeft="53dp"/>
+
+
+            </RelativeLayout>
+
+
+            <!--登录按钮-->
+            <Button
+                android:id="@+id/btn_Register"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/frame_fillet_blue_s"
+                android:text="立即注册"
+                android:textColor="@color/colorTitle"
+                android:textSize="13sp"
+                android:layout_marginLeft="57dp"
+                android:layout_marginRight="57dp"
+                android:layout_marginBottom="60dp"
+                android:layout_marginTop="10dp"
+                android:visibility="gone" />
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

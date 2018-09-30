@@ -1,0 +1,585 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bgColor">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:visibility="visible"
+        android:background="@color/colorPrimary">
+        <TextView
+            android:id="@+id/title_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="@string/deposit_tab_name"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_title_sp" />
+
+        <RelativeLayout
+            android:id="@+id/Logined_rl"
+            android:layout_width="130dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <View
+                android:id="@+id/point"
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                android:layout_centerVertical="true" />
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_below="@id/point"
+                android:layout_toStartOf="@+id/user_account_tv"
+                android:src="@mipmap/account_icon" />
+
+
+            <TextView
+                android:id="@+id/user_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/point"
+                android:layout_toStartOf="@+id/account_more_iv"
+                android:text="*****"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_9_sp" />
+
+            <TextView
+                android:id="@+id/user_account_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/point"
+                android:layout_marginStart="4dp"
+                android:layout_toStartOf="@+id/account_more_iv"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="*****"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_9_sp" />
+
+            <ImageView
+                android:id="@+id/account_more_iv"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/header_right_more" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/show_notice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/btn_yellow_normal"
+        android:textColor="@color/color_theme_coffee_black"
+        android:textSize="@dimen/sp_12"
+        android:paddingTop="3dp"
+        android:paddingBottom="4dp"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:visibility="gone"
+        android:text="温馨提示：完成存款后，请前往大厅申请活动优惠"
+        android:gravity="center"
+        />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/show_notice"
+        android:layout_marginTop="@dimen/dp_4">
+
+        <ScrollView
+            android:id="@+id/content_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:drawableLeft="@drawable/drawable_left_primary"
+                    android:drawablePadding="9dp"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/dp_10"
+                    android:text="请选择支付类型"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/sp_14" />
+
+                <com.dawoo.gamebox.view.view.NoMoveRecycleView
+                    android:id="@+id/pay_type_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:padding="6dp" />
+
+                <LinearLayout
+                    android:id="@+id/default_pay_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_10"
+                        android:background="@color/bgColor" />
+
+                    <LinearLayout
+                        android:id="@+id/pay_sec_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:descendantFocusability="blocksDescendants"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/dp_10"
+                            android:drawableLeft="@drawable/drawable_left_primary"
+                            android:drawablePadding="9dp"
+                            android:gravity="center"
+                            android:text="存款方式"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/sp_12" />
+
+                        <com.dawoo.gamebox.view.view.NoMoveRecycleView
+                            android:id="@+id/pay_sec_type_rl"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:nestedScrollingEnabled="false"
+                            android:paddingLeft="@dimen/dp_10"
+                            android:paddingRight="@dimen/dp_10"></com.dawoo.gamebox.view.view.NoMoveRecycleView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/money_ll"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/dp_10"
+                            android:drawableLeft="@drawable/drawable_left_primary"
+                            android:drawablePadding="9dp"
+                            android:gravity="center"
+                            android:text="请选择或输入金额"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/sp_12" />
+
+                        <com.dawoo.gamebox.view.view.NoMoveRecycleView
+                            android:id="@+id/pay_money_rl"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/dp_10"
+                            android:nestedScrollingEnabled="false"
+                            android:paddingLeft="@dimen/dp_10"
+                            android:paddingRight="@dimen/dp_10"></com.dawoo.gamebox.view.view.NoMoveRecycleView>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/bgColor" />
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_40"
+                        android:background="@color/white">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="5dp"
+                            android:gravity="center"
+                            android:text="存款金额"
+                            android:textColor="@color/text_color_gray_666666"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:id="@+id/random_tv"
+                            android:layout_width="@dimen/dp_40"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentRight="true"
+                            android:background="@color/deposit_gray"
+                            android:gravity="center"
+                            android:text=".55"
+                            android:textColor="@color/text_color_gray_333333"
+                            android:visibility="gone" />
+
+                        <EditText
+                            android:id="@+id/money_et"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginLeft="120dp"
+                            android:layout_toLeftOf="@id/random_tv"
+                            android:background="@color/transparent"
+                            android:gravity="center_vertical"
+                            android:hint="￥10~￥9,999"
+                            android:inputType="numberDecimal"
+                            android:minWidth="180dp"
+                            android:paddingRight="@dimen/dp_20"
+                            android:textColor="@color/text_color_gray_333333"
+                            android:textColorHint="@color/text_color_gray_666666"
+                            android:textSize="@dimen/sp_14" />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/bgColor" />
+
+                    <RelativeLayout
+                        android:id="@+id/select_bank_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_40"
+                        android:background="@color/white">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="5dp"
+                            android:gravity="center"
+                            android:text="支付银行"
+                            android:textColor="@color/text_color_gray_666666"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:id="@+id/select_bank_sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginLeft="120dp"
+                            android:textColor="@color/text_color_gray_333333"
+                            android:textSize="@dimen/sp_14"
+                            android:gravity="center_vertical"
+                            >
+                        </TextView>
+                        <ImageView
+                            android:id="@+id/selected_iv"
+                            android:layout_width="@dimen/dp_30"
+                            android:layout_height="@dimen/dp_30"
+                            android:layout_centerVertical="true"
+                            android:padding="5dp"
+                            android:layout_alignParentRight="true"
+                            android:src="@mipmap/down"
+                            />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_alignParentBottom="true"
+                            android:background="@color/line_view_gray" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/bitcoin_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dp_10"
+                        android:drawableLeft="@drawable/drawable_left_primary"
+                        android:drawablePadding="9dp"
+                        android:gravity="center"
+                        android:text="账户信息"
+                        android:textColor="@color/text_color_gray_333333"
+                        android:textSize="@dimen/sp_14" />
+
+                    <LinearLayout
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginRight="40dp"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:background="@drawable/shape_bank_bg"
+                        android:orientation="vertical"
+                        android:paddingBottom="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/dp_10"
+                            android:layout_marginLeft="18dp"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:drawableLeft="@mipmap/bitcoin"
+                            android:drawablePadding="5dp"
+                            android:gravity="center"
+                            android:text="bitcoin"
+                            android:textColor="@color/theme_text_color_gray_333333"
+                            android:textSize="@dimen/sp_16"
+                            android:textStyle="italic|bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="18dp"
+                            android:layout_marginRight="18dp"
+                            android:background="@drawable/shape_white_bg"
+                            android:orientation="vertical"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/white"
+                                android:paddingBottom="10dp"
+                                android:paddingTop="@dimen/dp_10"
+                                android:text="扫码存款到此比特币账户，自动到账"
+                                android:textColor="@color/text_color_gray_333333"
+                                android:textSize="@dimen/sp_14" />
+
+                            <TextView
+                                android:id="@+id/bitcoin_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/dp_10"
+                                android:gravity="center_vertical"
+                                android:text="姓名："
+                                android:textColor="@color/text_color_gray_333333"
+                                android:textSize="@dimen/sp_14" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/bgColor" />
+
+                    <ImageView
+                        android:id="@+id/qrcode_iv"
+                        android:layout_width="116dp"
+                        android:layout_height="116dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="11dp"
+                        android:visibility="gone"
+                        />
+
+                    <TextView
+                        android:id="@+id/save_pic_tv"
+                        android:layout_width="116dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="11dp"
+                        android:background="@drawable/frame_fillet_blue"
+                        android:gravity="center"
+                        android:text="保存到手机"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        android:visibility="gone"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/bgColor" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_40"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="您的比特币地址"
+                            android:id="@+id/add_name_tv"
+                            android:textColor="@color/text_color_gray_333333"
+                            android:textSize="14sp" />
+
+                        <EditText
+                            android:id="@+id/address_et"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_toRightOf="@id/add_name_tv"
+                            android:layout_centerVertical="true"
+                            android:background="@color/transparent"
+                            android:gravity="center_vertical|right"
+                            android:hint="请输入比特币地址"
+                            android:paddingRight="10dp"
+                            android:paddingLeft="@dimen/dp_10"
+                            android:textColor="@color/text_color_gray_333333"
+                            android:textColorHint="@color/text_color_gray_999999"
+                            android:textSize="14sp" />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/bgColor" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_40"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="txid"
+                            android:textColor="@color/text_color_gray_333333"
+                            android:textSize="14sp" />
+
+                        <EditText
+                            android:id="@+id/text_id_et"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:background="@color/transparent"
+                            android:gravity="center_vertical|right"
+                            android:hint="请输入交易是产生的txid"
+                            android:minWidth="200dp"
+                            android:paddingRight="10dp"
+                            android:textColor="@color/text_color_gray_333333"
+                            android:textColorHint="@color/text_color_gray_999999"
+                            android:textSize="14sp" />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/bgColor"
+                     />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_40"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="比特币数"
+                            android:textColor="@color/text_color_gray_333333"
+                            android:textSize="14sp" />
+
+                        <EditText
+                            android:id="@+id/count_et"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:background="@color/transparent"
+                            android:gravity="center_vertical|right"
+                            android:hint="@string/deposit_bitcoin_need_toast"
+                            android:inputType="numberDecimal"
+                            android:minWidth="200dp"
+                            android:paddingRight="10dp"
+                            android:textColor="@color/text_color_gray_333333"
+                            android:textColorHint="@color/text_color_gray_999999"
+                            android:textSize="14sp" />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/bgColor"
+                        />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_40"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="交易时间"
+                            android:textColor="@color/text_color_gray_333333"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/charge_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:gravity="center_vertical|right"
+                            android:hint="请选择交易日期"
+                            android:minWidth="200dp"
+                            android:paddingRight="10dp"
+                            android:textColor="@color/text_color_gray_333333"
+                            android:textColorHint="@color/text_color_gray_999999"
+                            android:textSize="14sp" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/sub_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="75dp"
+                    android:visibility="gone">
+
+                    <Button
+                        android:id="@+id/submit_bt"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/button_height"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="@dimen/dp_20"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginRight="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_20"
+                        android:background="@drawable/frament_home_one_key_back_corn_unclick"
+                        android:gravity="center"
+                        android:text="提交"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:id="@+id/note_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="21dp"
+                        android:layout_marginRight="21dp"
+                        android:textColor="@color/text_color_gray_666666"
+                        android:textSize="@dimen/sp_12" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+</android.support.v7.widget.LinearLayoutCompat>
